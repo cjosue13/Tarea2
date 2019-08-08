@@ -1,0 +1,48 @@
+
+#Titulo{
+    -fx-font-size: 35pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: BLACK;
+}
+.button{
+    -fx-background-color: #2196F3;
+    -jfx-button-type: RAISED;/*raised and flat*/
+    -fx-text-fill: WHITE;
+    -jfx-rippler-fill: RED;
+    
+}
+
+.button:hover {
+    -fx-background-color: #0d8aee;
+    -jfx-button-type: RAISED;/*raised and flat*/
+    -fx-text-fill: WHITE;
+    -jfx-rippler-fill: RED;
+}
+.text-field {
+    -fx-prompt-text-fill: #808080;
+    -jfx-focus-color: #09b6bc;
+    -jfx-unfocus-color: #4DBea8;
+    -jfx-label-float: true;
+}
+.button .jfx-rippler{
+    -jfx-rippler-fill: #1b5a8f;
+}
+
+.jfx-list-cell:selected{
+    -fx-background-color: #3b8c91;
+}
+.jfx-list-cell{
+    -fx-background-insets: 0.0;
+}
+.jfx-list-cell .jfx-rippler{
+    -fx-rippler-fill: BLUE;
+}
+.jfx-list-cell:hover{
+    -fx-background-color: #1bd79c;
+}
+.jfx-list-view{
+    -fx-background-insets: 0;
+    -fx-cell-vertical-margin:10.0;
+    -fx-vertical-gap: 10;
+    -fx-pref-width:150;
+}

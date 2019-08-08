@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.PuestosController">
+   <children>
+      <TableView fx:id="tablePuesto" layoutX="150.0" layoutY="140.0" prefHeight="280.0" prefWidth="750.0">
+         <columns>
+            <TableColumn fx:id="COL_NOMBRE_PUES" prefWidth="86.0" text="Nombre" />
+            <TableColumn fx:id="COL_DESCRIPCION_PUES" prefWidth="359.0" text="Descripción" />
+            <TableColumn fx:id="COL_CODIGO_PUES" prefWidth="93.0" text="Codigo" />
+            <TableColumn fx:id="COL_EMPLEADO_PUE" prefWidth="211.0" text="Empleado" />
+         </columns>
+      </TableView>
+      <Label fx:id="Titulo" layoutX="443.0" layoutY="40.0" text="Puestos" />
+      <JFXButton fx:id="btnEditar1" layoutX="150.0" layoutY="688.0" onAction="#editar" style="-fx-cursor: hand;" text="Editar" />
+      <JFXButton fx:id="btnEliminar" layoutX="450.0" layoutY="688.0" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
+      <JFXButton fx:id="btnAgregar1" layoutX="815.0" layoutY="688.0" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar" />
+      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="150.0" layoutY="461.0" promptText="Nombre" />
+      <TableView fx:id="tableEmpleado" layoutX="578.0" layoutY="436.0" onMouseReleased="#agregarPersona" prefHeight="101.0" prefWidth="319.0">
+        <columns>
+          <TableColumn fx:id="COL_ID_EMP" prefWidth="33.0" text="ID " />
+          <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="157.0" text="Nombre" />
+            <TableColumn fx:id="COL_APELLIDO_EMP" prefWidth="167.0" text="Apellidos " />
+        </columns>
+      </TableView>
+      <JFXTextField fx:id="txtEmpleado" disable="true" layoutX="578.0" layoutY="579.0" prefHeight="25.0" prefWidth="319.0" promptText="Empleado" />
+      <JFXTextArea fx:id="txtDescripcion" labelFloat="true" layoutX="150.0" layoutY="507.0" prefHeight="90.0" prefWidth="391.0" promptText="Descripcion" />
+   </children>
+</AnchorPane>

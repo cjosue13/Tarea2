@@ -2,10 +2,21 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="horarios.controller.AsignacionHorarioController">
+<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
    <children>
-      <Label layoutX="343.0" layoutY="212.0" text="Asignación de Horario" />
+      <Label layoutX="417.0" layoutY="22.0" text="Asignación de Horario" />
+      <FlowPane fx:id="flowPane" layoutX="270.0" layoutY="93.0" prefHeight="202.0" prefWidth="412.0">
+         <children>
+            <AnchorPane fx:id="anchorLunes" prefHeight="101.0" prefWidth="103.0" />
+            <AnchorPane fx:id="anchorMartes" prefHeight="101.0" prefWidth="103.0" />
+            <AnchorPane fx:id="anchorMiercoles" prefHeight="101.0" prefWidth="103.0" />
+            <AnchorPane fx:id="anchorJueves" prefHeight="101.0" prefWidth="103.0" />
+            <AnchorPane fx:id="anchorViernes" prefHeight="101.0" prefWidth="103.0" />
+            <AnchorPane fx:id="anchorSabado" prefHeight="101.0" prefWidth="103.0" />
+            <AnchorPane fx:id="anchorDomingo" prefHeight="101.0" prefWidth="103.0" />
+         </children>
+      </FlowPane>
    </children>
 </AnchorPane>

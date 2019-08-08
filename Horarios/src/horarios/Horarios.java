@@ -9,9 +9,6 @@ import com.jfoenix.controls.JFXProgressBar;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import horarios.util.FlowController;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 /**
  *
  * @author Jose Pablo Bermudez
@@ -22,7 +19,7 @@ public class Horarios extends Application {
     public void start(Stage stage) throws Exception {
         
         FlowController.getInstance().InitializeFlow(stage, null);
-        
+        FlowController.getInstance().goMain();
         
     }
     

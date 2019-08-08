@@ -5,6 +5,8 @@
  */
 package horarios.model;
 
+import java.util.ArrayList;
+
 
 
 /**
@@ -16,7 +18,8 @@ public class RolDto {
     private String NombreRol,HorarioRotativo;
     private Integer version;
     private Integer id;
-
+    private ArrayList <PuestoDto> puestos;
+    
     public RolDto(String NombreRol, String HorarioRotativo, Integer version, Integer id) {
         this.NombreRol = NombreRol;
         this.HorarioRotativo = HorarioRotativo;
@@ -62,7 +65,13 @@ public class RolDto {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    
+
+    public ArrayList<PuestoDto> getPuestos() {
+        return puestos;
+    }
+
+    public void setPuestos(ArrayList<PuestoDto> puestos) {
+        this.puestos = puestos;
+    }
     
 }

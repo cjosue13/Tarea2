@@ -8,6 +8,7 @@ package horarios.model;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,6 +21,8 @@ public class HorarioDto {
     private Integer version;
     private Integer Id;
     private RolDto rol;
+    private ArrayList <DiaDto> dias;
+
 
     public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol) {
         this.FechaInicio = FechaInicio;
@@ -78,6 +81,13 @@ public class HorarioDto {
         this.rol = rol;
     }
     
+    public ArrayList<DiaDto> getDias() {
+        return dias;
+    }
+
+    public void setDias(ArrayList<DiaDto> dias) {
+        this.dias = dias;
+    }
     
     
 }

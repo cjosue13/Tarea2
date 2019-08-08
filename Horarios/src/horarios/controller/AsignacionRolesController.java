@@ -5,24 +5,31 @@
  */
 package horarios.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import horarios.model.EmpleadoDto;
+import horarios.model.PuestoDto;
 import horarios.model.RolDto;
 import horarios.service.EmpleadoService;
+import horarios.service.PuestoService;
 import horarios.service.RolService;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -34,20 +41,12 @@ public class AsignacionRolesController extends Controller {
     @FXML
     private Label Titulo;
     @FXML
-    private TableView<EmpleadoDto> table;
-    @FXML
-    private TableColumn<EmpleadoDto, String> COL_NOMBRE_EMP;
-    @FXML
-    private TableColumn<EmpleadoDto, String> COL_APELLIDO_EMP;
-    @FXML
-    private TableColumn<EmpleadoDto, String> COL_CEDULA_EMP;
-    @FXML
-    private TableColumn<EmpleadoDto, String> COL_CORREO_EMP;
+    private TableView<PuestoDto> table;
     private JFXTextField txtCorreo;
     private EmpleadoDto empleado;
-    private EmpleadoService empService;
+    private PuestoService puesService;
     private Respuesta resp;
-    private ArrayList<EmpleadoDto> empleados;
+    private ArrayList<PuestoDto> EmpPuesto;
     private ObservableList items;
     private Mensaje ms;
     private RolService rolservice;
@@ -60,35 +59,90 @@ public class AsignacionRolesController extends Controller {
     private TableColumn<RolDto, String> COL_NOMBRE_ROL;
     @FXML
     private TableView<RolDto> table2;
-    
+    @FXML
+    private TableColumn<PuestoDto, String> COL_PUESTO_EMP;
+    @FXML
+    private TableColumn<PuestoDto, String> COL_NOMBRE_EMP;
+    @FXML
+    private TableColumn<PuestoDto, Number> COL_FOLIO_EMP;
+    @FXML
+    private JFXButton btnAsignarRol;
+    @FXML
+    private JFXTextField txtfolio;
+    @FXML
+    private JFXTextField txtNombre;
+    @FXML
+    private JFXTextField txtPuesto;
+    @FXML
+    private JFXTextField txtRol;
+    private PuestoDto puesto;
+    private RolDto Rol;
+
     @Override
     public void initialize() {
-
-        
-        empService = new EmpleadoService();
+        btnAsignarRol.setCursor(Cursor.HAND);
+        puesService = new PuestoService();
         ms = new Mensaje();
-        resp = empService.getEmpleados();
-        empleados = ((ArrayList<EmpleadoDto>) resp.getResultado("Empleados"));
-        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre()));
-        COL_APELLIDO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getApellido()));
-        COL_CEDULA_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCedula()));
-        COL_CORREO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCorreo()));
-        items = FXCollections.observableArrayList(empleados);
+        resp = puesService.getPuestos();
+        EmpPuesto = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
+        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEmpleado().getNombre() + " " + value.getValue().getEmpleado().getApellido()));
+        COL_PUESTO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
+        COL_FOLIO_EMP.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getEmpleado().getId()));
+        items = FXCollections.observableArrayList(EmpPuesto);
         table.setItems(items);
-        
-        
-        
+
         rolservice = new RolService();
         ms2 = new Mensaje();
         resp2 = rolservice.getRoles();
         roles = ((ArrayList<RolDto>) resp2.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-        
-      
+
         items2 = FXCollections.observableArrayList(roles);
         table2.setItems(items2);
-        
-    }
-    
-}
 
+    }
+
+    public boolean ValidarAsignacion() {
+        if (table.getSelectionModel() == null || table2.getSelectionModel() == null) {
+            return false;
+        } else {
+            if (table.getSelectionModel().getSelectedItem() == null || table2.getSelectionModel().getSelectedItem() == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    @FXML
+    private void AsignarRol(ActionEvent event) {
+
+        if (ValidarAsignacion()) { // si devuelve true entonces seleccionó bien
+
+        }
+    }
+
+    @FXML
+    private void DatosEmpleado(MouseEvent event) {
+        if (table.getSelectionModel() != null) {
+            if (table.getSelectionModel().getSelectedItem() != null) {
+                puesto = table.getSelectionModel().getSelectedItem();
+                txtfolio.setText(String.valueOf(puesto.getId()));
+                txtNombre.setText(puesto.getEmpleado().getNombre() + " " + puesto.getEmpleado().getApellido());
+                txtPuesto.setText(puesto.getNombrePuesto());
+            }
+        }
+    }
+
+    @FXML
+    private void DatosRol(MouseEvent event) {
+        if (table2.getSelectionModel() != null) {
+            if (table2.getSelectionModel().getSelectedItem() != null) {
+                Rol = table2.getSelectionModel().getSelectedItem();
+                txtRol.setText(Rol.getNombreRol());
+            }
+        }
+
+    }
+
+}

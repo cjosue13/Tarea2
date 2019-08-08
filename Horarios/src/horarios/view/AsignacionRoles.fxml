@@ -17,10 +17,9 @@
             <TableColumn fx:id="COL_CORREO_EMP" prefWidth="187.5" text="Correo" />
          </columns>
       </TableView>
-      <TableView layoutX="151.0" layoutY="524.0" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="table2" layoutX="151.0" layoutY="524.0" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="100.0" text="Codigo" />
-          <TableColumn prefWidth="100.0" text="Nombre" />
+          <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="200.0" text="Nombre" />
         </columns>
       </TableView>
       <Label layoutX="151.0" layoutY="476.0" text="Roles:" />

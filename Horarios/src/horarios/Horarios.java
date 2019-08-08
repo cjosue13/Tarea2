@@ -22,7 +22,6 @@ public class Horarios extends Application {
     public void start(Stage stage) throws Exception {
         
         FlowController.getInstance().InitializeFlow(stage, null);
-        FlowController.getInstance().goMain();
         
     }
     

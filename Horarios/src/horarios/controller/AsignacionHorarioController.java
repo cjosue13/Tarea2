@@ -5,12 +5,14 @@
  */
 package horarios.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import com.jfoenix.controls.JFXRippler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import static javafx.scene.input.KeyCode.L;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  * FXML Controller class
@@ -39,8 +41,23 @@ public class AsignacionHorarioController extends Controller {
     @Override
     public void initialize() {
 
+        /*JFXRippler rippler1 = new JFXRippler(new Label("Lunes"));
+       
+        rippler1.setMaskType(JFXRippler.RipplerMask.RECT);
+        rippler1.setRipplerFill(Paint.valueOf("#ff0000"));
         
+        anchorDomingo.getChildren().add(rippler1);*/
+        //anchor.getChildren().add(rippler1);
+        flowPane.getChildren().stream().forEach((node) -> {
+            ((AnchorPane) node).setOnMouseClicked((event) -> {
+                if (node.getId().equals("buttonSelec")) {
+                    node.setId("button2");
+                } else {
+                    node.setId("buttonSelec");
+                }
 
+            });
+        });
     }
-    
+
 }

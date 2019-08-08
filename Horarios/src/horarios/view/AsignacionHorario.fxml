@@ -9,13 +9,41 @@
       <Label layoutX="417.0" layoutY="22.0" text="Asignación de Horario" />
       <FlowPane fx:id="flowPane" layoutX="270.0" layoutY="93.0" prefHeight="202.0" prefWidth="412.0">
          <children>
-            <AnchorPane fx:id="anchorLunes" prefHeight="101.0" prefWidth="103.0" />
-            <AnchorPane fx:id="anchorMartes" prefHeight="101.0" prefWidth="103.0" />
-            <AnchorPane fx:id="anchorMiercoles" prefHeight="101.0" prefWidth="103.0" />
-            <AnchorPane fx:id="anchorJueves" prefHeight="101.0" prefWidth="103.0" />
-            <AnchorPane fx:id="anchorViernes" prefHeight="101.0" prefWidth="103.0" />
-            <AnchorPane fx:id="anchorSabado" prefHeight="101.0" prefWidth="103.0" />
-            <AnchorPane fx:id="anchorDomingo" prefHeight="101.0" prefWidth="103.0" />
+            <AnchorPane id="button2" fx:id="anchorLunes" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="38.0" layoutY="42.0" text="Lunes" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorMartes" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="38.0" layoutY="42.0" text="Martes" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorMiercoles" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="24.0" layoutY="42.0" text="Miercoles" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorJueves" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="38.0" layoutY="42.0" text="Jueves" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorViernes" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="35.0" layoutY="39.0" text="Viernes" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorSabado" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="38.0" layoutY="42.0" text="Sabado" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorDomingo" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="27.0" layoutY="42.0" text="Domingo" />
+               </children>
+            </AnchorPane>
          </children>
       </FlowPane>
    </children>

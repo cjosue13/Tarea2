@@ -5,6 +5,7 @@
  */
 package horarios.util;
 
+import com.jfoenix.controls.JFXProgressBar;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -20,6 +21,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import horarios.Horarios;
 import horarios.controller.Controller;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 /**
  *
@@ -101,6 +105,7 @@ public class FlowController {
     public void goView(String viewName, String accion) {
         goView(viewName, "Center", accion);
     }
+    
 
     public void goView(String viewName, String location, String accion) {
         FXMLLoader loader = getLoader(viewName);
@@ -114,6 +119,7 @@ public class FlowController {
         }
         switch (location) {
             case "Center":
+
                 ((VBox) ((BorderPane) stage.getScene().getRoot()).getCenter()).getChildren().clear();
                 ((VBox) ((BorderPane) stage.getScene().getRoot()).getCenter()).getChildren().add(loader.getRoot());
                 break;

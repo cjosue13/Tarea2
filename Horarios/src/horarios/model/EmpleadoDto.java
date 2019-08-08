@@ -11,13 +11,13 @@ package horarios.model;
  */
 public class EmpleadoDto {
     
-    String Nombre;
-    String Apellido;
-    String Cedula;
-    String Correo;
-    Integer CantidadHoras;
-    Integer version;
-    Integer Id;
+    private String Nombre;
+    private String Apellido;
+    private String Cedula;
+    private String Correo;
+    private Integer CantidadHoras;
+    private Integer version;
+    private Integer Id;
 
     public EmpleadoDto(String Nombre, String Apellido, String Cedula, String Correo, Integer CantidadHoras, Integer version, Integer Id) {
         this.Nombre = Nombre;

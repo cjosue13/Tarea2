@@ -8,6 +8,7 @@ package horarios.model;
 import java.io.Serializable;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -59,8 +61,8 @@ public class Horario implements Serializable {
     @Basic(optional = false)
     @Column(name = "HOR_VERSION")
     private Integer horVersion;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "horHorario", fetch = FetchType.LAZY)
-    private Dia dia;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horHorario", fetch = FetchType.LAZY)
+    private List<Dia> horDiaList;
     @JoinColumn(name = "HOR_ROL", referencedColumnName = "ROL_ID")
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Rol horRol;
@@ -123,13 +125,14 @@ public class Horario implements Serializable {
         this.horVersion = horVersion;
     }
 
-    public Dia getDia() {
-        return dia;
+    public List<Dia> getHorDiaList() {
+        return horDiaList;
     }
 
-    public void setDia(Dia dia) {
-        this.dia = dia;
+    public void setHorDiaList(List<Dia> horDiaList) {
+        this.horDiaList = horDiaList;
     }
+
 
     public Rol getHorRol() {
         return horRol;

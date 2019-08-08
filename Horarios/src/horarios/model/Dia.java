@@ -5,9 +5,7 @@
  */
 package horarios.model;
 
-import java.io.Serializable;/*
-import java.math.Integer;
-import java.math.Integer;*/
+import java.io.Serializable;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -18,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -66,7 +65,7 @@ public class Dia implements Serializable {
     @Column(name = "DIA_VERSION")
     private Integer diaVersion;
     @JoinColumn(name = "HOR_HORARIO", referencedColumnName = "HOR_ID")
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Horario horHorario;
 
     public Dia() {
@@ -96,7 +95,7 @@ public class Dia implements Serializable {
         this.diaId = dia.getDiaid();
         this.diaNombre = dia.getNombre();
         this.diaVersion = dia.getVersion();
-        //this.pacienteList
+        
     }
     
     

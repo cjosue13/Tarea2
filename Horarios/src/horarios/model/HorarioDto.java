@@ -7,7 +7,6 @@ package horarios.model;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 /**
@@ -16,11 +15,11 @@ import java.time.ZoneId;
  */
 public class HorarioDto {
     
-    LocalDate FechaInicio;
-    Integer HorasLibras;
-    Integer version;
-    Integer Id;
-    RolDto rol;
+    private LocalDate FechaInicio;
+    private Integer HorasLibras;
+    private Integer version;
+    private Integer Id;
+    private RolDto rol;
 
     public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol) {
         this.FechaInicio = FechaInicio;

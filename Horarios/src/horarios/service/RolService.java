@@ -56,6 +56,10 @@ public class RolService {
                     return new Respuesta(false, "No se encontró el Rol a modificar.", "guardarRol NoResultException");
                 }
                 //Aquí tiene que hacerse lo de la tabla relacional
+                /*for(rolDto){
+                    
+                }*/
+                
                 rol.actualizarRol(rolDto);
                 rol = em.merge(rol);
             } else {

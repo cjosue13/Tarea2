@@ -11,10 +11,10 @@ package horarios.model;
  */
 public class PuestoDto {
     
-    String NombrePuesto,Descripcion;
-    Integer version;
-    EmpleadoDto empleado;
-    Integer id;
+    private String NombrePuesto,Descripcion;
+    private Integer version;
+    private EmpleadoDto empleado;
+    private Integer id;
 
     public PuestoDto(String NombrePuesto, String Descripcion, Integer version, EmpleadoDto empleado, Integer id) {
         this.NombrePuesto = NombrePuesto;

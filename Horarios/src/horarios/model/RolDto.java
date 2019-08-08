@@ -5,8 +5,7 @@
  */
 package horarios.model;
 
-import java.time.Instant;
-import java.time.ZoneId;
+
 
 /**
  *
@@ -14,9 +13,9 @@ import java.time.ZoneId;
  */
 public class RolDto {
     
-    String NombreRol,HorarioRotativo;
-    Integer version;
-    Integer id;
+    private String NombreRol,HorarioRotativo;
+    private Integer version;
+    private Integer id;
 
     public RolDto(String NombreRol, String HorarioRotativo, Integer version, Integer id) {
         this.NombreRol = NombreRol;

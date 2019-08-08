@@ -7,7 +7,6 @@ package horarios.model;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import static org.eclipse.persistence.expressions.ExpressionOperator.today;
 
 /**
  *
@@ -15,12 +14,12 @@ import static org.eclipse.persistence.expressions.ExpressionOperator.today;
  */
 public class DiaDto {
     
-    String nombre;
-    LocalDateTime Hora_Inicio;
-    LocalDateTime Hora_Salida;
-    Integer Diaid;
-    Integer version;
-    HorarioDto horario;
+    private String nombre;
+    private LocalDateTime Hora_Inicio;
+    private LocalDateTime Hora_Salida;
+    private Integer Diaid;
+    private Integer version;
+    private HorarioDto horario;
 
     public DiaDto(String nombre, LocalDateTime Hora_Inicio, LocalDateTime Hora_Salida, Integer Diaid, Integer version, Integer Id, HorarioDto horario) {
         this.nombre = nombre;

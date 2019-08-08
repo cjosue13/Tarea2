@@ -6,19 +6,18 @@
 package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXProgressBar;
+import com.jfoenix.controls.JFXSpinner;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import horarios.util.FlowController;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -60,10 +59,26 @@ public class DrawerContentController  extends Controller{
         System.exit(0);
     }
 
+    private double progreso;
+    JFXProgressBar progressBar;
+    Timeline timeProgress = new Timeline(new KeyFrame(Duration.ZERO,event -> correrBar()),new KeyFrame(Duration.seconds(0.017)));
 
+    public void correrBar() {
+        progreso += 0.001;
+        progressBar.setProgress(progreso);
+        if(progreso>0.9){
+            timeProgress.stop();
+            FlowController.getInstance().goMain();
+            ((Stage)progressBar.getScene().getWindow()).close();
+        }
+    }
     @Override
     public void initialize() {
         Image img;
+        timeProgress.setCycleCount(Timeline.INDEFINITE);
+        correrBar();
+        timeProgress.play();
+        FlowController.getInstance().goMain();
         try {
             img = new Image("/horarios/resources/ima.jpg");
             image.setImage(img);

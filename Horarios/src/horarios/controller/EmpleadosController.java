@@ -9,19 +9,14 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import horarios.model.EmpleadoDto;
 import horarios.service.EmpleadoService;
-import horarios.util.DragResizeMod;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -61,6 +56,7 @@ public class EmpleadosController extends Controller {
     private JFXTextField txtCedula;
     @FXML
     private JFXTextField txtCorreo;
+    
     private EmpleadoDto empleado;
     private EmpleadoService empService;
     private Respuesta resp;
@@ -139,11 +135,8 @@ public class EmpleadosController extends Controller {
     }
 
     boolean registroCorrecto() {
-        if (!txtNombre.getText().isEmpty() && !txtApellidos.getText().isEmpty() && !txtCorreo.getText().isEmpty() && !txtCedula.getText().isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return !txtNombre.getText().isEmpty() && !txtApellidos.getText().isEmpty() && 
+                !txtCorreo.getText().isEmpty() && !txtCedula.getText().isEmpty();
     }
 
     void limpiarValores() {
@@ -152,5 +145,4 @@ public class EmpleadosController extends Controller {
         txtCorreo.clear();
         txtCedula.clear();
     }
-
 }

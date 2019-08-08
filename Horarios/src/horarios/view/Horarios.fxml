@@ -29,9 +29,9 @@
       </ScrollPane>
       <TableView fx:id="listaEmpleados" layoutX="26.0" layoutY="182.0" prefHeight="513.0" prefWidth="350.0">
         <columns>
-          <TableColumn prefWidth="116.67" text="Nombre" />
-          <TableColumn prefWidth="116.67" text="Puesto" />
-            <TableColumn prefWidth="116.67" text="Rol" />
+          <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="116.67" text="Nombre" />
+          <TableColumn fx:id="COL_NOMBRE_PUE" prefWidth="116.67" text="Puesto" />
+            <TableColumn fx:id="COL_ROL_NOMBRE" prefWidth="116.67" text="Rol" />
         </columns>
       </TableView>
       <Label layoutX="26.0" layoutY="135.0" text="Filtro:" />
@@ -42,6 +42,6 @@
       <Label fx:id="horasTrabajadas" layoutX="637.0" layoutY="516.0" prefHeight="21.0" prefWidth="189.0" />
       <Label fx:id="CantidadRoles" layoutX="637.0" layoutY="565.0" prefHeight="21.0" prefWidth="189.0" />
       <Label layoutX="404.0" layoutY="135.0" text="Días de trabajo:" />
-      <Label fx:id="Titulo" layoutX="296.0" layoutY="40.0" text="Asignaciones de roles" />
+      <Label fx:id="Titulo" layoutX="424.0" layoutY="41.0" text="Horarios" />
    </children>
 </AnchorPane>

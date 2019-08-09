@@ -8,8 +8,10 @@ package horarios.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.controls.JFXTextField;
+import java.util.function.Consumer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import static javafx.scene.input.KeyCode.L;
 import javafx.scene.layout.AnchorPane;
@@ -67,7 +69,7 @@ public class AsignacionHorarioController extends Controller {
             
             ((AnchorPane) node).setOnMouseClicked((event) -> {
                 desabilitarBotones(((AnchorPane) node));
-                habilitarBotones(((AnchorPane) node), t);
+                //habilitarBotones(((AnchorPane) node), t);
                 if (node.getId().equals("buttonSelec")) {
                     //Si se desleccionado
                     node.setId("button2");
@@ -85,7 +87,6 @@ public class AsignacionHorarioController extends Controller {
     public void desabilitarBotones(AnchorPane pane){
         
         flowPane.getChildren().stream().forEach((node) -> {
-            
             if(!pane.equals(node)){
                 ((AnchorPane)node).setDisable(true);
             }
@@ -94,24 +95,10 @@ public class AsignacionHorarioController extends Controller {
 
     @FXML
     private void agregar(ActionEvent event) {
-
         if(!txtHoraFinal.getText().isEmpty() && txtHoraInicial.getText().isEmpty()){
-            
-        }else{
-            t = true;
+            flowPane.getChildren().stream().forEach((node) -> {
+                    ((AnchorPane)node).setDisable(false);
+            });
         }
     }
-    
-    
-    public void habilitarBotones(AnchorPane pane, boolean t){
-         if(!txtHoraFinal.getText().isEmpty() && txtHoraInicial.getText().isEmpty()){
-            flowPane.getChildren().stream().forEach((node) -> {
-                if(pane.equals(node)){
-                    ((AnchorPane)node).setDisable(false);
-                }
-            });
-         }
-    }
-    
-
 }

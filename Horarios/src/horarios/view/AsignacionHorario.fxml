@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
+<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="952.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
    <children>
-      <Label fx:id="Titulo" layoutX="417.0" layoutY="22.0" text="Asignación de Horario" />
-      <FlowPane fx:id="flowPane" layoutX="105.0" layoutY="90.0" prefHeight="202.0" prefWidth="412.0">
+      <Label fx:id="Titulo" layoutX="240.0" layoutY="14.0" text="Asignación de Horario" />
+      <FlowPane fx:id="flowPane" layoutX="81.0" layoutY="117.0" prefHeight="202.0" prefWidth="412.0">
          <children>
             <AnchorPane id="button2" fx:id="anchorLunes" prefHeight="101.0" prefWidth="103.0" stylesheets="@newCascadeStyleSheet.css">
                <children>
@@ -49,11 +48,10 @@
             </AnchorPane>
          </children>
       </FlowPane>
-      <JFXTextField fx:id="txtHoraInicial" layoutX="718.0" layoutY="93.0" />
-      <JFXTextField fx:id="txtHoraFinal" layoutX="718.0" layoutY="166.0" />
-      <Label layoutX="586.0" layoutY="97.0" text="Hora Inicial:" />
-      <Label layoutX="586.0" layoutY="170.0" text="Hora Final:" />
-      <JFXButton fx:id="agregar" layoutX="813.0" layoutY="242.0" onAction="#agregar" text="Agregar" />
-      <JFXTimePicker layoutX="562.0" layoutY="356.0" />
+      <Label layoutX="562.0" layoutY="124.0" text="Hora Inicial:" />
+      <Label layoutX="562.0" layoutY="197.0" text="Hora Final:" />
+      <JFXButton fx:id="agregar" layoutX="789.0" layoutY="269.0" onAction="#agregar" text="Agregar" />
+      <JFXTimePicker fx:id="txtHoraInicial" layoutX="687.0" layoutY="120.0" />
+      <JFXTimePicker fx:id="txtHoraFinal" layoutX="687.0" layoutY="193.0" />
    </children>
 </AnchorPane>

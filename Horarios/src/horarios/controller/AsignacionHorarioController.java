@@ -8,10 +8,23 @@ package horarios.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTimePicker;
+import horarios.model.DiaDto;
+import horarios.model.EmpleadoDto;
+import horarios.model.HorarioDto;
+import horarios.service.DiaService;
+import horarios.service.EmpleadoService;
+import horarios.util.Mensaje;
+import horarios.util.Respuesta;
+import java.util.ArrayList;
 import java.util.function.Consumer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import static javafx.scene.input.KeyCode.L;
 import javafx.scene.layout.AnchorPane;
@@ -43,17 +56,25 @@ public class AsignacionHorarioController extends Controller {
     @FXML
     private AnchorPane anchorDomingo;
     @FXML
-    private JFXTextField txtHoraInicial;
+    private JFXTimePicker txtHoraInicial;
     @FXML
-    private JFXTextField txtHoraFinal;
+    private JFXTimePicker txtHoraFinal;
     @FXML
     private Label Titulo;
     @FXML
     private JFXButton agregar;
-    //ArrayList<>
+    ArrayList<DiaDto> diaList;
     boolean t = true;
+    private DiaDto dia;
+    private DiaService diaService;
+    private Respuesta resp;
+    private ArrayList<DiaDto> dias;
+    private ObservableList items;
+    private Mensaje ms;
+    private HorarioDto horario;
     @Override
     public void initialize() {
+        diaList = new ArrayList();
         
         flowPane.getChildren().stream().forEach((node) -> {
             
@@ -84,10 +105,31 @@ public class AsignacionHorarioController extends Controller {
 
     @FXML
     private void agregar(ActionEvent event) {
-        if(!txtHoraFinal.getText().isEmpty() && !txtHoraInicial.getText().isEmpty()){
+        if(!(txtHoraFinal.getValue().toString() == null) && !(txtHoraInicial.getValue().toString() == null)){
             flowPane.getChildren().stream().forEach((node) -> {
                     ((AnchorPane)node).setDisable(false);//activa los anchor una vez que haya agregado las horas
             });
+            
+            //dia = new DiaDto(, txtHoraInicial.getValue(), txtHoraFinal.getValue(), null, 1, 1, horario);
+            try{
+                resp = diaService.guardarDia(dia);
+                ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", resp.getMensaje());
+                limpiarValores();
+                dias = (ArrayList) diaService.getDias().getResultado("Dias");
+                items = FXCollections.observableArrayList(dias);
+            }catch(Exception e) {
+                ms.show(Alert.AlertType.ERROR, "Informacion de guardado", "Hubo un error al momento de guardar el empleado.");
+            }
+
+        }else{
+            ms.show(Alert.AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, " + "verifica que todos los datos esten llenos.");
         }
+            
     }
+
+    void limpiarValores() {
+        txtHoraFinal.setValue(null);
+        txtHoraInicial.setValue(null);
+    }
+
 }

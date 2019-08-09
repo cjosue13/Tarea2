@@ -68,16 +68,16 @@ public class DiaService {
         }
     }
     
-    public Respuesta getDia() {
+    public Respuesta getDias() {
         try {
-            Query qryHos = em.createNamedQuery("Dia.findAll", Dia.class);
+            Query qryDia = em.createNamedQuery("Dia.findAll", Dia.class);
             ArrayList <DiaDto> Dia = new ArrayList<>();
             
-            qryHos.getResultList().stream().forEach((hos)->{
+            qryDia.getResultList().stream().forEach((hos)->{
                 Dia.add(new DiaDto((Dia)hos));
             });
             
-            return new Respuesta(true, "Dia obtenidas", "", "Dia", Dia);
+            return new Respuesta(true, "Dia obtenidas", "", "Dias", Dia);
             
         } catch (NoResultException ex) {
             return new Respuesta(false, "No existe una Dia con el código ingresado.", "getDia NoResultException");

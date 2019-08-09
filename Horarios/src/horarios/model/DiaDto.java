@@ -21,7 +21,7 @@ public class DiaDto {
     private Integer version;
     private HorarioDto horario;
 
-    public DiaDto(String nombre, LocalDateTime Hora_Inicio, LocalDateTime Hora_Salida, Integer Diaid, Integer version, Integer Id, HorarioDto horario) {
+    public DiaDto(String nombre, LocalDateTime Hora_Inicio, LocalDateTime Hora_Salida, Integer Diaid, Integer version, HorarioDto horario) {
         this.nombre = nombre;
         this.Hora_Inicio = Hora_Inicio;
         this.Hora_Salida = Hora_Salida;

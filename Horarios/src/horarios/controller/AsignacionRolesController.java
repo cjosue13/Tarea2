@@ -156,7 +156,6 @@ public class AsignacionRolesController extends Controller {
                 rol = tableRoles.getSelectionModel().getSelectedItem();
                 txtRol.setText(rol.getNombreRol());
             }
-
         }
     }
 

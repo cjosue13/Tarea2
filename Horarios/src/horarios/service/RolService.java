@@ -6,6 +6,8 @@
  */
 package horarios.service;
 
+import horarios.model.Puesto;
+import horarios.model.PuestoDto;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,21 +51,35 @@ public class RolService {
             et = em.getTransaction();
             et.begin();
             Rol rol;
+            
             if (rolDto.getId() != null && rolDto.getId() > 0) {
                 rol = em.find(Rol.class, rolDto.getId());
                 if (rol == null) {
                     et.rollback();
                     return new Respuesta(false, "No se encontró el Rol a modificar.", "guardarRol NoResultException");
                 }
-                //Aquí tiene que hacerse lo de la tabla relacional
-                /*for(rolDto){
-                    
-                }*/
-                
+
                 rol.actualizarRol(rolDto);
+                if (rolDto.getPuestos() != null && !rolDto.getPuestos().isEmpty()) {
+                    for (PuestoDto pues : rolDto.getPuestos()) {
+                        Puesto puesto = em.find(Puesto.class, pues.getId());
+                        puesto.getRolList().add(rol);
+                        rol.getPuestoList().add(puesto);
+                    }
+                }
+                
                 rol = em.merge(rol);
             } else {
                 rol = new Rol(rolDto);
+                
+                if (rolDto.getPuestos() != null && !rolDto.getPuestos().isEmpty()) {
+                    for (PuestoDto pues : rolDto.getPuestos()) {
+                        Puesto puesto = em.find(Puesto.class, pues.getId());
+                        puesto.getRolList().add(rol);
+                        rol.getPuestoList().add(puesto);
+                    }
+                }
+                
                 em.persist(rol);
             }
             et.commit();

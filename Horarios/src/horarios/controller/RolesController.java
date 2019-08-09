@@ -134,7 +134,7 @@ public class RolesController extends Controller {
     @FXML
     private void abrirHorario(ActionEvent event) {
 
-        FlowController.getInstance().goView("AsignacionHorario");
+        FlowController.getInstance().goViewInWindowModal("AsignacionHorario",this.getStage(),false);
 
     }
 

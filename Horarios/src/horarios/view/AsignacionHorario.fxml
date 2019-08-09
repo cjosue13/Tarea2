@@ -1,11 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="horarios.controller.AsignacionHorarioController">
+<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
    <children>
-      <Label layoutX="343.0" layoutY="212.0" text="Asignación de Horario" />
+      <Label fx:id="Titulo" layoutX="417.0" layoutY="22.0" text="Asignación de Horario" />
+      <FlowPane fx:id="flowPane" layoutX="105.0" layoutY="90.0" prefHeight="202.0" prefWidth="412.0">
+         <children>
+            <AnchorPane id="button2" fx:id="anchorLunes" prefHeight="101.0" prefWidth="103.0" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="38.0" layoutY="42.0" text="Lunes" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorMartes" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="38.0" layoutY="42.0" text="Martes" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorMiercoles" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="24.0" layoutY="42.0" text="Miercoles" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorJueves" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="38.0" layoutY="42.0" text="Jueves" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorViernes" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="35.0" layoutY="39.0" text="Viernes" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorSabado" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="38.0" layoutY="42.0" text="Sabado" />
+               </children>
+            </AnchorPane>
+            <AnchorPane id="button2" fx:id="anchorDomingo" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+               <children>
+                  <Label layoutX="27.0" layoutY="42.0" text="Domingo" />
+               </children>
+            </AnchorPane>
+         </children>
+      </FlowPane>
+      <JFXTextField fx:id="txtHoraInicial" layoutX="718.0" layoutY="93.0" />
+      <JFXTextField fx:id="txtHoraFinal" layoutX="718.0" layoutY="166.0" />
+      <Label layoutX="586.0" layoutY="97.0" text="Hora Inicial:" />
+      <Label layoutX="586.0" layoutY="170.0" text="Hora Final:" />
+      <JFXButton fx:id="agregar" layoutX="813.0" layoutY="242.0" onAction="#agregar" text="Agregar" />
+      <JFXTimePicker layoutX="562.0" layoutY="356.0" />
    </children>
 </AnchorPane>

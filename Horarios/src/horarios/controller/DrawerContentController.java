@@ -24,18 +24,18 @@ import javafx.util.Duration;
  *
  * @author Jose Pablo Bermudez
  */
-public class DrawerContentController  extends Controller{
+public class DrawerContentController extends Controller {
 
     @FXML
     private ImageView image;
-    static public File filePath2;  
+    static public File filePath2;
     @FXML
     private JFXButton btnEmpleados;
     @FXML
     private JFXButton btnPuestos;
     @FXML
     private JFXButton btnRoles;
-    @FXML  
+    @FXML
     private JFXButton btnAsignacionRoles;
     @FXML
     private JFXButton btnHorarios;
@@ -59,7 +59,7 @@ public class DrawerContentController  extends Controller{
         System.exit(0);
     }
 
-    private double progreso;
+    /*private double progreso;
     JFXProgressBar progressBar;
     Timeline timeProgress = new Timeline(new KeyFrame(Duration.ZERO,event -> correrBar()),new KeyFrame(Duration.seconds(0.017)));
 
@@ -71,56 +71,57 @@ public class DrawerContentController  extends Controller{
             FlowController.getInstance().goMain();
             ((Stage)progressBar.getScene().getWindow()).close();
         }
-    }
+    }*/
     @Override
     public void initialize() {
-        Image img;
+        /*  Image img;
         timeProgress.setCycleCount(Timeline.INDEFINITE);
         correrBar();
         timeProgress.play();
-        FlowController.getInstance().goMain();
+        FlowController.getInstance().goMain();*/
+        Image img;
         try {
             img = new Image("/horarios/resources/ima.jpg");
             image.setImage(img);
         } catch (Exception e) {
         }
-     
+
         Image img7;
-        try{
+        try {
             img7 = new Image("/horarios/resources/user2.png");
             img1.setImage(img7);
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         Image img8;
-        try{
+        try {
             img8 = new Image("/horarios/resources/resume.png");
             img2.setImage(img8);
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         Image img9;
-        try{
+        try {
             img9 = new Image("/horarios/resources/portfolio.png");
             img3.setImage(img9);
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         Image img10;
-        try{
+        try {
             img10 = new Image("/horarios/resources/hiring.png");
             img4.setImage(img10);
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         Image img11;
-        try{
+        try {
             img11 = new Image("/horarios/resources/calendar.png");
             img5.setImage(img11);
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         Image img12;
-        try{
+        try {
             img12 = new Image("/horarios/resources/logout.png");
             img6.setImage(img12);
-        }catch(Exception e){
+        } catch (Exception e) {
         }
 
     }
@@ -149,5 +150,5 @@ public class DrawerContentController  extends Controller{
     private void btnHorarios(ActionEvent event) {
         FlowController.getInstance().goView("Horarios");
     }
-    
+
 }

@@ -18,6 +18,42 @@
     -fx-text-fill: WHITE;
     -jfx-rippler-fill: RED;
 }
+
+#button2{
+    -fx-background-color: gray;
+    -jfx-button-type: RAISED;/*raised and flat*/
+    -fx-text-fill: WHITE;
+    -jfx-rippler-fill: GREEN;
+    
+}
+#button2:hover {
+    -fx-background-color: GREEN;
+    -jfx-button-type: RAISED;/*raised and flat*/
+    -fx-text-fill: WHITE;
+    -jfx-rippler-fill: GREEN;
+}
+
+#buttonSelec{
+    -fx-background-color: greenyellow;
+    -jfx-button-type: RAISED;/*raised and flat*/
+    -fx-text-fill: WHITE;
+    -jfx-rippler-fill: GREEN;
+}
+#buttonSelec:hover{
+    -fx-background-color: GREEN;
+    -jfx-button-type: RAISED;/*raised and flat*/
+    -fx-text-fill: WHITE;
+    -jfx-rippler-fill: GREEN;
+}
+.button:disabled{
+    
+    -fx-background-color: #cccccc;
+    -jfx-button-type: RAISED;/*raised and flat*/
+    -fx-text-fill: WHITE;
+    -jfx-rippler-fill: GREEN;
+    
+}
+
 .text-field {
     -fx-prompt-text-fill: #808080;
     -jfx-focus-color: #09b6bc;

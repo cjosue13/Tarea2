@@ -54,9 +54,9 @@ public class HorariosController extends Controller {
     @FXML
     private TableColumn<EmpleadoDto, String> COL_NOMBRE_EMP;
     @FXML
-    private TableColumn<PuestoDto, String> COL_NOMBRE_PUE;
+    private TableColumn<?, String> COL_NOMBRE_PUE;
     @FXML
-    private TableColumn<RolDto, String> COL_ROL_NOMBRE;
+    private TableColumn<?, String> COL_ROL_NOMBRE;
     @FXML
     private Label horasTrabajadas;
     @FXML
@@ -80,7 +80,6 @@ public class HorariosController extends Controller {
         resp = empService.getEmpleados();
         empleados = ((ArrayList<EmpleadoDto>) resp.getResultado("Empleados"));
         COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre()));
-        
         items = FXCollections.observableArrayList(empleados);
         listaEmpleados.setItems(items);
         

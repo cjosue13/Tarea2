@@ -7,6 +7,7 @@ package horarios.model;
 
 import java.io.Serializable;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -79,18 +80,22 @@ public class Horario implements Serializable {
         this.horFechainicio = horFechainicio;
         this.horHoraslibres = horHoraslibres;
         this.horVersion = horVersion;
+
     }
-    
-    public Horario(HorarioDto hor){
+
+    public Horario(HorarioDto hor) {
         this.horId = hor.getId();
         actualizarHorario(hor);
     }
-    
+
     public void actualizarHorario(HorarioDto horario) {
         this.horId = horario.getId();
         this.horFechainicio = Date.from(horario.getFechaInicio().atStartOfDay(ZoneId.systemDefault()).toInstant());
         this.horHoraslibres = horario.getHorasLibras();
         this.horVersion = horario.getVersion();
+        this.horRol = new Rol(horario.getRol());
+        this.horDiaList = new ArrayList<>();
+
     }
 
     public Integer getHorId() {
@@ -133,7 +138,6 @@ public class Horario implements Serializable {
         this.horDiaList = horDiaList;
     }
 
-
     public Rol getHorRol() {
         return horRol;
     }
@@ -166,5 +170,5 @@ public class Horario implements Serializable {
     public String toString() {
         return "horarios.model.Horario[ horId=" + horId + " ]";
     }
-    
+
 }

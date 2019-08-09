@@ -59,7 +59,13 @@ public class HorarioService {
                 Horario = em.merge(Horario);
             } else {
                 Horario = new Horario(horarioDto);
-
+                ArrayList <Dia> dias = new ArrayList<>();
+                horarioDto.getDias().stream().forEach((dia)->{
+                   dia.setHorario(horarioDto);
+                   dias.add(new Dia(dia));
+                });
+                
+                Horario.setHorDiaList(dias);
                 em.persist(Horario);
             }
             et.commit();

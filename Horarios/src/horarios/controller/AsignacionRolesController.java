@@ -74,23 +74,18 @@ public class AsignacionRolesController extends Controller {
     private Respuesta respRol;
     private ArrayList<RolDto> roles;
     private ObservableList itemsRoles;
-    
 
     @Override
     public void initialize() {
-        
-        txtRol.clear();
-        txtfolio.clear();
-        txtNombre.clear();
-        txtPuesto.clear();
-        
-        
+
+        limpiarValores();
+
         btnAsignarRol.setCursor(Cursor.HAND);
         puesService = new PuestoService();
         ms = new Mensaje();
         respPues = puesService.getPuestos();
         puestos = ((ArrayList) respPues.getResultado("Puestos"));
-        System.out.println(puestos.size());
+
         COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEmpleado().getNombre() + " " + value.getValue().getEmpleado().getApellido()));
         COL_PUESTO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
         COL_FOLIO_EMP.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getEmpleado().getId()));
@@ -101,7 +96,7 @@ public class AsignacionRolesController extends Controller {
         respRol = rolservice.getRoles();
         roles = ((ArrayList) respRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-        System.out.println(roles.size());
+
         itemsRoles = FXCollections.observableArrayList(roles);
         tableRoles.setItems(itemsRoles);
 
@@ -111,11 +106,8 @@ public class AsignacionRolesController extends Controller {
         if (tablePuestos.getSelectionModel() == null || tableRoles.getSelectionModel() == null) {
             return false;
         } else {
-            if (tablePuestos.getSelectionModel().getSelectedItem() == null || tableRoles.getSelectionModel().getSelectedItem() == null) {
-                return false;
-            } else {
-                return true;
-            }
+            return !(tablePuestos.getSelectionModel().getSelectedItem() == null
+                    || tableRoles.getSelectionModel().getSelectedItem() == null);
         }
     }
 
@@ -126,12 +118,13 @@ public class AsignacionRolesController extends Controller {
             rol.getPuestos().add(puesto);
             try {
                 respPues = rolservice.guardarRol(rol);
-                ms.show(Alert.AlertType.INFORMATION,"Informacion de guardado", respPues.getMensaje());
+                ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", respPues.getMensaje());
+                limpiarValores();
+
             } catch (Exception e) {
-                ms.show(Alert.AlertType.ERROR,"Informacion de guardado","Ocurrio un error al asignar un rol al empleado");
-                
+                ms.show(Alert.AlertType.ERROR, "Informacion de guardado", "Ocurrio un error al asignar un rol al empleado");
             }
-            
+
         } else {
             ms.show(Alert.AlertType.ERROR, "Informacion de registro", "No has seleccionado alguno de los datos de la tabla.");
         }
@@ -160,4 +153,12 @@ public class AsignacionRolesController extends Controller {
 
     }
 
+    void limpiarValores() {
+        txtRol.clear();
+        txtfolio.clear();
+        txtNombre.clear();
+        txtPuesto.clear();
+        tablePuestos.setSelectionModel(null);
+        tableRoles.setSelectionModel(null);
+    }
 }

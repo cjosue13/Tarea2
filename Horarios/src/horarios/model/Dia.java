@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -64,7 +65,7 @@ public class Dia implements Serializable {
     @Column(name = "DIA_VERSION")
     private Integer diaVersion;
     @JoinColumn(name = "HOR_HORARIO", referencedColumnName = "HOR_ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
     private Horario horHorario;
 
     public Dia() {
@@ -94,10 +95,9 @@ public class Dia implements Serializable {
         this.diaId = dia.getDiaid();
         this.diaNombre = dia.getNombre();
         this.diaVersion = dia.getVersion();
+        this.horHorario = new Horario(dia.getHorario());
         
     }
-    
-    
     
     public Integer getDiaId() {
         return diaId;

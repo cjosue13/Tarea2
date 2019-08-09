@@ -105,7 +105,6 @@ public class FlowController {
     public void goView(String viewName, String accion) {
         goView(viewName, "Center", accion);
     }
-    
 
     public void goView(String viewName, String location, String accion) {
         FXMLLoader loader = getLoader(viewName);
@@ -202,4 +201,7 @@ public class FlowController {
         this.mainStage.close();
     }
 
+    public void delete(String parameter) {
+        loaders.put(parameter, null);
+    }
 }

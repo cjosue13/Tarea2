@@ -7,8 +7,11 @@ package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import horarios.model.HorarioDto;
 import horarios.model.RolDto;
+import horarios.service.HorarioService;
 import horarios.service.RolService;
+import horarios.util.AppContext;
 import horarios.util.FlowController;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
@@ -114,6 +117,15 @@ public class RolesController extends Controller {
             rol = new RolDto(nombre, rotar, 1, null);
             try {
                 resp = rolservice.guardarRol(rol);
+                //Guardo el horario en base de datos
+                HorarioDto horario = (HorarioDto) AppContext.getInstance().get("horario");
+                horario.setRol((RolDto)resp.getResultado("Rol"));
+                
+                HorarioService horService = new HorarioService();
+                horService.guardarHorario(horario);
+                AppContext.getInstance().delete("horario");
+                /////////////////////////////////////
+                
                 ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", resp.getMensaje());
                 limpiarValores();
                 roles = (ArrayList) rolservice.getRoles().getResultado("Roles");
@@ -127,7 +139,7 @@ public class RolesController extends Controller {
             }
         } else {
             ms.show(Alert.AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, "
-                    + "verifica que todos los datos esten llenos.");
+                    + "verifica que todos los datos esten llenos o que ya hayas creado un horario.");
         }
     }
 
@@ -139,15 +151,13 @@ public class RolesController extends Controller {
     }
 
     boolean registroCorrecto() {
-        if (!txtNombre.getText().isEmpty() && (!RotativoRadioButtonN.getText().isEmpty() || !RotativoRadioButtonY.getText().isEmpty()) /*&& !txtCodigo.getText().isEmpty()*/) {
-            return true;
-        } else {
-            return false;
-        }
+        return !txtNombre.getText().isEmpty() && (!RotativoRadioButtonN.getText().isEmpty() 
+        || !RotativoRadioButtonY.getText().isEmpty()) && AppContext.getInstance().get("horario")!=null;
     }
 
     void limpiarValores() {
         txtNombre.clear();
+        FlowController.getInstance().delete("AsignacionHorario");
         //txtCodigo.clear();
     }
 }

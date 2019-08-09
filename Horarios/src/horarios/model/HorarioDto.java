@@ -15,14 +15,13 @@ import java.util.ArrayList;
  * @author Jose Pablo Bermudez
  */
 public class HorarioDto {
-    
+
     private LocalDate FechaInicio;
     private Integer HorasLibras;
     private Integer version;
     private Integer Id;
     private RolDto rol;
-    private ArrayList <DiaDto> dias;
-
+    private ArrayList<DiaDto> dias;
 
     public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol) {
         this.FechaInicio = FechaInicio;
@@ -39,8 +38,10 @@ public class HorarioDto {
         this.rol = new RolDto(horario.getHorRol());
         this.version = horario.getHorVersion();
     }
-    
-    
+
+    public HorarioDto() {
+    }
+
     public LocalDate getFechaInicio() {
         return FechaInicio;
     }
@@ -80,14 +81,29 @@ public class HorarioDto {
     public void setRol(RolDto rol) {
         this.rol = rol;
     }
-    
+
     public ArrayList<DiaDto> getDias() {
-        return dias;
+        if(dias!=null){
+            return dias;
+        }
+        else{
+            dias = new ArrayList<>();
+            return dias;
+        }
     }
 
     public void setDias(ArrayList<DiaDto> dias) {
         this.dias = dias;
     }
-    
+    public void calcularHorasLibres(){
+        if(dias!=null){
+            this.HorasLibras = dias.stream().mapToInt(x->x.getCantHorasLibre()).sum();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "HorarioDto{" + "FechaInicio=" + FechaInicio + ", HorasLibras=" + HorasLibras + ", version=" + version + ", Id=" + Id + ", rol=" + rol + ", dias=" + dias + '}';
+    }
     
 }

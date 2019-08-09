@@ -28,6 +28,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -166,5 +167,14 @@ public class RolesController extends Controller {
         txtNombre.clear();
         FlowController.getInstance().delete("AsignacionHorario");
         //txtCodigo.clear();
+    }
+    @FXML
+    private void DatosRoles(MouseEvent event) {
+        if (table.getSelectionModel() != null) {
+            if (table.getSelectionModel().getSelectedItem() != null) {
+                rol = table.getSelectionModel().getSelectedItem();
+                txtNombre.setText(rol.getNombreRol());
+            }
+        }
     }
 }

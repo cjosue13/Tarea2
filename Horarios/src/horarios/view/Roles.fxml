@@ -9,9 +9,9 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.RolesController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.RolesController">
    <children>
-      <TableView fx:id="table" layoutX="150.0" layoutY="140.0" prefHeight="280.0" prefWidth="750.0">
+      <TableView fx:id="table" layoutX="150.0" layoutY="140.0" onMouseReleased="#DatosRoles" prefHeight="280.0" prefWidth="750.0">
          <columns>
             <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="749.0" text="Nombre" />
          </columns>

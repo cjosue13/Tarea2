@@ -158,7 +158,7 @@ public class AsignacionRolesController extends Controller {
         txtfolio.clear();
         txtNombre.clear();
         txtPuesto.clear();
-        tablePuestos.setSelectionModel(null);
-        tableRoles.setSelectionModel(null);
+        /*tablePuestos.setSelectionModel(null);
+        tableRoles.setSelectionModel(null);*/
     }
 }

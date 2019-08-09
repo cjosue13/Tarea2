@@ -98,8 +98,8 @@ public class AsignacionRolesController extends Controller {
         respRol = rolservice.getRoles();
         roles = ((ArrayList) respRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-       /* //Remueve los roles que ya tengan un 
-        Stream <RolDto>streamRol  = roles.stream();
+        //Remueve los roles que ya tengan un 
+        /*Stream <RolDto>streamRol  = roles.stream();
         streamRol.filter(x->x.getPuestos()!=null).forEach((t) -> {
             roles.remove(t);
         });*/
@@ -157,7 +157,6 @@ public class AsignacionRolesController extends Controller {
                 txtRol.setText(rol.getNombreRol());
             }
         }
-
     }
 
     void limpiarValores() {

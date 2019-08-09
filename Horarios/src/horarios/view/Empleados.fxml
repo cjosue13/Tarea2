@@ -23,13 +23,9 @@
       <JFXButton fx:id="btnEliminar" layoutX="450.0" layoutY="688.0" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
       <JFXButton fx:id="btnAgregar1" layoutX="815.0" layoutY="688.0" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar" />
       <Separator layoutX="140.0" layoutY="440.0" prefHeight="4.0" prefWidth="750.0" />
-      <JFXTextField fx:id="txtNombre" layoutX="297.0" layoutY="475.0" />
-      <JFXTextField fx:id="txtApellidos" layoutX="297.0" layoutY="555.0" />
-      <Label layoutX="150.0" layoutY="490.0" text="Nombre:" />
-      <Label layoutX="150.0" layoutY="570.0" text="Apellidos:" />
-      <Label layoutX="570.0" layoutY="490.0" text="Cédula:" />
-      <Label layoutX="569.0" layoutY="570.0" stylesheets="@newCascadeStyleSheet.css" text="Correo:" />
-      <JFXTextField fx:id="txtCedula" layoutX="709.0" layoutY="475.0" />
-      <JFXTextField fx:id="txtCorreo" layoutX="709.0" layoutY="555.0" />
+      <JFXTextField fx:id="txtNombre" layoutX="150.0" layoutY="475.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre" />
+      <JFXTextField fx:id="txtApellidos" layoutX="150.0" layoutY="555.0" prefHeight="29.0" prefWidth="250.0" promptText="Apellidos" />
+      <JFXTextField fx:id="txtCedula" layoutX="628.0" layoutY="475.0" prefHeight="29.0" prefWidth="250.0" promptText="Cedula" />
+      <JFXTextField fx:id="txtCorreo" layoutX="628.0" layoutY="555.0" prefHeight="29.0" prefWidth="250.0" promptText="Correo" />
    </children>
 </AnchorPane>

@@ -120,7 +120,7 @@ public class RolesController extends Controller {
             try {
                 resp = rolservice.guardarRol(rol);
                 //Guardo el horario en base de datos
-                HorarioDto horario = (HorarioDto) AppContext.getInstance().get("horario");
+                HorarioDto horario = (HorarioDto) AppContext.getInstance().get("horario");/*para poder usar los datos desde otra ventana*/
                 horario.setRol((RolDto)resp.getResultado("Rol"));
                 
                 HorarioService horService = new HorarioService();

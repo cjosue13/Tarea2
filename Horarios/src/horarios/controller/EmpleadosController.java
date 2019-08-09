@@ -22,6 +22,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -145,4 +146,18 @@ public class EmpleadosController extends Controller {
         txtCorreo.clear();
         txtCedula.clear();
     }
+    
+    @FXML
+    private void DatosEmpleado(MouseEvent event) {
+        if (table.getSelectionModel() != null) {
+            if (table.getSelectionModel().getSelectedItem() != null) {
+                empleado = table.getSelectionModel().getSelectedItem();
+                txtApellidos.setText(empleado.getApellido());
+                txtNombre.setText(empleado.getNombre());
+                txtCorreo.setText(empleado.getCorreo());
+                txtCedula.setText(empleado.getCedula());
+            }
+        }
+    }
+    
 }

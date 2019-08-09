@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="804.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
+<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="804.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
    <children>
       <Label fx:id="Titulo" layoutX="166.0" layoutY="14.0" text="Asignación de Horario" />
       <FlowPane fx:id="flowPane" layoutX="96.0" layoutY="150.0" prefHeight="202.0" prefWidth="412.0">
          <children>
-            <AnchorPane id="button2" fx:id="anchorLunes" focusTraversable="true" prefHeight="101.0" prefWidth="103.0" stylesheets="@newCascadeStyleSheet.css">
+            <AnchorPane id="button2" fx:id="anchorLunes" focusTraversable="true" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                <children>
                   <Label layoutX="38.0" layoutY="42.0" text="Lunes" />
                </children>

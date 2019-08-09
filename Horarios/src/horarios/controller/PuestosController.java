@@ -183,4 +183,16 @@ public class PuestosController extends Controller {
             }
         }
     }
+    
+    @FXML
+    private void DatosPuestos(MouseEvent event) {
+        if (tablePuesto.getSelectionModel() != null) {
+            if (tablePuesto.getSelectionModel().getSelectedItem() != null) {
+                puesto = tablePuesto.getSelectionModel().getSelectedItem();
+                txtNombre.setText(puesto.getNombrePuesto());
+                txtDescripcion.setText(puesto.getDescripcion());
+            }
+        }
+    }
+    
 }

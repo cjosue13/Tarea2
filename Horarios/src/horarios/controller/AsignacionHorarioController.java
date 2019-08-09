@@ -59,17 +59,20 @@ public class AsignacionHorarioController extends Controller {
         rippler1.setRipplerFill(Paint.valueOf("#ff0000"));
         
         anchorDomingo.getChildren().add(rippler1);*/
+
         //anchor.getChildren().add(rippler1);
+
         
         flowPane.getChildren().stream().forEach((node) -> {
-            Label label = (Label)((AnchorPane) node).getChildren().get(0);
-            label.getText();
+            
             ((AnchorPane) node).setOnMouseClicked((event) -> {
                 desabilitarBotones(((AnchorPane) node));
                 habilitarBotones(((AnchorPane) node), t);
                 if (node.getId().equals("buttonSelec")) {
+                    //Si se desleccionado
                     node.setId("button2");
                 } else {
+                    //Si se ha seleccionado
                     node.setId("buttonSelec");
                     //node.setDisable(true);
                 }

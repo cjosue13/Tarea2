@@ -54,22 +54,11 @@ public class AsignacionHorarioController extends Controller {
     boolean t = true;
     @Override
     public void initialize() {
-
-        /*JFXRippler rippler1 = new JFXRippler(new Label("Lunes"));
-       
-        rippler1.setMaskType(JFXRippler.RipplerMask.RECT);
-        rippler1.setRipplerFill(Paint.valueOf("#ff0000"));
-        
-        anchorDomingo.getChildren().add(rippler1);*/
-
-        //anchor.getChildren().add(rippler1);
-
         
         flowPane.getChildren().stream().forEach((node) -> {
             
             ((AnchorPane) node).setOnMouseClicked((event) -> {
                 desabilitarBotones(((AnchorPane) node));
-                //habilitarBotones(((AnchorPane) node), t);
                 if (node.getId().equals("buttonSelec")) {
                     //Si se desleccionado
                     node.setId("button2");
@@ -87,7 +76,7 @@ public class AsignacionHorarioController extends Controller {
     public void desabilitarBotones(AnchorPane pane){
         
         flowPane.getChildren().stream().forEach((node) -> {
-            if(!pane.equals(node)){
+            if(!pane.equals(node)){//deshabilita todos los anchor que no esten seleccionados
                 ((AnchorPane)node).setDisable(true);
             }
         });
@@ -97,7 +86,7 @@ public class AsignacionHorarioController extends Controller {
     private void agregar(ActionEvent event) {
         if(!txtHoraFinal.getText().isEmpty() && txtHoraInicial.getText().isEmpty()){
             flowPane.getChildren().stream().forEach((node) -> {
-                    ((AnchorPane)node).setDisable(false);
+                    ((AnchorPane)node).setDisable(false);//activa los anchor una vez que haya agregado las horas
             });
         }
     }

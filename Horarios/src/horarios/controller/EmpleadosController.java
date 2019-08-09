@@ -92,7 +92,7 @@ public class EmpleadosController extends Controller {
 
                 empService.eliminarEmpleado(table.getSelectionModel().getSelectedItem().getId());
                 ms.show(Alert.AlertType.INFORMATION, "Información", "Datos Eliminados correctamente");
-
+                
                 Respuesta respuesta = empService.getEmpleados();
                 items.clear();
                 empleados = (ArrayList<EmpleadoDto>) respuesta.getResultado("Empleados");

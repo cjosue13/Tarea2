@@ -5,6 +5,8 @@
  */
 package horarios.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jose Pablo Bermudez
@@ -15,7 +17,7 @@ public class PuestoDto {
     private Integer version;
     private EmpleadoDto empleado;
     private Integer id;
-
+    private ArrayList <RolDto> roles; 
     public PuestoDto(String NombrePuesto, String Descripcion, Integer version, EmpleadoDto empleado, Integer id) {
         this.NombrePuesto = NombrePuesto;
         this.Descripcion = Descripcion;
@@ -70,6 +72,21 @@ public class PuestoDto {
     public void setId(Integer id) {
         this.id = id;
     }
-  
+
+    public ArrayList<RolDto> getRoles() {
+        if(roles!= null){
+            return roles;
+        }
+        else{
+            roles = new ArrayList<>();
+            return roles;
+        }
+        
+    }
+
+    public void setRoles(ArrayList<RolDto> roles) {
+        this.roles = roles;
+    }
+    
     
 }

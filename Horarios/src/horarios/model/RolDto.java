@@ -7,19 +7,17 @@ package horarios.model;
 
 import java.util.ArrayList;
 
-
-
 /**
  *
  * @author Jose Pablo Bermudez
  */
 public class RolDto {
-    
-    private String NombreRol,HorarioRotativo;
+
+    private String NombreRol, HorarioRotativo;
     private Integer version;
     private Integer id;
-    private ArrayList <PuestoDto> puestos;
-    
+    private ArrayList<PuestoDto> puestos;
+
     public RolDto(String NombreRol, String HorarioRotativo, Integer version, Integer id) {
         this.NombreRol = NombreRol;
         this.HorarioRotativo = HorarioRotativo;
@@ -33,7 +31,7 @@ public class RolDto {
         this.id = rol.getRolId();
         this.version = rol.getRolVersion();
     }
-    
+
     public String getNombreRol() {
         return NombreRol;
     }
@@ -67,11 +65,17 @@ public class RolDto {
     }
 
     public ArrayList<PuestoDto> getPuestos() {
-        return puestos;
+        if (puestos != null) {
+            return puestos;
+        } else {
+            puestos = new ArrayList<>();
+            return puestos;
+        }
+
     }
 
     public void setPuestos(ArrayList<PuestoDto> puestos) {
         this.puestos = puestos;
     }
-    
+
 }

@@ -84,7 +84,7 @@ public class AsignacionHorarioController extends Controller {
 
     @FXML
     private void agregar(ActionEvent event) {
-        if(!txtHoraFinal.getText().isEmpty() && txtHoraInicial.getText().isEmpty()){
+        if(!txtHoraFinal.getText().isEmpty() && !txtHoraInicial.getText().isEmpty()){
             flowPane.getChildren().stream().forEach((node) -> {
                     ((AnchorPane)node).setDisable(false);//activa los anchor una vez que haya agregado las horas
             });

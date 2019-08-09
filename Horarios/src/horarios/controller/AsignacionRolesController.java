@@ -18,6 +18,8 @@ import horarios.util.Respuesta;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -78,7 +80,7 @@ public class AsignacionRolesController extends Controller {
     @Override
     public void initialize() {
 
-        limpiarValores();
+       // limpiarValores();
 
         btnAsignarRol.setCursor(Cursor.HAND);
         puesService = new PuestoService();
@@ -96,7 +98,12 @@ public class AsignacionRolesController extends Controller {
         respRol = rolservice.getRoles();
         roles = ((ArrayList) respRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-
+       /* //Remueve los roles que ya tengan un 
+        Stream <RolDto>streamRol  = roles.stream();
+        streamRol.filter(x->x.getPuestos()!=null).forEach((t) -> {
+            roles.remove(t);
+        });*/
+        
         itemsRoles = FXCollections.observableArrayList(roles);
         tableRoles.setItems(itemsRoles);
 
@@ -158,7 +165,12 @@ public class AsignacionRolesController extends Controller {
         txtfolio.clear();
         txtNombre.clear();
         txtPuesto.clear();
+<<<<<<< HEAD
         /*tablePuestos.setSelectionModel(null);
         tableRoles.setSelectionModel(null);*/
+=======
+        tablePuestos.getSelectionModel().clearSelection();
+        tableRoles.getSelectionModel().clearSelection();
+>>>>>>> 700dd4ade69c50aff2fc0cc73060a80fae87369d
     }
 }

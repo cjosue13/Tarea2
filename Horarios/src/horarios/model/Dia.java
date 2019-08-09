@@ -65,7 +65,7 @@ public class Dia implements Serializable {
     @Column(name = "DIA_VERSION")
     private Integer diaVersion;
     @JoinColumn(name = "HOR_HORARIO", referencedColumnName = "HOR_ID")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Horario horHorario;
 
     public Dia() {

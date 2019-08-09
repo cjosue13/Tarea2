@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import horarios.model.HorarioDto;
 import horarios.model.RolDto;
+import horarios.service.DiaService;
 import horarios.service.HorarioService;
 import horarios.service.RolService;
 import horarios.util.AppContext;
@@ -122,8 +123,14 @@ public class RolesController extends Controller {
                 horario.setRol((RolDto)resp.getResultado("Rol"));
                 
                 HorarioService horService = new HorarioService();
-                horService.guardarHorario(horario);
                 AppContext.getInstance().delete("horario");
+                Respuesta respHorario = horService.guardarHorario(horario);
+                
+                DiaService diaService = new DiaService();
+                horario.getDias().stream().forEach(dia->{ 
+                    dia.setHorario((HorarioDto)respHorario.getResultado("Horario"));
+                    diaService.guardarDia(dia);
+                });
                 /////////////////////////////////////
                 
                 ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", resp.getMensaje());

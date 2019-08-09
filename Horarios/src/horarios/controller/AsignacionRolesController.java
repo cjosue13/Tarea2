@@ -144,12 +144,12 @@ public class AsignacionRolesController extends Controller {
 
     @FXML
     private void DatosRol(MouseEvent event) {
-        if (tableRoles.getSelectionModel() != null) {
+     /*   if (tableRoles.getSelectionModel() != null) {
             if (tableRoles.getSelectionModel().getSelectedItem() != null) {
                 rol = tableRoles.getSelectionModel().getSelectedItem();
                 txtRol.setText(rol.getNombreRol());
             }
-        }
+        }*/
 
     }
 

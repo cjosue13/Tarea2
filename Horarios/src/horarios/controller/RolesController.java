@@ -210,12 +210,6 @@ public class RolesController extends Controller {
     private void DatosRoles(MouseEvent event) {
         if (table.getSelectionModel() != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
-                resp = rolservice.getHorario(table.getSelectionModel().getSelectedItem());
-                //System.out.println(resp.getMensaje());
-                horarioDto = (HorarioDto)resp.getResultado("Horario");
-                horarioDto.getDias().stream().forEach(dia->{
-                    System.out.println("Dia "+ dia.getNombre());
-                });
                 rol = table.getSelectionModel().getSelectedItem();
                 txtNombre.setText(rol.getNombreRol());
                 if(rol.getHorarioRotativo().equals("Y")){

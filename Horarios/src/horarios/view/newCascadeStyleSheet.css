@@ -128,14 +128,14 @@
     
 }
 #button2:hover {
-    -fx-background-color: GREEN;
+    -fx-background-color: #009cad;
     -jfx-button-type: RAISED;/*raised and flat*/
     -fx-text-fill: WHITE;
     -jfx-rippler-fill: GREEN;
 }
 
 #buttonSelec{
-    -fx-background-color: greenyellow;
+    -fx-background-color: #009cad;
     -jfx-button-type: RAISED;/*raised and flat*/
     -fx-text-fill: WHITE;
     -jfx-rippler-fill: GREEN;

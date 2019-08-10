@@ -6,8 +6,6 @@
 package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXProgressBar;
-import com.jfoenix.controls.JFXSpinner;
 import horarios.util.AppContext;
 import java.io.File;
 import javafx.event.ActionEvent;
@@ -15,12 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import horarios.util.FlowController;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -62,19 +54,7 @@ public class DrawerContentController extends Controller {
         System.exit(0);
     }
 
-    private double progreso;
-    private JFXProgressBar progressBar = new JFXProgressBar();
-    private Timeline timeProgress = new Timeline(new KeyFrame(Duration.ZERO,event -> correrBar()),new KeyFrame(Duration.seconds(0.017)));
-
-    public void correrBar() {
-        progreso += 0.001;
-        progressBar.setProgress(progreso);
-        if(progreso>0.9){
-            timeProgress.stop();
-            FlowController.getInstance().goView("Empleados");
-            progressBar.getScene().getWindow().hide();
-        }
-    }
+   
     @Override
     public void initialize() { 
         Image img;

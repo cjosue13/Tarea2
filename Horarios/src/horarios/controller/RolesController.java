@@ -205,16 +205,11 @@ public class RolesController extends Controller {
     void limpiarValores() {
         txtNombre.clear();
         FlowController.getInstance().delete("AsignacionHorario");
-        //txtCodigo.clear();
     }
     @FXML
     private void DatosRoles(MouseEvent event) {
         if (table.getSelectionModel() != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
-                resp = rolservice.getHorario(table.getSelectionModel().getSelectedItem());
-                System.out.println(resp.getMensaje());
-                horarioDto = (HorarioDto)resp.getResultado("Horario");
-                //System.out.println("Horario "+ horarioDto.getId());
                 rol = table.getSelectionModel().getSelectedItem();
                 txtNombre.setText(rol.getNombreRol());
                 if(rol.getHorarioRotativo().equals("Y")){

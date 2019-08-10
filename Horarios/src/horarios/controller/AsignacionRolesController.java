@@ -7,26 +7,19 @@ package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import horarios.model.EmpleadoDto;
 import horarios.model.PuestoDto;
 import horarios.model.RolDto;
-import horarios.service.EmpleadoService;
 import horarios.service.PuestoService;
 import horarios.service.RolService;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -80,8 +73,7 @@ public class AsignacionRolesController extends Controller {
     @Override
     public void initialize() {
 
-       // limpiarValores();
-
+        // limpiarValores();
         btnAsignarRol.setCursor(Cursor.HAND);
         puesService = new PuestoService();
         ms = new Mensaje();
@@ -98,11 +90,6 @@ public class AsignacionRolesController extends Controller {
         respRol = rolservice.getRoles();
         roles = ((ArrayList) respRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-        //Remueve los roles que ya tengan un 
-        /*Stream <RolDto>streamRol  = roles.stream();
-        streamRol.filter(x->x.getPuestos()!=null).forEach((t) -> {
-            roles.remove(t);
-        });*/
         
         itemsRoles = FXCollections.observableArrayList(roles);
         tableRoles.setItems(itemsRoles);
@@ -152,10 +139,13 @@ public class AsignacionRolesController extends Controller {
     @FXML
     private void DatosRol(MouseEvent event) {
         if (tableRoles.getSelectionModel() != null) {
-            if (tableRoles.getSelectionModel().getSelectedItem() != null) {
-                rol = tableRoles.getSelectionModel().getSelectedItem();
-                txtRol.setText(rol.getNombreRol());
+            if (tableRoles.getSelectionModel() != null) {
+                if (tableRoles.getSelectionModel().getSelectedItem() != null) {
+                    rol = tableRoles.getSelectionModel().getSelectedItem();
+                    txtRol.setText(rol.getNombreRol());
+                }
             }
+
         }
     }
 

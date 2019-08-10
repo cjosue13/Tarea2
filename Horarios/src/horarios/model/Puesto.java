@@ -153,10 +153,7 @@ public class Puesto implements Serializable {
             return false;
         }
         Puesto other = (Puesto) object;
-        if ((this.pueCodigo == null && other.pueCodigo != null) || (this.pueCodigo != null && !this.pueCodigo.equals(other.pueCodigo))) {
-            return false;
-        }
-        return true;
+        return !((this.pueCodigo == null && other.pueCodigo != null) || (this.pueCodigo != null && !this.pueCodigo.equals(other.pueCodigo)));
     }
 
     @Override

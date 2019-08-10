@@ -6,6 +6,8 @@
  */
 package horarios.service;
 
+import horarios.model.Dia;
+import horarios.model.DiaDto;
 import horarios.model.Horario;
 import horarios.model.HorarioDto;
 import horarios.model.Puesto;
@@ -55,10 +57,15 @@ public class RolService {
             Rol rol = new Rol(ID);
             qryHorario.setParameter("horRol", rol);
             
+            ArrayList <DiaDto> dias = new ArrayList<>();
+            for(Dia dia :((Horario) qryHorario.getSingleResult()).getHorDiaList()){
+                dias.add(new DiaDto(dia));
+            }
+            
+            HorarioDto horario = new HorarioDto((Horario) qryHorario.getSingleResult());
+            horario.setDias(dias);
 
-            HorarioDto Horario = new HorarioDto((Horario) qryHorario.getSingleResult());
-
-            return new Respuesta(true, "Encontrado exitosamente", "", "Horario", Horario);
+            return new Respuesta(true, "Encontrado exitosamente", "", "Horario", horario);
         } catch (NoResultException ex) {
             return new Respuesta(false, "No existe un Horario con el código ingresado.", "getHorario NoResultException");
         } catch (NonUniqueResultException ex) {

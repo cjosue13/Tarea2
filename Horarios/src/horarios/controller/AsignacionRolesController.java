@@ -80,8 +80,7 @@ public class AsignacionRolesController extends Controller {
     @Override
     public void initialize() {
 
-       // limpiarValores();
-
+        // limpiarValores();
         btnAsignarRol.setCursor(Cursor.HAND);
         puesService = new PuestoService();
         ms = new Mensaje();
@@ -98,11 +97,6 @@ public class AsignacionRolesController extends Controller {
         respRol = rolservice.getRoles();
         roles = ((ArrayList) respRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-        //Remueve los roles que ya tengan un 
-        /*Stream <RolDto>streamRol  = roles.stream();
-        streamRol.filter(x->x.getPuestos()!=null).forEach((t) -> {
-            roles.remove(t);
-        });*/
         
         itemsRoles = FXCollections.observableArrayList(roles);
         tableRoles.setItems(itemsRoles);
@@ -151,14 +145,15 @@ public class AsignacionRolesController extends Controller {
 
     @FXML
     private void DatosRol(MouseEvent event) {
-      if (tableRoles.getSelectionModel() != null) {
         if (tableRoles.getSelectionModel() != null) {
-            if (tableRoles.getSelectionModel().getSelectedItem() != null) {
-                rol = tableRoles.getSelectionModel().getSelectedItem();
-                txtRol.setText(rol.getNombreRol());
+            if (tableRoles.getSelectionModel() != null) {
+                if (tableRoles.getSelectionModel().getSelectedItem() != null) {
+                    rol = tableRoles.getSelectionModel().getSelectedItem();
+                    txtRol.setText(rol.getNombreRol());
+                }
             }
-        }
 
+        }
     }
 
     void limpiarValores() {

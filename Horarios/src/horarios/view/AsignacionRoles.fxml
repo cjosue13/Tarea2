@@ -19,8 +19,7 @@
       </TableView>
       <TableView fx:id="tableRoles" layoutX="77.0" layoutY="485.0" onMouseReleased="#DatosRol" prefHeight="239.0" prefWidth="371.0">
         <columns>
-          <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="200.0" text="Roles" />
-          <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="371.0" text="Nombre" />
+          <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="370.0" text="Roles" />
         </columns>
       </TableView>
       <Label layoutX="77.0" layoutY="444.0" text="Roles:" />

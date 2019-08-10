@@ -75,11 +75,11 @@ public class Empleado implements Serializable {
         this.empFolio = empFolio;
     }
 
-    public Empleado(EmpleadoDto emp){
+    public Empleado(EmpleadoDto emp) {
         this.empFolio = emp.getId();
         actualizarEmpleado(emp);
     }
-    
+
     public Empleado(Integer empFolio, String empNombre, String empApellidos, String empCedula, String empCorreo, Integer empCantidadhorastrabajadas, Integer empVersion) {
         this.empFolio = empFolio;
         this.empNombre = empNombre;
@@ -89,6 +89,7 @@ public class Empleado implements Serializable {
         this.empCantidadhorastrabajadas = empCantidadhorastrabajadas;
         this.empVersion = empVersion;
     }
+
     public void actualizarEmpleado(EmpleadoDto empleado) {
         this.empFolio = empleado.getId();
         this.empNombre = empleado.getNombre();
@@ -184,5 +185,5 @@ public class Empleado implements Serializable {
     public String toString() {
         return "horarios.model.Empleado[ empFolio=" + empFolio + " ]";
     }
-    
+
 }

@@ -21,20 +21,35 @@ public class HorarioDto {
     private Integer version;
     private Integer Id;
     private RolDto rol;
+    private Integer ordenRotacion;
     private ArrayList<DiaDto> dias;
 
-    public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol) {
+    public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol, Integer ordenRotacion) {
         this.FechaInicio = FechaInicio;
         this.HorasLibras = HorasLibras;
         this.version = version;
         this.Id = Id;
         this.rol = rol;
+        this.ordenRotacion = ordenRotacion;
     }
+
+    public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol, Integer ordenRotacion, ArrayList<DiaDto> dias) {
+        this.FechaInicio = FechaInicio;
+        this.HorasLibras = HorasLibras;
+        this.version = version;
+        this.Id = Id;
+        this.rol = rol;
+        this.ordenRotacion = ordenRotacion;
+        this.dias = dias;
+    }
+
+    
 
     public HorarioDto(Horario horario) {
         this.FechaInicio = Instant.ofEpochMilli(horario.getHorFechainicio().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-        this.HorasLibras = horario.getHorHoraslibres();
+        this.HorasLibras = horario.getHorHoraslibressemanales();
         this.Id = horario.getHorId();
+        this.ordenRotacion = horario.getHorOrdenrotacion();
         this.rol = new RolDto(horario.getHorRol());
         this.version = horario.getHorVersion();
     }
@@ -83,10 +98,9 @@ public class HorarioDto {
     }
 
     public ArrayList<DiaDto> getDias() {
-        if(dias!=null){
+        if (dias != null) {
             return dias;
-        }
-        else{
+        } else {
             dias = new ArrayList<>();
             return dias;
         }
@@ -95,15 +109,24 @@ public class HorarioDto {
     public void setDias(ArrayList<DiaDto> dias) {
         this.dias = dias;
     }
-    public void calcularHorasLibres(){
-        if(dias!=null){
-            this.HorasLibras = dias.stream().mapToInt(x->x.getCantHorasLibre()).sum();
+
+    public void calcularHorasLibres() {
+        if (dias != null) {
+            this.HorasLibras = dias.stream().mapToInt(x -> x.getCantHorasLibre()).sum();
         }
     }
 
+    public Integer getOrdenRotacion() {
+        return ordenRotacion;
+    }
+
+    public void setOrdenRotacion(Integer ordenRotacion) {
+        this.ordenRotacion = ordenRotacion;
+    }
+    
     @Override
     public String toString() {
         return "HorarioDto{" + "FechaInicio=" + FechaInicio + ", HorasLibras=" + HorasLibras + ", version=" + version + ", Id=" + Id + ", rol=" + rol + ", dias=" + dias + '}';
     }
-    
+
 }

@@ -94,7 +94,7 @@ public class EmpleadosController extends Controller {
             empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, 1, id);
             try {
                 resp = empService.guardarEmpleado(empleado);
-                ms.show(AlertType.INFORMATION, "Informacion de Edición", resp.getMensaje());
+                ms.showModal(AlertType.INFORMATION, "Informacion de Edición",this.getStage() ,resp.getMensaje());
                 limpiarValores();
                 empleados = (ArrayList) empService.getEmpleados().getResultado("Empleados");
                 table.getItems().clear();
@@ -102,10 +102,10 @@ public class EmpleadosController extends Controller {
                 table.setItems(items);
 
             } catch (Exception e) {
-                ms.show(AlertType.ERROR, "Informacion de guardado", "Hubo un error al momento de guardar el empleado.");
+                ms.showModal(AlertType.ERROR, "Informacion de guardado",this.getStage() ,"Hubo un error al momento de guardar el empleado.");
             }
         } else {
-            ms.show(AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, "
+            ms.showModal(AlertType.ERROR, "Informacion acerca del guardado", this.getStage() ,"Existen datos erroneos en el registro, "
                     + "verifica que todos los datos esten llenos.");
         }
     }
@@ -116,7 +116,7 @@ public class EmpleadosController extends Controller {
             if (table.getSelectionModel().getSelectedItem() != null) {
 
                 empService.eliminarEmpleado(table.getSelectionModel().getSelectedItem().getId());
-                ms.show(Alert.AlertType.INFORMATION, "Información", "Datos Eliminados correctamente");
+                ms.showModal(Alert.AlertType.INFORMATION, "Información",this.getStage() ,"Datos Eliminados correctamente");
                 
                 Respuesta respuesta = empService.getEmpleados();
                 items.clear();
@@ -124,7 +124,7 @@ public class EmpleadosController extends Controller {
                 items = FXCollections.observableArrayList(empleados);
                 table.setItems(items);
             } else {
-                ms.show(Alert.AlertType.WARNING, "Información", "Debes seleccionar el elemento a eliminar");
+                ms.showModal(Alert.AlertType.WARNING, "Información",this.getStage() ,"Debes seleccionar el elemento a eliminar");
             }
         }
     }
@@ -141,7 +141,7 @@ public class EmpleadosController extends Controller {
             empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, 1, null);
             try {
                 resp = empService.guardarEmpleado(empleado);
-                ms.show(AlertType.INFORMATION, "Informacion de guardado", resp.getMensaje());
+                ms.showModal(AlertType.INFORMATION, "Informacion de guardado",this.getStage() ,resp.getMensaje());
                 limpiarValores();
                 empleados = (ArrayList) empService.getEmpleados().getResultado("Empleados");
                 table.getItems().clear();
@@ -149,7 +149,7 @@ public class EmpleadosController extends Controller {
                 table.setItems(items);
 
             } catch (Exception e) {
-                ms.show(AlertType.ERROR, "Informacion de guardado", "Hubo un error al momento de guardar el empleado.");
+                ms.showModal(AlertType.ERROR, "Informacion de guardado", this.getStage() ,"Hubo un error al momento de guardar el empleado.");
             }
 
         } else {

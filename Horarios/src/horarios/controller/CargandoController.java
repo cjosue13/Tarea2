@@ -8,12 +8,9 @@ package horarios.controller;
 import com.jfoenix.controls.JFXProgressBar;
 import horarios.util.AppContext;
 import horarios.util.FlowController;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 

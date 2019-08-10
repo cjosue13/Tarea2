@@ -19,6 +19,7 @@ import horarios.model.Horario;
 import horarios.model.HorarioDto;
 import horarios.util.EntityManagerHelper;
 import horarios.util.Respuesta;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 public class HorarioService {
 
@@ -108,6 +109,33 @@ public class HorarioService {
         } catch (Exception ex) {
             Logger.getLogger(HorarioService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar el Horario.", ex);
             return new Respuesta(false, "Ocurrio un error al consultar el Horario.", "getHorario " + ex.getMessage());
+        }
+    }
+    public Respuesta eliminarHorario(Integer id) {
+        try {
+            et = em.getTransaction();
+            et.begin();
+            Horario Horario;
+            if (id != null && id > 0) {
+                Horario = em.find(Horario.class, id);
+                if (Horario == null) {
+                    et.rollback();
+                    return new Respuesta(false, "No se encontró el Horario a eliminar.", "EliminarHorario NoResultException");
+                }
+                em.remove(Horario);
+            } else {
+                et.rollback();
+                return new Respuesta(false, "Debe cargar el Horario a eliminar.", "EliminarHorario NoResultException");
+            }
+            et.commit();
+            return new Respuesta(true, "Eliminado exitosamente", "");
+        } catch (Exception ex) {
+            et.rollback();
+            if (ex.getCause() != null && ex.getCause().getCause().getClass() == SQLIntegrityConstraintViolationException.class) {
+                return new Respuesta(false, "No se puede eliminar el Horario porque tiene relaciones con otros registros.", "EliminarHorario " + ex.getMessage());
+            }
+            Logger.getLogger(HorarioService.class.getName()).log(Level.SEVERE, "Ocurrio un error al guardar el Horario.", ex);
+            return new Respuesta(false, "Ocurrio un error al eliminar el Horario.", "EliminarHorario " + ex.getMessage());
         }
     }
 }

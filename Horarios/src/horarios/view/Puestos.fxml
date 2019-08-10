@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.PuestosController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.PuestosController">
    <children>
       <TableView fx:id="tablePuesto" layoutX="77.0" layoutY="140.0" onMouseReleased="#DatosPuestos" prefHeight="280.0" prefWidth="870.0">
          <columns>
@@ -31,6 +31,6 @@
         </columns>
       </TableView>
       <JFXTextField fx:id="txtEmpleado" disable="true" layoutX="387.0" layoutY="618.0" prefHeight="29.0" prefWidth="250.0" promptText="Empleado" />
-      <JFXTextArea fx:id="txtDescripcion" labelFloat="true" layoutX="77.0" layoutY="557.0" prefHeight="90.0" prefWidth="250.0" promptText="Descripcion" />
+      <JFXTextArea fx:id="txtDescripcion" labelFloat="true" layoutX="77.0" layoutY="557.0" prefHeight="90.0" prefWidth="250.0" promptText="Descripcion" styleClass="text-field" />
    </children>
 </AnchorPane>

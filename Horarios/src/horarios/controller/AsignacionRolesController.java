@@ -111,15 +111,15 @@ public class AsignacionRolesController extends Controller {
             rol.getPuestos().add(puesto);
             try {
                 respPues = rolservice.guardarRol(rol);
-                ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", respPues.getMensaje());
+                ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado",this.getStage() ,respPues.getMensaje());
                 limpiarValores();
 
             } catch (Exception e) {
-                ms.show(Alert.AlertType.ERROR, "Informacion de guardado", "Ocurrio un error al asignar un rol al empleado");
+                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Ocurrio un error al asignar un rol al empleado");
             }
 
         } else {
-            ms.show(Alert.AlertType.ERROR, "Informacion de registro", "No has seleccionado alguno de los datos de la tabla.");
+            ms.showModal(Alert.AlertType.ERROR, "Informacion de registro",this.getStage() ,"No has seleccionado alguno de los datos de la tabla.");
         }
     }
 

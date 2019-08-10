@@ -89,4 +89,9 @@ public class RolDto {
         this.puestos = puestos;
     }
 
+    @Override
+    public String toString() {
+        return "RolDto{" + "NombreRol=" + NombreRol + ", HorarioRotativo=" + HorarioRotativo + ", version=" + version + ", id=" + id + ", puestos=" + puestos + ", horario=" + horario + '}';
+    }
+
 }

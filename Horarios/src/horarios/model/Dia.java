@@ -61,6 +61,9 @@ public class Dia implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date diaHorasalida;
     @Basic(optional = false)
+    @Column(name = "DIA_CANTIDADHORASLIBRES")
+    private Integer diaCantidadhoraslibres;
+    @Basic(optional = false)
     @Column(name = "DIA_VERSION")
     private Integer diaVersion;
     @JoinColumn(name = "HOR_HORARIO", referencedColumnName = "HOR_ID")
@@ -70,34 +73,37 @@ public class Dia implements Serializable {
     public Dia() {
     }
 
-    
-    public Dia(DiaDto dia){
+    public Dia(DiaDto dia) {
         this.diaId = dia.getDiaid();
         this.actualizarDia(dia);
     }
-    
+
     public Dia(Integer diaId) {
         this.diaId = diaId;
     }
 
-    public Dia(Integer diaId, String diaNombre, Date diaHorainicio, Date diaHorasalida, Integer diaVersion) {
+    public Dia(Integer diaId, String diaNombre, Date diaHorainicio, Date diaHorasalida, Integer diaCantidadhoraslibres, Integer diaVersion, Horario horHorario) {
         this.diaId = diaId;
         this.diaNombre = diaNombre;
         this.diaHorainicio = diaHorainicio;
         this.diaHorasalida = diaHorasalida;
+        this.diaCantidadhoraslibres = diaCantidadhoraslibres;
         this.diaVersion = diaVersion;
+        this.horHorario = horHorario;
     }
 
-    public void actualizarDia(DiaDto dia){
+
+    public void actualizarDia(DiaDto dia) {
         this.diaHorainicio = Date.from(dia.getHora_Inicio().atZone(ZoneId.systemDefault()).toInstant());
         this.diaHorasalida = Date.from(dia.getHora_Salida().atZone(ZoneId.systemDefault()).toInstant());
         this.diaId = dia.getDiaid();
         this.diaNombre = dia.getNombre();
+        this.diaCantidadhoraslibres = dia.getCantHorasLibre();
         this.diaVersion = dia.getVersion();
         this.horHorario = new Horario(dia.getHorario());
-        
+
     }
-    
+
     public Integer getDiaId() {
         return diaId;
     }
@@ -167,5 +173,13 @@ public class Dia implements Serializable {
     public String toString() {
         return "horarios.model.Dia[ diaId=" + diaId + " ]";
     }
-    
+
+    public Integer getDiaCantidadhoraslibres() {
+        return diaCantidadhoraslibres;
+    }
+
+    public void setDiaCantidadhoraslibres(Integer diaCantidadhoraslibres) {
+        this.diaCantidadhoraslibres = diaCantidadhoraslibres;
+    }
+
 }

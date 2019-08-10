@@ -50,22 +50,23 @@ public class RolService {
         }
     }
     
-     public Respuesta getHorario(RolDto ID) {
+     public Respuesta getHorario(RolDto rol) {
         try {
             Query qryHorario = em.createNamedQuery("Horario.findByRol", Horario.class);
           
-            Rol rol = new Rol(ID);
-            qryHorario.setParameter("horRol", rol);
+            qryHorario.setParameter("horRol", new Rol(rol));
+            Horario horario = em.find(Horario.class, ((Horario) qryHorario.getSingleResult()).getHorId());
             
             ArrayList <DiaDto> dias = new ArrayList<>();
-            for(Dia dia :((Horario) qryHorario.getSingleResult()).getHorDiaList()){
+            
+            for(Dia dia :(horario).getHorDiaList()){
                 dias.add(new DiaDto(dia));
             }
             
-            HorarioDto horario = new HorarioDto((Horario) qryHorario.getSingleResult());
-            horario.setDias(dias);
+            HorarioDto horarioDto = new HorarioDto(horario);
+            horarioDto.setDias(dias);
 
-            return new Respuesta(true, "Encontrado exitosamente", "", "Horario", horario);
+            return new Respuesta(true, "Encontrado exitosamente", "", "Horario", horarioDto);
         } catch (NoResultException ex) {
             return new Respuesta(false, "No existe un Horario con el código ingresado.", "getHorario NoResultException");
         } catch (NonUniqueResultException ex) {

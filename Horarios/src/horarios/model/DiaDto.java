@@ -31,6 +31,8 @@ public class DiaDto {
         this.horario = horario;
         this.cantHorasLibre = cantHorasLibre;
     }
+    
+    
 
     
     
@@ -39,9 +41,9 @@ public class DiaDto {
         this.Hora_Inicio = LocalDateTime.ofInstant(dia.getDiaHorainicio().toInstant(),ZoneId.systemDefault());
         this.Hora_Salida = LocalDateTime.ofInstant(dia.getDiaHorasalida().toInstant(),ZoneId.systemDefault());
         this.Diaid = dia.getDiaId();
+        this.cantHorasLibre = dia.getDiaCantidadhoraslibres();
         this.version = dia.getDiaVersion();
         this.horario = new HorarioDto(dia.getHorHorario());
-        //Introducir horas libres
     }
     
     public String getNombre() {
@@ -98,4 +100,10 @@ public class DiaDto {
     public void setHorario(HorarioDto horario) {
         this.horario = horario;
     }
+
+    @Override
+    public String toString() {
+        return "DiaDto{" + "nombre=" + nombre + ", Hora_Inicio=" + Hora_Inicio + ", Hora_Salida=" + Hora_Salida + ", Diaid=" + Diaid + ", version=" + version + ", horario=" + horario + ", cantHorasLibre=" + cantHorasLibre + '}';
+    }
+    
 }

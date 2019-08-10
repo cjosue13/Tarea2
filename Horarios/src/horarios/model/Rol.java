@@ -39,6 +39,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Rol.findByRolVersion", query = "SELECT r FROM Rol r WHERE r.rolVersion = :rolVersion")})
 public class Rol implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "ROL_VERSION")
+    private Integer rolVersion;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -53,9 +57,6 @@ public class Rol implements Serializable {
     @Basic(optional = false)
     @Column(name = "ROL_HORARIOROTATIVO")
     private String rolHorariorotativo;
-    @Basic(optional = false)
-    @Column(name = "ROL_VERSION")
-    private Integer rolVersion;
     @ManyToMany(mappedBy = "rolList", fetch = FetchType.LAZY)
     private List<Puesto> puestoList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "horRol", fetch = FetchType.LAZY)
@@ -84,6 +85,9 @@ public class Rol implements Serializable {
         this.rolNombre = rol.getNombreRol();
         this.rolHorariorotativo = rol.getHorarioRotativo();
         this.rolVersion = rol.getVersion();
+        if(rol.getHorario()!= null && rol.getHorario().getId()!= null){
+            this.horario = new Horario();
+        }
     }
 
     public Integer getRolId() {
@@ -156,5 +160,6 @@ public class Rol implements Serializable {
     public String toString() {
         return "horarios.model.Rol[ rolId=" + rolId + " ]";
     }
+
     
 }

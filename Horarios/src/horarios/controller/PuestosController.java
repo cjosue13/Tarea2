@@ -118,7 +118,7 @@ public class PuestosController extends Controller {
             try {
                 resp = puesService.guardarPuesto(puesto);
 
-                ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", resp.getMensaje());
+                ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado",this.getStage() ,resp.getMensaje());
                 limpiarValores();
                 puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
                 tablePuesto.getItems().clear();
@@ -126,13 +126,13 @@ public class PuestosController extends Controller {
                 tablePuesto.setItems(itemsPues);
 
             } catch (Exception e) {
-                ms.show(Alert.AlertType.ERROR, "Informacion de guardado", "Hubo un error al momento de guardar el hospital. "
+                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el hospital. "
                         + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
 
             }
 
         } else {
-            ms.show(Alert.AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, "
+            ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage() ,"Existen datos erroneos en el registro, "
                     + "verifica que todos los datos esten llenos.");
         }
         
@@ -143,7 +143,7 @@ public class PuestosController extends Controller {
         if (tablePuesto.getSelectionModel() != null) {
             if (tablePuesto.getSelectionModel().getSelectedItem() != null) {
                 puesService.EliminarPuesto(tablePuesto.getSelectionModel().getSelectedItem().getId());
-                ms.show(Alert.AlertType.INFORMATION, "Información", "Datos Eliminados correctamente");
+                ms.showModal(Alert.AlertType.INFORMATION, "Información",this.getStage(),"Datos Eliminados correctamente");
                 resp= puesService.getPuestos();
                 itemsPues.clear();
                 puestos = (ArrayList<PuestoDto>) resp.getResultado("Puestos");
@@ -151,7 +151,7 @@ public class PuestosController extends Controller {
                 tablePuesto.setItems(itemsPues);
             }
         } else {
-            ms.show(Alert.AlertType.WARNING, "Información", "Debes seleccionar el elemento a eliminar");
+            ms.showModal(Alert.AlertType.WARNING, "Información",this.getStage() ,"Debes seleccionar el elemento a eliminar");
         }
     }
 
@@ -165,7 +165,7 @@ public class PuestosController extends Controller {
             try {
                 resp = puesService.guardarPuesto(puesto);
 
-                ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", resp.getMensaje());
+                ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado",this.getStage() ,resp.getMensaje());
                 limpiarValores();
                 puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
                 tablePuesto.getItems().clear();
@@ -173,13 +173,13 @@ public class PuestosController extends Controller {
                 tablePuesto.setItems(itemsPues);
 
             } catch (Exception e) {
-                ms.show(Alert.AlertType.ERROR, "Informacion de guardado", "Hubo un error al momento de guardar el hospital. "
+                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el hospital. "
                         + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
 
             }
 
         } else {
-            ms.show(Alert.AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, "
+            ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage() ,"Existen datos erroneos en el registro, "
                     + "verifica que todos los datos esten llenos.");
         }
 

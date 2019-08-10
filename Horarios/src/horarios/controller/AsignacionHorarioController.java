@@ -13,15 +13,19 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import horarios.model.DiaDto;
 import horarios.model.HorarioDto;
+import horarios.model.RolDto;
+import horarios.service.RolService;
 import horarios.util.AppContext;
 import horarios.util.Mensaje;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -64,24 +68,51 @@ public class AsignacionHorarioController extends Controller {
     private JFXTextField txtCantidadHoras;
     @FXML
     private Button btnCancelar;
-    private DiaDto dia;
-    private Mensaje ms;
-    private HorarioDto horario;
-    private AnchorPane anchorAux;
     @FXML
     private JFXButton Ayuda;
     @FXML
     private StackPane stackpane;
+    private DiaDto dia;
+    private Mensaje ms;
+    private HorarioDto horario;
+    private AnchorPane anchorAux;
+    private RolService rolService;
 
     @Override
     public void initialize() {
-        horario = new HorarioDto();
+        inicio();
+    }
+
+    public void inicio() {
+        typeKeys();
         ms = new Mensaje();
+        
+        if (AppContext.getInstance().get("Rol") != null) {//Si se ha seleccionado un rol para editar 
+            //Busco el horario a traves del rol seleccionado
+            rolService = new RolService();
+            horario = (HorarioDto) rolService.getHorario((RolDto) AppContext.getInstance().get("Rol")).getResultado("Horario");
+            horario.getDias().stream().forEach(diaSem -> {
+                //System.out.println(diaSem.getNombre());
+                flowPane.getChildren().stream().forEach(anchor -> {
+                    //Verifico que los textos del AnchorPane sean iguales a la lista de dias para activarlos
+                    if (((Label) ((AnchorPane) anchor).getChildren().get(0)).getText().equals(diaSem.getNombre())) {
+                        anchor.setId("buttonSelec");
+                    }
+                });
+            });
+            dateFechaIni.setValue(horario.getFechaInicio());
+            //Revisar mas adelante 
+            AppContext.getInstance().set("horario", horario);
+
+        } else {
+            horario = new HorarioDto();
+        }
+
         flowPane.getChildren().stream().forEach((node) -> {
             //Agrega evento de mouse a cada anchorpane
             ((AnchorPane) node).setOnMouseClicked((event) -> {
                 anchorAux = (AnchorPane) node;
-                //Si se deseleccionado
+                //Si se ha deseleccionado
                 if (node.getId().equals("buttonSelec")) {
                     node.setId("button2");
                     ocultarAtributosDia();
@@ -93,7 +124,6 @@ public class AsignacionHorarioController extends Controller {
                 }
             });
         });
-
     }
 
     public void desabilitarBotones(AnchorPane pane) {
@@ -140,7 +170,6 @@ public class AsignacionHorarioController extends Controller {
     @FXML
     private void atras(ActionEvent event) {
         getStage().hide();
-        
     }
 
     @FXML
@@ -161,7 +190,7 @@ public class AsignacionHorarioController extends Controller {
                 ((AnchorPane) node).setDisable(false);//activa los anchor una vez que haya agregado las horas
             });
         } else {
-            ms.show(Alert.AlertType.ERROR, "Informacion sobre agregar", "Existen datos erroneos en el registro, " + "verifica que todos los datos se hayan llenado correctamente.");
+            ms.showModal(Alert.AlertType.ERROR, "Informacion sobre agregar",this.getStage() ,"Existen datos erroneos en el registro, " + "verifica que todos los datos se hayan llenado correctamente.");
         }
     }
 
@@ -171,11 +200,12 @@ public class AsignacionHorarioController extends Controller {
             horario.setFechaInicio(dateFechaIni.getValue());
             horario.setVersion(1);
             horario.calcularHorasLibres();
+            horario.setOrdenRotacion(0);
             AppContext.getInstance().set("horario", horario);
             //Cierra la ventana
             getStage().hide();
         } else {
-            ms.show(Alert.AlertType.ERROR, "Informacion", "Los datos no han sido llenado correctamente."
+            ms.showModal(Alert.AlertType.ERROR, "Informacion",this.getStage() ,"Los datos no han sido llenado correctamente."
                     + " Verifica que hayas seleccionado un dia de la semana o que se haya elegido una fecha de inicio");
         }
     }
@@ -194,7 +224,7 @@ public class AsignacionHorarioController extends Controller {
 
     @FXML
     private void ayudar(ActionEvent event) {
-        
+
         JFXDialogLayout content = new JFXDialogLayout();
         content.setHeading(new Text("Instrucciones de Uso"));
         content.setBody(new Text("Para poder guardar un rol correctamente es necesario\n"
@@ -204,11 +234,33 @@ public class AsignacionHorarioController extends Controller {
                 + "\n2)Selecionar el día que se requiera para el rol "
                 + "\n3)Selecionar las horas de trabajo para cada día "
                 + "\n4)Presionar el boton de guardar"));
-        JFXDialog dialog = new JFXDialog(stackpane,content,JFXDialog.DialogTransition.CENTER);
-        JFXButton button = new JFXButton("okay");
-        button.setOnAction((ActionEvent event1) -> {dialog.close();});
+        JFXDialog dialog = new JFXDialog(stackpane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton button = new JFXButton("Ok");
+        button.setOnAction((ActionEvent event1) -> {
+            dialog.close();
+        });
         content.setActions(button);
         dialog.show();
-        
     }
+    
+    public void typeKeys(){
+        txtCantidadHoras.setOnKeyReleased(aceptaNumeros);
+        dateFechaIni.setOnKeyReleased(noEscribir);
+        txtHoraFinal.setOnKeyReleased(noEscribir);
+   
+    } 
+    private EventHandler<KeyEvent> aceptaCaracteres = (KeyEvent event) -> {
+        if (Character.isDigit(event.getCharacter().charAt(0))) {
+            event.consume();
+        }
+    };
+
+    private EventHandler<KeyEvent> aceptaNumeros = (KeyEvent event) -> {
+        if (!Character.isDigit(event.getCharacter().charAt(0))) {
+            event.consume();
+        }
+    };
+    private EventHandler<KeyEvent> noEscribir = (KeyEvent event) -> {
+            event.consume();
+    };
 }

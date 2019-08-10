@@ -40,10 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h")
     , @NamedQuery(name = "Horario.findByHorId", query = "SELECT h FROM Horario h WHERE h.horId = :horId")
     , @NamedQuery(name = "Horario.findByHorFechainicio", query = "SELECT h FROM Horario h WHERE h.horFechainicio = :horFechainicio")
-    , @NamedQuery(name = "Horario.findByHorHoraslibres", query = "SELECT h FROM Horario h WHERE h.horHoraslibres = :horHoraslibres")
+    , @NamedQuery(name = "Horario.findByHorHoraslibres", query = "SELECT h FROM Horario h WHERE h.horHoraslibressemanales = :horHoraslibressemanales")
     , @NamedQuery(name = "Horario.findByHorVersion", query = "SELECT h FROM Horario h WHERE h.horVersion = :horVersion")
     , @NamedQuery(name = "Horario.findByRol", query = "SELECT h FROM Horario h  WHERE h.horRol = :horRol")
-    })
+})
 public class Horario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,11 +59,14 @@ public class Horario implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date horFechainicio;
     @Basic(optional = false)
-    @Column(name = "HOR_HORASLIBRES")
-    private Integer horHoraslibres;
-    @Basic(optional = false)
     @Column(name = "HOR_VERSION")
     private Integer horVersion;
+    @Basic(optional = false)
+    @Column(name = "HOR_HORASLIBRESSEMANALES")
+    private Integer horHoraslibressemanales;
+    @Basic(optional = false)
+    @Column(name = "HOR_ORDENROTACION")
+    private Integer horOrdenrotacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horHorario", fetch = FetchType.LAZY)
     private List<Dia> horDiaList;
     @JoinColumn(name = "HOR_ROL", referencedColumnName = "ROL_ID")
@@ -73,16 +76,13 @@ public class Horario implements Serializable {
     public Horario() {
     }
 
-    public Horario(Integer horId) {
-        this.horId = horId;
-    }
-
-    public Horario(Integer horId, Date horFechainicio, Integer horHoraslibres, Integer horVersion) {
+    public Horario(Integer horId, Date horFechainicio, Integer horVersion, Integer horHoraslibressemanales, Integer horOrdenrotacion, Rol horRol) {
         this.horId = horId;
         this.horFechainicio = horFechainicio;
-        this.horHoraslibres = horHoraslibres;
         this.horVersion = horVersion;
-
+        this.horHoraslibressemanales = horHoraslibressemanales;
+        this.horOrdenrotacion = horOrdenrotacion;
+        this.horRol = horRol;
     }
 
     public Horario(HorarioDto hor) {
@@ -93,8 +93,9 @@ public class Horario implements Serializable {
     public void actualizarHorario(HorarioDto horario) {
         this.horId = horario.getId();
         this.horFechainicio = Date.from(horario.getFechaInicio().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        this.horHoraslibres = horario.getHorasLibras();
+        this.horHoraslibressemanales = horario.getHorasLibras();
         this.horVersion = horario.getVersion();
+        this.horOrdenrotacion = horario.getOrdenRotacion();
         this.horRol = new Rol(horario.getRol());
         this.horDiaList = new ArrayList<>();
 
@@ -114,14 +115,6 @@ public class Horario implements Serializable {
 
     public void setHorFechainicio(Date horFechainicio) {
         this.horFechainicio = horFechainicio;
-    }
-
-    public Integer getHorHoraslibres() {
-        return horHoraslibres;
-    }
-
-    public void setHorHoraslibres(Integer horHoraslibres) {
-        this.horHoraslibres = horHoraslibres;
     }
 
     public Integer getHorVersion() {
@@ -163,6 +156,22 @@ public class Horario implements Serializable {
         }
         Horario other = (Horario) object;
         return !((this.horId == null && other.horId != null) || (this.horId != null && !this.horId.equals(other.horId)));
+    }
+
+    public Integer getHorHoraslibressemanales() {
+        return horHoraslibressemanales;
+    }
+
+    public void setHorHoraslibressemanales(Integer horHoraslibressemanales) {
+        this.horHoraslibressemanales = horHoraslibressemanales;
+    }
+
+    public Integer getHorOrdenrotacion() {
+        return horOrdenrotacion;
+    }
+
+    public void setHorOrdenrotacion(Integer horOrdenrotacion) {
+        this.horOrdenrotacion = horOrdenrotacion;
     }
 
     @Override

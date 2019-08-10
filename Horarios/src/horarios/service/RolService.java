@@ -6,6 +6,8 @@
  */
 package horarios.service;
 
+import horarios.model.Horario;
+import horarios.model.HorarioDto;
 import horarios.model.Puesto;
 import horarios.model.PuestoDto;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class RolService {
             qryRol.setParameter("rolId", ID);
 
             RolDto Rol = new RolDto((Rol) qryRol.getSingleResult());
-
+            
             return new Respuesta(true, "Encontrado exitosamente", "", "RolID", Rol);
         } catch (NoResultException ex) {
             return new Respuesta(false, "No existe un Rol con el código ingresado.", "getRol NoResultException");
@@ -45,7 +47,29 @@ public class RolService {
             return new Respuesta(false, "Ocurrio un error al consultar el Rol.", "getRol " + ex.getMessage());
         }
     }
+    
+     public Respuesta getHorario(RolDto ID) {
+        try {
+            Query qryHorario = em.createNamedQuery("Horario.findByRol", Horario.class);
+          
+            Rol rol = new Rol(ID);
+            qryHorario.setParameter("horRol", rol);
+            
 
+            HorarioDto Horario = new HorarioDto((Horario) qryHorario.getSingleResult());
+
+            return new Respuesta(true, "Encontrado exitosamente", "", "Horario", Horario);
+        } catch (NoResultException ex) {
+            return new Respuesta(false, "No existe un Horario con el código ingresado.", "getHorario NoResultException");
+        } catch (NonUniqueResultException ex) {
+            Logger.getLogger(HorarioService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar el Horario.", ex);
+            return new Respuesta(false, "Ocurrio un error al consultar el Horario.", "getHorario NonUniqueResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(HorarioService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar el Horario.", ex);
+            return new Respuesta(false, "Ocurrio un error al consultar el Horario.", "getHorario " + ex.getMessage());
+        }
+    }
+    
     public Respuesta guardarRol(RolDto rolDto) {
         try {
             et = em.getTransaction();

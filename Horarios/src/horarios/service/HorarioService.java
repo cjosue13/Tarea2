@@ -43,7 +43,7 @@ public class HorarioService {
             return new Respuesta(false, "Ocurrio un error al consultar el Horario.", "getHorario " + ex.getMessage());
         }
     }
-
+    
     public Respuesta guardarHorario(HorarioDto horarioDto) {
         try {
             et = em.getTransaction();

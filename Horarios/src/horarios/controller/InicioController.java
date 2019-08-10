@@ -8,6 +8,7 @@ package horarios.controller;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+import horarios.util.AppContext;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -35,11 +37,15 @@ public class InicioController extends Controller {
     private JFXHamburger hamburger;
     @FXML
     private Label Titulo;
-    @FXML
     private ImageView imgfondo;
+    @FXML
+    private BorderPane borderPane;
+    private BorderPane B;
 
     @Override
     public void initialize() {
+       
+        AppContext.getInstance().set("Border", borderPane);
         
         Image img13;
         try {

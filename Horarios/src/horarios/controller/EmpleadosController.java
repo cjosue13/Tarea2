@@ -83,7 +83,31 @@ public class EmpleadosController extends Controller {
 
     @FXML
     private void editar(ActionEvent event) {
+        
+        if (registroCorrecto()) {
+            Integer id = empleado.getId();
+            String nombre = txtNombre.getText();
+            String apellido = txtApellidos.getText();
+            String correo = txtCorreo.getText();
+            String cedula = txtCedula.getText();
 
+            empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, 1, id);
+            try {
+                resp = empService.guardarEmpleado(empleado);
+                ms.show(AlertType.INFORMATION, "Informacion de Edición", resp.getMensaje());
+                limpiarValores();
+                empleados = (ArrayList) empService.getEmpleados().getResultado("Empleados");
+                table.getItems().clear();
+                items = FXCollections.observableArrayList(empleados);
+                table.setItems(items);
+
+            } catch (Exception e) {
+                ms.show(AlertType.ERROR, "Informacion de guardado", "Hubo un error al momento de guardar el empleado.");
+            }
+        } else {
+            ms.show(AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, "
+                    + "verifica que todos los datos esten llenos.");
+        }
     }
 
     @FXML

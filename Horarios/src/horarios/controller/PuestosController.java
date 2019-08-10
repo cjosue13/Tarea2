@@ -110,6 +110,32 @@ public class PuestosController extends Controller {
 
     @FXML
     private void editar(ActionEvent event) {
+        if (registroCorrecto()) {
+            String nombre = txtNombre.getText();
+            String descripcion = txtDescripcion.getText();
+            Integer id = puesto.getId();
+            puesto = new PuestoDto(nombre, descripcion, 1, empleado, id);
+            try {
+                resp = puesService.guardarPuesto(puesto);
+
+                ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", resp.getMensaje());
+                limpiarValores();
+                puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
+                tablePuesto.getItems().clear();
+                itemsPues = FXCollections.observableArrayList(puestos);
+                tablePuesto.setItems(itemsPues);
+
+            } catch (Exception e) {
+                ms.show(Alert.AlertType.ERROR, "Informacion de guardado", "Hubo un error al momento de guardar el hospital. "
+                        + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
+
+            }
+
+        } else {
+            ms.show(Alert.AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, "
+                    + "verifica que todos los datos esten llenos.");
+        }
+        
     }
 
     @FXML

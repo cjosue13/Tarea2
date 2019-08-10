@@ -17,12 +17,16 @@ public class RolDto {
     private Integer version;
     private Integer id;
     private ArrayList<PuestoDto> puestos;
+    private HorarioDto horario;
 
-    public RolDto(String NombreRol, String HorarioRotativo, Integer version, Integer id) {
+    
+
+    public RolDto(String NombreRol, String HorarioRotativo, Integer version, Integer id, HorarioDto horario) {
         this.NombreRol = NombreRol;
         this.HorarioRotativo = HorarioRotativo;
         this.version = version;
         this.id = id;
+        this.horario = horario;
     }
 
     public RolDto(Rol rol) {
@@ -30,6 +34,7 @@ public class RolDto {
         this.NombreRol = rol.getRolNombre();
         this.id = rol.getRolId();
         this.version = rol.getRolVersion();
+        //this.horario = new HorarioDto(rol.getHorario());
     }
 
     public String getNombreRol() {
@@ -56,6 +61,14 @@ public class RolDto {
         this.version = version;
     }
 
+    public HorarioDto getHorario() {
+        return horario;
+    }
+
+    public void setHorario(HorarioDto horario) {
+        this.horario = horario;
+    }
+    
     public Integer getId() {
         return id;
     }

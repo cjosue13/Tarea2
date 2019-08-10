@@ -41,7 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Horario.findByHorId", query = "SELECT h FROM Horario h WHERE h.horId = :horId")
     , @NamedQuery(name = "Horario.findByHorFechainicio", query = "SELECT h FROM Horario h WHERE h.horFechainicio = :horFechainicio")
     , @NamedQuery(name = "Horario.findByHorHoraslibres", query = "SELECT h FROM Horario h WHERE h.horHoraslibres = :horHoraslibres")
-    , @NamedQuery(name = "Horario.findByHorVersion", query = "SELECT h FROM Horario h WHERE h.horVersion = :horVersion")})
+    , @NamedQuery(name = "Horario.findByHorVersion", query = "SELECT h FROM Horario h WHERE h.horVersion = :horVersion")
+    , @NamedQuery(name = "Horario.findByRol", query = "SELECT h FROM Horario h  WHERE h.horRol = :horRol")
+    })
 public class Horario implements Serializable {
 
     private static final long serialVersionUID = 1L;

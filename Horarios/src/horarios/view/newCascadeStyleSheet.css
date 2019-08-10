@@ -11,7 +11,12 @@
     -jfx-rippler-fill: RED;
     
 }
-
+.text-field{
+    -fx-prompt-text-fill: #808080;
+    -jfx-focus-color: #09b6bc;
+    -jfx-unfocus-color: #4DBea8;
+    -jfx-label-float: true;
+}
 .button:hover {
     -fx-background-color: #0d8aee;
     -jfx-button-type: RAISED;/*raised and flat*/

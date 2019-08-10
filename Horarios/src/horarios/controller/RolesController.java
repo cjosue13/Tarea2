@@ -61,11 +61,13 @@ public class RolesController extends Controller {
     private ObservableList items;
     private Mensaje ms;
     private RolDto rol;
+    private HorarioDto horarioDto;
     @FXML
     private ToggleGroup rotativo;
 
     @Override
     public void initialize() {
+        horarioDto = new HorarioDto();
         rolservice = new RolService();
         ms = new Mensaje();
         resp = rolservice.getRoles();
@@ -79,7 +81,45 @@ public class RolesController extends Controller {
 
     @FXML
     private void editar(ActionEvent event) {
+        String rotar = null;
+        if (RotativoRadioButtonN.isSelected()) {
+            rotar = "N";
+        } else if (RotativoRadioButtonY.isSelected()) {
+                rotar = "Y";
+        }
+        if (registroCorrecto()) {
+            String nombre = txtNombre.getText();
+            Integer id = rol.getId();
+            rol = new RolDto(nombre, rotar, 1, id, horarioDto);
+            try {
+                resp = rolservice.guardarRol(rol);
+                //Guardo el horario en base de datos
+                HorarioDto horario = (HorarioDto) AppContext.getInstance().get("horario");/*para poder usar los datos desde otra ventana*/
+                horario.setRol((RolDto)resp.getResultado("Rol"));
 
+                HorarioService horService = new HorarioService();
+                AppContext.getInstance().delete("horario");
+                Respuesta respHorario = horService.guardarHorario(horario);
+                
+                DiaService diaService = new DiaService();
+                horario.getDias().stream().forEach(dia->{ 
+                    dia.setHorario((HorarioDto)respHorario.getResultado("Horario"));
+                    diaService.guardarDia(dia);
+                });
+                ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", resp.getMensaje());
+                limpiarValores();
+                roles = (ArrayList) rolservice.getRoles().getResultado("Roles");
+                table.getItems().clear();
+                items = FXCollections.observableArrayList(roles);
+                table.setItems(items);
+            }catch(Exception e) {
+                //Preguntar a Carranza
+                ms.show(Alert.AlertType.ERROR, "Informacion de guardado", "Hubo un error al momento de guardar el hospital.");
+            }
+        }else{
+            ms.show(Alert.AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, "
+                    + "verifica que todos los datos esten llenos o que ya hayas creado un horario.");
+        }
     }
 
     @FXML
@@ -116,11 +156,11 @@ public class RolesController extends Controller {
         if (registroCorrecto()) {
             String nombre = txtNombre.getText();
 
-            rol = new RolDto(nombre, rotar, 1, null);
+            rol = new RolDto(nombre, rotar, 1, null,null);
             try {
                 resp = rolservice.guardarRol(rol);
                 //Guardo el horario en base de datos
-                HorarioDto horario = (HorarioDto) AppContext.getInstance().get("horario");
+                HorarioDto horario = (HorarioDto) AppContext.getInstance().get("horario");/*para poder usar los datos desde otra ventana*/
                 horario.setRol((RolDto)resp.getResultado("Rol"));
                 
                 HorarioService horService = new HorarioService();
@@ -132,7 +172,6 @@ public class RolesController extends Controller {
                     dia.setHorario((HorarioDto)respHorario.getResultado("Horario"));
                     diaService.guardarDia(dia);
                 });
-                /////////////////////////////////////
                 
                 ms.show(Alert.AlertType.INFORMATION, "Informacion de guardado", resp.getMensaje());
                 limpiarValores();
@@ -160,7 +199,7 @@ public class RolesController extends Controller {
 
     boolean registroCorrecto() {
         return !txtNombre.getText().isEmpty() && (!RotativoRadioButtonN.getText().isEmpty() 
-        || !RotativoRadioButtonY.getText().isEmpty()) && AppContext.getInstance().get("horario")!=null;
+        || !RotativoRadioButtonY.getText().isEmpty()) && AppContext.getInstance().get("horario")!=null;//el app context valida que se haya selecionado una lista de horarios
     }
 
     void limpiarValores() {
@@ -172,8 +211,19 @@ public class RolesController extends Controller {
     private void DatosRoles(MouseEvent event) {
         if (table.getSelectionModel() != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
+                resp = rolservice.getHorario(table.getSelectionModel().getSelectedItem());
+                System.out.println(resp.getMensaje());
+                horarioDto = (HorarioDto)resp.getResultado("Horario");
+                //System.out.println("Horario "+ horarioDto.getId());
                 rol = table.getSelectionModel().getSelectedItem();
                 txtNombre.setText(rol.getNombreRol());
+                if(rol.getHorarioRotativo().equals("Y")){
+                    RotativoRadioButtonY.setSelected(true);
+                    RotativoRadioButtonN.setSelected(false);
+                }else{
+                    RotativoRadioButtonN.setSelected(true);
+                    RotativoRadioButtonY.setSelected(false);
+                }
             }
         }
     }

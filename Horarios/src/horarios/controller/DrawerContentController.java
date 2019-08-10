@@ -8,6 +8,7 @@ package horarios.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXSpinner;
+import horarios.util.AppContext;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,8 @@ import javafx.scene.image.ImageView;
 import horarios.util.FlowController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -59,26 +62,21 @@ public class DrawerContentController extends Controller {
         System.exit(0);
     }
 
-    /*private double progreso;
-    JFXProgressBar progressBar;
-    Timeline timeProgress = new Timeline(new KeyFrame(Duration.ZERO,event -> correrBar()),new KeyFrame(Duration.seconds(0.017)));
+    private double progreso;
+    private JFXProgressBar progressBar = new JFXProgressBar();
+    private Timeline timeProgress = new Timeline(new KeyFrame(Duration.ZERO,event -> correrBar()),new KeyFrame(Duration.seconds(0.017)));
 
     public void correrBar() {
         progreso += 0.001;
         progressBar.setProgress(progreso);
         if(progreso>0.9){
             timeProgress.stop();
-            FlowController.getInstance().goMain();
-            ((Stage)progressBar.getScene().getWindow()).close();
+            FlowController.getInstance().goView("Empleados");
+            progressBar.getScene().getWindow().hide();
         }
-    }*/
+    }
     @Override
-    public void initialize() {
-        /*  Image img;
-        timeProgress.setCycleCount(Timeline.INDEFINITE);
-        correrBar();
-        timeProgress.play();
-        FlowController.getInstance().goMain();*/
+    public void initialize() { 
         Image img;
         try {
             img = new Image("/horarios/resources/ima.jpg");
@@ -123,32 +121,36 @@ public class DrawerContentController extends Controller {
             img6.setImage(img12);
         } catch (Exception e) {
         }
-
     }
-
+    
     @FXML
     private void btnEmpleados(ActionEvent event) {
-        FlowController.getInstance().goView("Empleados");
+             AppContext.getInstance().set("Vista", "Empleados");
+             FlowController.getInstance().goView("Cargando");
     }
 
     @FXML
     private void btnPuestos(ActionEvent event) {
-        FlowController.getInstance().goView("Puestos");
+      AppContext.getInstance().set("Vista", "Puestos");
+      FlowController.getInstance().goView("Cargando");
     }
 
     @FXML
     private void btnRoles(ActionEvent event) {
-        FlowController.getInstance().goView("Roles");
+        AppContext.getInstance().set("Vista", "Roles");
+        FlowController.getInstance().goView("Cargando");
     }
 
     @FXML
     private void btnAsignacionRoles(ActionEvent event) {
-        FlowController.getInstance().goView("AsignacionRoles");
+        AppContext.getInstance().set("Vista", "AsignacionRoles");
+        FlowController.getInstance().goView("Cargando");
     }
 
     @FXML
     private void btnHorarios(ActionEvent event) {
-        FlowController.getInstance().goView("Horarios");
+       AppContext.getInstance().set("Vista", "Horarios");
+       FlowController.getInstance().goView("Cargando");
     }
 
 }

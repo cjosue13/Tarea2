@@ -7,6 +7,8 @@ package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
@@ -35,8 +37,10 @@ import javafx.scene.control.Label;
 import static javafx.scene.input.KeyCode.L;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.stage.Window;
 
 /**
@@ -80,6 +84,10 @@ public class AsignacionHorarioController extends Controller {
     private Mensaje ms;
     private HorarioDto horario;
     private AnchorPane anchorAux;
+    @FXML
+    private JFXButton Ayuda;
+    @FXML
+    private StackPane stackpane;
 
     @Override
     public void initialize() {
@@ -198,5 +206,25 @@ public class AsignacionHorarioController extends Controller {
             anchorAux.setId("button2");
             limpiarValores();
         }
+    }
+
+    @FXML
+    private void ayudar(ActionEvent event) {
+        
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Instrucciones de Uso"));
+        content.setBody(new Text("Para poder guardar un rol correctamente es necesario\n"
+                + "asignar un horario para el rol."
+                + "\nPasos:"
+                + " \n1)Selecionar una fecha de inicio para el rol a guardar "
+                + "\n2)Selecionar el día que se requiera para el rol "
+                + "\n3)Selecionar las horas de trabajo para cada día "
+                + "\n4)Presionar el boton de guardar"));
+        JFXDialog dialog = new JFXDialog(stackpane,content,JFXDialog.DialogTransition.CENTER);
+        JFXButton button = new JFXButton("okay");
+        button.setOnAction((ActionEvent event1) -> {dialog.close();});
+        content.setActions(button);
+        dialog.show();
+        
     }
 }

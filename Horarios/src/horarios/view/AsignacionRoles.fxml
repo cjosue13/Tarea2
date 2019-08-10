@@ -10,23 +10,24 @@
 <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionRolesController">
    <children>
       <Label fx:id="Titulo" layoutX="286.0" layoutY="40.0" text="Asignaciones de roles" />
-      <TableView fx:id="tablePuestos" layoutX="150.0" layoutY="140.0" onMouseReleased="#DatosEmpleado" prefHeight="280.0" prefWidth="564.0">
+      <TableView fx:id="tablePuestos" layoutX="77.0" layoutY="140.0" onMouseReleased="#DatosEmpleado" prefHeight="280.0" prefWidth="650.0">
          <columns>
-            <TableColumn fx:id="COL_FOLIO_EMP" prefWidth="187.5" text="Folio" />
-            <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="187.5" text="Nombre Completo" />
-            <TableColumn fx:id="COL_PUESTO_EMP" prefWidth="187.5" text="Puesto" />
+            <TableColumn fx:id="COL_FOLIO_EMP" prefWidth="216.6" text="Folio" />
+            <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="216.6" text="Nombre Completo" />
+            <TableColumn fx:id="COL_PUESTO_EMP" prefWidth="216.8" text="Puesto" />
          </columns>
       </TableView>
-      <TableView fx:id="tableRoles" layoutX="151.0" layoutY="524.0" onMouseReleased="#DatosRol" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableRoles" layoutX="77.0" layoutY="485.0" onMouseReleased="#DatosRol" prefHeight="239.0" prefWidth="371.0">
         <columns>
           <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="200.0" text="Roles" />
+          <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="371.0" text="Nombre" />
         </columns>
       </TableView>
-      <Label layoutX="151.0" layoutY="476.0" text="Roles:" />
-      <JFXButton fx:id="btnAsignarRol" layoutX="805.0" layoutY="693.0" onAction="#AsignarRol" style="-fx-cursor: hand;" text="Asignar Rol" />
-      <JFXTextField fx:id="txtfolio" disable="true" labelFloat="true" layoutX="776.0" layoutY="140.0" prefHeight="25.0" prefWidth="200.0" promptText="Folio" />
-      <JFXTextField fx:id="txtNombre" disable="true" labelFloat="true" layoutX="776.0" layoutY="197.0" prefHeight="25.0" prefWidth="200.0" promptText="Nombre Completo" />
-      <JFXTextField fx:id="txtPuesto" disable="true" labelFloat="true" layoutX="776.0" layoutY="255.0" prefHeight="25.0" prefWidth="200.0" promptText="Puesto" />
-      <JFXTextField fx:id="txtRol" disable="true" labelFloat="true" layoutX="401.0" layoutY="524.0" prefHeight="25.0" prefWidth="200.0" promptText="Rol" />
+      <Label layoutX="77.0" layoutY="444.0" text="Roles:" />
+      <JFXButton fx:id="btnAsignarRol" layoutX="899.0" layoutY="693.0" onAction="#AsignarRol" style="-fx-cursor: hand;" text="Asignar Rol" />
+      <JFXTextField fx:id="txtfolio" disable="true" labelFloat="true" layoutX="745.0" layoutY="140.0" prefHeight="29.0" prefWidth="250.0" promptText="Folio" />
+      <JFXTextField fx:id="txtNombre" disable="true" labelFloat="true" layoutX="745.0" layoutY="199.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre Completo" />
+      <JFXTextField fx:id="txtPuesto" disable="true" labelFloat="true" layoutX="745.0" layoutY="258.0" prefHeight="29.0" prefWidth="250.0" promptText="Puesto" />
+      <JFXTextField fx:id="txtRol" disable="true" labelFloat="true" layoutX="464.0" layoutY="485.0" prefHeight="29.0" prefWidth="250.0" promptText="Rol" />
    </children>
 </AnchorPane>

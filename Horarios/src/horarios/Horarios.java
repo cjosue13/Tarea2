@@ -19,8 +19,10 @@ public class Horarios extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         //stage.setFullScreen(true);
+
         stage.setTitle("Mantenimiento de Horarios");
         stage.getIcons().add(new Image("/horarios/resources/work.png"));
+
         FlowController.getInstance().InitializeFlow(stage, null);
         FlowController.getInstance().goMain();
         

@@ -10,13 +10,12 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <StackPane fx:id="stackpane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="804.0" stylesheets="@newCascadeStyleSheet.css">
+      <AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="804.0">
          <children>
             <Label fx:id="Titulo" layoutX="166.0" layoutY="14.0" text="Asignación de Horario" />
-            <FlowPane fx:id="flowPane" layoutX="96.0" layoutY="150.0" prefHeight="202.0" prefWidth="412.0">
+            <FlowPane fx:id="flowPane" layoutX="26.0" layoutY="130.0" prefHeight="303.0" prefWidth="419.0">
                <children>
                   <AnchorPane id="button2" fx:id="anchorLunes" focusTraversable="true" prefHeight="101.0" prefWidth="103.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
@@ -56,14 +55,14 @@
                </children>
             </FlowPane>
             <JFXButton fx:id="btnAgregarDia" layoutX="569.0" layoutY="229.0" onAction="#agregarDia" text="Agregar Dia" visible="false" />
-            <JFXTimePicker fx:id="txtHoraInicial" editable="true" layoutX="569.0" layoutY="95.0" promptText="Hora Inicial" visible="false" />
-            <JFXTimePicker fx:id="txtHoraFinal" layoutX="569.0" layoutY="137.0" promptText="Hora Final" visible="false" />
-            <Button layoutX="29.0" layoutY="436.0" mnemonicParsing="false" onAction="#atras" text="Atras" />
-            <JFXTextField fx:id="txtCantidadHoras" labelFloat="true" layoutX="569.0" layoutY="181.0" promptText="Cantidad de horas libre" visible="false" />
-            <JFXDatePicker fx:id="dateFechaIni" layoutX="96.0" layoutY="108.0" promptText="Fecha de inicio" showWeekNumbers="true" />
-            <Button layoutX="653.0" layoutY="436.0" mnemonicParsing="false" onAction="#agregarHorario" text="Agregar Horario" />
+            <JFXTimePicker fx:id="txtHoraInicial" editable="true" layoutX="500.0" layoutY="95.0" prefHeight="29.0" prefWidth="250.0" promptText="Hora Inicial" visible="false" />
+            <JFXTimePicker fx:id="txtHoraFinal" layoutX="500.0" layoutY="137.0" prefHeight="29.0" prefWidth="250.0" promptText="Hora Final" visible="false" />
+            <Button layoutX="26.0" layoutY="462.0" mnemonicParsing="false" onAction="#atras" text="Atras" />
+            <JFXTextField fx:id="txtCantidadHoras" labelFloat="true" layoutX="500.0" layoutY="181.0" prefHeight="29.0" prefWidth="250.0" promptText="Cantidad de horas libre" visible="false" />
+            <JFXDatePicker fx:id="dateFechaIni" layoutX="26.0" layoutY="88.0" prefHeight="29.0" prefWidth="250.0" promptText="Fecha de inicio" showWeekNumbers="true" />
+            <Button layoutX="650.0" layoutY="462.0" mnemonicParsing="false" onAction="#agregarHorario" text="Agregar Horario" />
             <Button fx:id="btnCancelar" layoutX="678.0" layoutY="229.0" mnemonicParsing="false" onAction="#cancelarDia" text="Cancelar" visible="false" />
-            <JFXButton fx:id="Ayuda" layoutX="569.0" layoutY="436.0" onAction="#ayudar" text="Ayuda" />
+            <JFXButton fx:id="Ayuda" layoutX="566.0" layoutY="462.0" onAction="#ayudar" text="Ayuda" />
          </children>
       </AnchorPane>
    </children>

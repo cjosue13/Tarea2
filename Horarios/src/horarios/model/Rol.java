@@ -149,10 +149,7 @@ public class Rol implements Serializable {
             return false;
         }
         Rol other = (Rol) object;
-        if ((this.rolId == null && other.rolId != null) || (this.rolId != null && !this.rolId.equals(other.rolId))) {
-            return false;
-        }
-        return true;
+        return !((this.rolId == null && other.rolId != null) || (this.rolId != null && !this.rolId.equals(other.rolId)));
     }
 
     @Override

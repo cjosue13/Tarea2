@@ -19,8 +19,6 @@ public class RolDto {
     private ArrayList<PuestoDto> puestos;
     private HorarioDto horario;
 
-    
-
     public RolDto(String NombreRol, String HorarioRotativo, Integer version, Integer id, HorarioDto horario) {
         this.NombreRol = NombreRol;
         this.HorarioRotativo = HorarioRotativo;

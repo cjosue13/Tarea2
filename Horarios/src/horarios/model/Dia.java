@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -74,7 +73,7 @@ public class Dia implements Serializable {
     
     public Dia(DiaDto dia){
         this.diaId = dia.getDiaid();
-        actualizarDia(dia);
+        this.actualizarDia(dia);
     }
     
     public Dia(Integer diaId) {
@@ -161,10 +160,7 @@ public class Dia implements Serializable {
             return false;
         }
         Dia other = (Dia) object;
-        if ((this.diaId == null && other.diaId != null) || (this.diaId != null && !this.diaId.equals(other.diaId))) {
-            return false;
-        }
-        return true;
+        return !((this.diaId == null && other.diaId != null) || (this.diaId != null && !this.diaId.equals(other.diaId)));
     }
 
     @Override

@@ -186,11 +186,7 @@ public class PuestosController extends Controller {
     }
 
     boolean registroCorrecto() {
-        if (!txtNombre.getText().isEmpty() && empleado != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return !txtNombre.getText().isEmpty() && empleado != null;
     }
 
     void limpiarValores() {

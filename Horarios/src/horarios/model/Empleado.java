@@ -177,10 +177,7 @@ public class Empleado implements Serializable {
             return false;
         }
         Empleado other = (Empleado) object;
-        if ((this.empFolio == null && other.empFolio != null) || (this.empFolio != null && !this.empFolio.equals(other.empFolio))) {
-            return false;
-        }
-        return true;
+        return !((this.empFolio == null && other.empFolio != null) || (this.empFolio != null && !this.empFolio.equals(other.empFolio)));
     }
 
     @Override

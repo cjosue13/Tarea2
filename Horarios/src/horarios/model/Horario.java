@@ -162,10 +162,7 @@ public class Horario implements Serializable {
             return false;
         }
         Horario other = (Horario) object;
-        if ((this.horId == null && other.horId != null) || (this.horId != null && !this.horId.equals(other.horId))) {
-            return false;
-        }
-        return true;
+        return !((this.horId == null && other.horId != null) || (this.horId != null && !this.horId.equals(other.horId)));
     }
 
     @Override

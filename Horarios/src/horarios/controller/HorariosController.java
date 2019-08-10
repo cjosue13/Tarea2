@@ -7,18 +7,24 @@ package horarios.controller;
 
 import com.jfoenix.controls.JFXTextField;
 import horarios.model.EmpleadoDto;
+import horarios.model.PuestoDto;
+import horarios.model.RolDto;
 import horarios.service.EmpleadoService;
+import horarios.service.PuestoService;
+import horarios.service.RolService;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.SimpleStyleableStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -45,13 +51,11 @@ public class HorariosController extends Controller {
     @FXML
     private AnchorPane Domingo;
     @FXML
-    private TableView<?> listaEmpleados;
+    private TableView<PuestoDto> listaEmpleados;
     @FXML
-    private TableColumn<EmpleadoDto, String> COL_NOMBRE_EMP;
+    private TableColumn<PuestoDto, String> COL_NOMBRE_EMP;
     @FXML
-    private TableColumn<?, String> COL_NOMBRE_PUE;
-    @FXML
-    private TableColumn<?, String> COL_ROL_NOMBRE;
+    private TableColumn<PuestoDto, String> COL_NOMBRE_PUE;
     @FXML
     private Label horasTrabajadas;
     @FXML
@@ -60,25 +64,52 @@ public class HorariosController extends Controller {
     private Label Titulo;
 
     private JFXTextField txtCorreo;
-    private EmpleadoDto empleado;
-    private EmpleadoService empService;
+    private PuestoService puesService;
     private Respuesta resp;
-    private ArrayList<EmpleadoDto> empleados;
+    private ArrayList<PuestoDto> empleados;
     private ObservableList items;
-    private Mensaje ms;
+    @FXML
+    private TableView<RolDto> tableRol;
+    private ArrayList<RolDto> roles;
+    private ObservableList itemsRoles;
+    private RolService rolService;
+    private Respuesta RespuestaRol;
+    @FXML
+    private TableColumn<RolDto, String> COL_NOMBRE_ROL;
     @Override
     public void initialize() {
-
-        
-        empService = new EmpleadoService();
-        ms = new Mensaje();
-        resp = empService.getEmpleados();
-        empleados = ((ArrayList<EmpleadoDto>) resp.getResultado("Empleados"));
-        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre()));
+        puesService = new PuestoService();
+        resp = puesService.getPuestos();
+        empleados = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
+        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEmpleado().getNombre()));
+        COL_NOMBRE_PUE.setCellValueFactory(value-> new SimpleStringProperty(value.getValue().getNombrePuesto()));
         items = FXCollections.observableArrayList(empleados);
-        listaEmpleados.setItems(items);
+        listaEmpleados.setItems(items);   
         
-        
+        rolService = new RolService();
+        RespuestaRol = rolService.getRoles();
+        roles = ((ArrayList<RolDto>) RespuestaRol.getResultado("Roles"));
+        COL_NOMBRE_ROL.setCellValueFactory(value-> new SimpleStringProperty(value.getValue().getNombreRol()));
+        itemsRoles = FXCollections.observableArrayList(roles);
+        tableRol.setItems(itemsRoles);
+    }
+
+    @FXML
+    private void SeleccionaEmpleado(MouseEvent event) {
+        if(listaEmpleados.getSelectionModel()!=null){
+            if(listaEmpleados.getSelectionModel().getSelectedItem()!=null){
+                tableRol.getItems().clear();
+                PuestoDto puestoDto = listaEmpleados.getSelectionModel().getSelectedItem();
+                ArrayList<RolDto> lista = puestoDto.getRoles();
+               
+                itemsRoles = FXCollections.observableArrayList(lista);
+                tableRol.setItems(itemsRoles);
+            }       
+        }
+    }
+
+    @FXML
+    private void SeleccionaRol(MouseEvent event) {
     }
     
 }

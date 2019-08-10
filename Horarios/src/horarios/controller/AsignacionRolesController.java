@@ -98,8 +98,8 @@ public class AsignacionRolesController extends Controller {
         respRol = rolservice.getRoles();
         roles = ((ArrayList) respRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-       /* //Remueve los roles que ya tengan un 
-        Stream <RolDto>streamRol  = roles.stream();
+        //Remueve los roles que ya tengan un 
+        /*Stream <RolDto>streamRol  = roles.stream();
         streamRol.filter(x->x.getPuestos()!=null).forEach((t) -> {
             roles.remove(t);
         });*/
@@ -151,12 +151,12 @@ public class AsignacionRolesController extends Controller {
 
     @FXML
     private void DatosRol(MouseEvent event) {
-     /*   if (tableRoles.getSelectionModel() != null) {
+      if (tableRoles.getSelectionModel() != null) {
             if (tableRoles.getSelectionModel().getSelectedItem() != null) {
                 rol = tableRoles.getSelectionModel().getSelectedItem();
                 txtRol.setText(rol.getNombreRol());
             }
-        }*/
+        }
 
     }
 
@@ -165,12 +165,7 @@ public class AsignacionRolesController extends Controller {
         txtfolio.clear();
         txtNombre.clear();
         txtPuesto.clear();
-<<<<<<< HEAD
-        /*tablePuestos.setSelectionModel(null);
-        tableRoles.setSelectionModel(null);*/
-=======
         tablePuestos.getSelectionModel().clearSelection();
         tableRoles.getSelectionModel().clearSelection();
->>>>>>> 700dd4ade69c50aff2fc0cc73060a80fae87369d
     }
 }

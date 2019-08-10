@@ -79,7 +79,7 @@ public class DrawerContentController extends Controller {
     public void initialize() { 
         Image img;
         try {
-            img = new Image("/horarios/resources/ima.jpg");
+            img = new Image("/horarios/resources/r.png");
             image.setImage(img);
         } catch (Exception e) {
         }

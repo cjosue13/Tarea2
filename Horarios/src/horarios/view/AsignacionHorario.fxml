@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="stackpane" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
+<StackPane fx:id="stackpane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="804.0" stylesheets="@newCascadeStyleSheet.css">
+      <AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="804.0">
          <children>
             <Label fx:id="Titulo" layoutX="166.0" layoutY="14.0" text="Asignación de Horario" />
             <FlowPane fx:id="flowPane" layoutX="26.0" layoutY="130.0" prefHeight="303.0" prefWidth="419.0">

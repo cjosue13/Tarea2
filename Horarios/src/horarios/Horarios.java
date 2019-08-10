@@ -17,7 +17,7 @@ public class Horarios extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setFullScreen(true);
+        //stage.setFullScreen(true);
         FlowController.getInstance().InitializeFlow(stage, null);
         FlowController.getInstance().goMain();
         

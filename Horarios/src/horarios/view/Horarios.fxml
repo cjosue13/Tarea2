@@ -33,7 +33,7 @@
           <TableColumn fx:id="COL_NOMBRE_PUE" prefWidth="116.67" text="Puesto" />
         </columns>
       </TableView>
-      <JFXTextField layoutX="27.0" layoutY="131.0" prefHeight="29.0" prefWidth="350.0" promptText="Filtro" />
+      <JFXTextField layoutX="27.0" layoutY="131.0" prefHeight="29.0" prefWidth="250.0" promptText="Filtro" />
       <Label layoutX="404.0" layoutY="516.0" text="Total de Horas Trabajadas:" />
       <Label layoutX="404.0" layoutY="565.0" text="Cantidad de Roles Asignados:" />
       <JFXButton layoutX="880.0" layoutY="664.0" style="-fx-cursor: hand;" text="Exportar a Excel" />

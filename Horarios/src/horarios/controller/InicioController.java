@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -37,16 +38,21 @@ public class InicioController extends Controller {
     @FXML
     private BorderPane borderPane;
     private BorderPane B;
+    @FXML
+    private ImageView omg;
+    @FXML
+    private AnchorPane anchorp;
+
 
     @Override
     public void initialize() {
        
         AppContext.getInstance().set("Border", borderPane);
         
-        Image img13;
+        Image omg1;
         try {
-            img13 = new Image("/horarios/resources/fondocalendar.png");
-            imgfondo.setImage(img13);
+            omg1 = new Image("/horarios/resources/ttttt.png");
+            omg.setImage(omg1);
         } catch (Exception e) {
         }
         
@@ -56,6 +62,7 @@ public class InicioController extends Controller {
             
             HamburgerBackArrowBasicTransition burgerTask2 = new HamburgerBackArrowBasicTransition(hamburger);
             burgerTask2.setRate(-1);
+            drawer.open();
             hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e)->{
                 burgerTask2.setRate(burgerTask2.getRate()*-1);
                 burgerTask2.play();

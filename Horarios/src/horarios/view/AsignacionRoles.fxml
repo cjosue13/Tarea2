@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionRolesController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionRolesController">
    <children>
       <Label fx:id="Titulo" layoutX="286.0" layoutY="40.0" text="Asignaciones de roles" />
       <TableView fx:id="tablePuestos" layoutX="150.0" layoutY="140.0" onMouseReleased="#DatosEmpleado" prefHeight="280.0" prefWidth="564.0">
@@ -19,7 +19,7 @@
       </TableView>
       <TableView fx:id="tableRoles" layoutX="151.0" layoutY="524.0" onMouseReleased="#DatosRol" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="200.0" text="Nombre" />
+          <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="200.0" text="Roles" />
         </columns>
       </TableView>
       <Label layoutX="151.0" layoutY="476.0" text="Roles:" />

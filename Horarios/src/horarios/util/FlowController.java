@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import horarios.Horarios;
 import horarios.controller.Controller;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -54,7 +55,6 @@ public class FlowController {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        //throw new CloneNotSupportedException();
         return null;
     }
 
@@ -84,7 +84,6 @@ public class FlowController {
     }
 
     public void goMain() {
-        //System.out.println(SYS_HOSPITAL.class.getResource("view/Inicio.fxml"));
         try {
 
             this.mainStage.setScene(new Scene(FXMLLoader.load(Horarios.class.getResource("view/Inicio.fxml"), this.idioma)));
@@ -112,9 +111,9 @@ public class FlowController {
             stage = this.mainStage;
             controller.setStage(stage);
         }
+
         switch (location) {
             case "Center":
-
                 ((VBox) ((BorderPane) stage.getScene().getRoot()).getCenter()).getChildren().clear();
                 ((VBox) ((BorderPane) stage.getScene().getRoot()).getCenter()).getChildren().add(loader.getRoot());
                 break;
@@ -134,6 +133,7 @@ public class FlowController {
     public void goViewInStage(String viewName, Stage stage) {
         FXMLLoader loader = getLoader(viewName);
         Controller controller = loader.getController();
+        controller.initialize();
         controller.setStage(stage);
         stage.getScene().setRoot(loader.getRoot());
     }
@@ -143,8 +143,8 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        /* stage.getIcons().add(new Image("unaplanilla2/resources/Agregar-48.png"));
-        stage.setTitle("UNA PLANILLA");*/
+        stage.getIcons().add(new Image("/horarios/resources/work.png"));
+        stage.setTitle("Mantenimiento de Horarios");
         stage.setOnHidden((WindowEvent event) -> {
             controller.getStage().getScene().setRoot(new Pane());
             controller.setStage(null);
@@ -163,8 +163,8 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        /* stage.getIcons().add(new Image("unaplanilla2/resources/Agregar-48.png"));
-        stage.setTitle("UNA PLANILLA");*/
+        stage.getIcons().add(new Image("/horarios/resources/work.png"));
+        stage.setTitle("Mantenimiento de Horarios");
         stage.setResizable(resizable);
         stage.setOnHidden((WindowEvent event) -> {
             controller.getStage().getScene().setRoot(new Pane());

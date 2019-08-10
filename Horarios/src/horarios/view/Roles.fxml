@@ -9,7 +9,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.RolesController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.RolesController">
    <children>
       <TableView fx:id="table" layoutX="150.0" layoutY="140.0" onMouseReleased="#DatosRoles" prefHeight="280.0" prefWidth="750.0">
          <columns>
@@ -18,15 +18,20 @@
       </TableView>
       <Label fx:id="Titulo" layoutX="468.0" layoutY="40.0" stylesheets="@newCascadeStyleSheet.css" text="Roles" />
       <JFXButton fx:id="btnEditar1" layoutX="150.0" layoutY="688.0" onAction="#editar" style="-fx-cursor: hand;" text="Editar" />
-      <JFXButton fx:id="btnEliminar" layoutX="450.0" layoutY="688.0" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
-      <JFXButton fx:id="btnAgregar1" layoutX="815.0" layoutY="688.0" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar" />
-      <JFXTextField fx:id="txtNombre" layoutX="154.0" layoutY="485.0" prefHeight="29.0" prefWidth="312.0" promptText="Nombre del Rol" />
-      <Label layoutX="150.0" layoutY="570.0" text="Rotativo:" />
-      <JFXRadioButton fx:id="RotativoRadioButtonY" layoutX="297.0" layoutY="568.0" text="Si">
+      <JFXButton fx:id="btnEliminar" layoutX="496.0" layoutY="688.0" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
+      <JFXButton fx:id="btnAgregar1" layoutX="841.0" layoutY="688.0" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar" />
+      <JFXTextField fx:id="txtNombre" layoutX="150.0" layoutY="508.0" prefHeight="29.0" prefWidth="312.0" promptText="Nombre del Rol" />
+      <JFXButton layoutX="798.0" layoutY="563.0" onAction="#abrirHorario" text="Agregar Horario" />
+      <Label layoutX="150.0" layoutY="463.0" text="Horario Rotativo:" />
+      <JFXRadioButton fx:id="RotativoRadioButtonY" layoutX="297.0" layoutY="461.0" text="Si">
          <toggleGroup>
             <ToggleGroup fx:id="rotativo" />
-         </toggleGroup></JFXRadioButton>
-      <JFXRadioButton fx:id="RotativoRadioButtonN" layoutX="404.0" layoutY="568.0" text="No" toggleGroup="$rotativo" />
-      <JFXButton layoutX="772.0" layoutY="563.0" onAction="#abrirHorario" text="Agregar Horario" />
+         </toggleGroup>
+      </JFXRadioButton>
+      <JFXRadioButton fx:id="RotativoRadioButtonN" layoutX="404.0" layoutY="461.0" text="No">
+         <toggleGroup>
+            <ToggleGroup fx:id="rotativo" />
+         </toggleGroup>
+      </JFXRadioButton>
    </children>
 </AnchorPane>

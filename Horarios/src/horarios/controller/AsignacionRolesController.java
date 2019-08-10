@@ -72,7 +72,6 @@ public class AsignacionRolesController extends Controller {
 
     @Override
     public void initialize() {
-
         // limpiarValores();
         btnAsignarRol.setCursor(Cursor.HAND);
         puesService = new PuestoService();

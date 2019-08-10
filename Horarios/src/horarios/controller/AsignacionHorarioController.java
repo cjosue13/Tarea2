@@ -19,6 +19,7 @@ import horarios.util.AppContext;
 import horarios.util.Mensaje;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -86,7 +87,7 @@ public class AsignacionHorarioController extends Controller {
     public void inicio() {
         typeKeys();
         ms = new Mensaje();
-        
+
         if (AppContext.getInstance().get("Rol") != null) {//Si se ha seleccionado un rol para editar 
             //Busco el horario a traves del rol seleccionado
             rolService = new RolService();
@@ -175,22 +176,38 @@ public class AsignacionHorarioController extends Controller {
     @FXML
     private void agregarDia(ActionEvent event) {
         if (!(txtHoraFinal.getValue() == null) && !(txtHoraInicial.getValue() == null) && !txtCantidadHoras.getText().isEmpty()) {
+            LocalTime horaFin = txtHoraFinal.getValue();
+            LocalTime horaIni = txtHoraInicial.getValue();
+            //Calcula la diferencia entre horas 
+            Integer difHoras = horaFin.getHour() - horaIni.getHour();
+            if (horaFin.isAfter(horaIni) && difHoras >= 1) {
+                //Cantidad de horas libres
+                Integer horasLib = Integer.valueOf(txtCantidadHoras.getText());
+                if (horasLib < difHoras) {
+                    flowPane.getChildren().stream().forEach((node) -> {
+                        //Busco el unico anchorPane que no esta deshabilitado para tomar el texto del dia al que pertenece
+                        if (!((AnchorPane) node).isDisable()) {
+                            String diaSemana = ((Label) ((AnchorPane) node).getChildren().get(0)).getText();
+                            LocalDateTime horaFecFin = txtHoraFinal.getValue().atDate(LocalDate.now());
+                            LocalDateTime horaFecIni = txtHoraInicial.getValue().atDate(LocalDate.now());
 
-            flowPane.getChildren().stream().forEach((node) -> {
-                //Busco el unico anchorPane que no esta deshabilitado para tomar el texto del dia al que pertenece
-                if (!((AnchorPane) node).isDisable()) {
-                    String diaSemana = ((Label) ((AnchorPane) node).getChildren().get(0)).getText();
-                    LocalDateTime horaFin = txtHoraFinal.getValue().atDate(LocalDate.now());
-                    LocalDateTime horaIni = txtHoraInicial.getValue().atDate(LocalDate.now());
-                    Integer horasLib = Integer.valueOf(txtCantidadHoras.getText());
-                    dia = new DiaDto(diaSemana, horaIni, horaFin, null, 1, horario, horasLib);
-                    horario.getDias().add(dia);
-                    limpiarValores();
+                            dia = new DiaDto(diaSemana, horaFecIni, horaFecFin, null, 1, horario, horasLib);
+                            horario.getDias().add(dia);
+                            limpiarValores();
+                        }
+                        ((AnchorPane) node).setDisable(false);//activa los anchor una vez que haya agregado las horas
+                    });
+                } else {
+                    ms.showModal(Alert.AlertType.WARNING, "Informacion sobre agregar dia", this.getStage(), "La cantidad de horas libres debe ser menor");
                 }
-                ((AnchorPane) node).setDisable(false);//activa los anchor una vez que haya agregado las horas
-            });
+            } else {
+                ms.showModal(Alert.AlertType.WARNING, "Informacion sobre agregar dia", this.getStage(), "Existen datos erroneos en el registro, "
+                        + "La hora final no puede estar antes que la hora inicial, y "
+                        + "debe existir al menos una hora de diferencia asignada al rol.");
+            }
         } else {
-            ms.showModal(Alert.AlertType.ERROR, "Informacion sobre agregar",this.getStage() ,"Existen datos erroneos en el registro, " + "verifica que todos los datos se hayan llenado correctamente.");
+            ms.showModal(Alert.AlertType.WARNING, "Informacion sobre agregar dia", this.getStage(), "Existen datos erroneos en el registro, "
+                    + "verifica que todos los datos se hayan llenado correctamente.");
         }
     }
 
@@ -205,7 +222,7 @@ public class AsignacionHorarioController extends Controller {
             //Cierra la ventana
             getStage().hide();
         } else {
-            ms.showModal(Alert.AlertType.ERROR, "Informacion",this.getStage() ,"Los datos no han sido llenado correctamente."
+            ms.showModal(Alert.AlertType.ERROR, "Informacion", this.getStage(), "Los datos no han sido llenado correctamente."
                     + " Verifica que hayas seleccionado un dia de la semana o que se haya elegido una fecha de inicio");
         }
     }
@@ -242,13 +259,13 @@ public class AsignacionHorarioController extends Controller {
         content.setActions(button);
         dialog.show();
     }
-    
-    public void typeKeys(){
+
+    public void typeKeys() {
         txtCantidadHoras.setOnKeyReleased(aceptaNumeros);
         dateFechaIni.setOnKeyReleased(noEscribir);
         txtHoraFinal.setOnKeyReleased(noEscribir);
-   
-    } 
+
+    }
     private EventHandler<KeyEvent> aceptaCaracteres = (KeyEvent event) -> {
         if (Character.isDigit(event.getCharacter().charAt(0))) {
             event.consume();
@@ -261,6 +278,6 @@ public class AsignacionHorarioController extends Controller {
         }
     };
     private EventHandler<KeyEvent> noEscribir = (KeyEvent event) -> {
-            event.consume();
+        event.consume();
     };
 }

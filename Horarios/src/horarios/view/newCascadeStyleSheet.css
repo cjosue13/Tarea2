@@ -114,7 +114,7 @@
     -fx-text-fill: white;
 }
 .button:hover {
-    -fx-background-color: #0d8aee;
+    -fx-background-color: #009cad;
     -jfx-button-type: RAISED;/*raised and flat*/
     -fx-text-fill: WHITE;
     -jfx-rippler-fill: RED;

@@ -16,19 +16,26 @@ import horarios.util.AppContext;
 import horarios.util.FlowController;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -65,6 +72,10 @@ public class RolesController extends Controller {
     @FXML
     private ToggleGroup rotativo;
     private HorarioService horarioService;
+    @FXML
+    private AnchorPane anchor;
+    @FXML
+    private Button rbNo;
 
     @Override
     public void initialize() {
@@ -213,7 +224,7 @@ public class RolesController extends Controller {
     }
 
     @FXML
-    private void abrirHorario(ActionEvent event) {
+    private void abrirHorario(ActionEvent event) throws IOException {
         FlowController.getInstance().goViewInWindowModal("AsignacionHorario", this.getStage(), false);
     }
 

@@ -124,7 +124,7 @@ public class EmpleadosController extends Controller {
 
                 Respuesta respuesta = empService.getEmpleados();
                 items.clear();
-                empleados = (ArrayList<EmpleadoDto>) respuesta.getResultado("Empleados");
+                empleados = (ArrayList) respuesta.getResultado("Empleados");
                 items = FXCollections.observableArrayList(empleados);
                 table.setItems(items);
                 limpiarValores();
@@ -158,7 +158,7 @@ public class EmpleadosController extends Controller {
             }
 
         } else {
-            ms.show(AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, "
+            ms.showModal(AlertType.ERROR, "Informacion acerca del guardado",this.getStage() ,"Existen datos erroneos en el registro, "
                     + "verifica que todos los datos esten llenos.");
         }
 

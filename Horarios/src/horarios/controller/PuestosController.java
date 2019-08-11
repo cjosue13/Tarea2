@@ -135,29 +135,8 @@ public class PuestosController extends Controller {
                     ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
                             + "verifica que todos los datos esten llenos.");
                 }
-
             } else {
                 ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a editar");
-                if (registroCorrecto()) {
-                    String nombre = txtNombre.getText();
-                    String descripcion = txtDescripcion.getText();
-                    Integer id = puesto.getId();
-                    puesto = new PuestoDto(nombre, descripcion, 1, empleado, id);
-                    try {
-                        resp = puesService.guardarPuesto(puesto);
-
-                        ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), resp.getMensaje());
-                        limpiarValores();
-                        puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
-                        tablePuesto.getItems().clear();
-                        itemsPues = FXCollections.observableArrayList(puestos);
-                        tablePuesto.setItems(itemsPues);
-
-                    } catch (Exception e) {
-                        ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el Puesto. "
-                                + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
-                    }
-                }
             }
         }
     }
@@ -167,7 +146,7 @@ public class PuestosController extends Controller {
         if (tablePuesto.getSelectionModel() != null) {
             if (tablePuesto.getSelectionModel().getSelectedItem() != null) {
                 puesService.EliminarPuesto(tablePuesto.getSelectionModel().getSelectedItem().getId());
-                ms.showModal(Alert.AlertType.INFORMATION, "Información", this.getStage(), "Datos Eliminados correctamente");
+                ms.showModal(Alert.AlertType.INFORMATION, "Información", this.getStage(), "Datos eliminados correctamente");
                 resp = puesService.getPuestos();
                 itemsPues.clear();
                 puestos = (ArrayList<PuestoDto>) resp.getResultado("Puestos");

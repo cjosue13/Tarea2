@@ -91,7 +91,7 @@ public class HorariosController extends Controller {
         roles = ((ArrayList<RolDto>) RespuestaRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value-> new SimpleStringProperty(value.getValue().getNombreRol()));
         itemsRoles = FXCollections.observableArrayList(roles);
-        tableRol.setItems(itemsRoles);
+        //tableRol.setItems(itemsRoles);
     }
 
     @FXML
@@ -101,9 +101,11 @@ public class HorariosController extends Controller {
                 tableRol.getItems().clear();
                 PuestoDto puestoDto = listaEmpleados.getSelectionModel().getSelectedItem();
                 ArrayList<RolDto> lista = puestoDto.getRoles();
-               
-                itemsRoles = FXCollections.observableArrayList(lista);
-                tableRol.setItems(itemsRoles);
+                resp = puesService.getRoles(puestoDto.getId());
+                puestoDto = (PuestoDto)resp.getResultado("Roles");
+                //System.out.println(puestoDto.getRoles().size());
+                //itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
+               // tableRol.setItems(itemsRoles);
             }       
         }
     }

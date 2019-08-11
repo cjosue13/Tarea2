@@ -7,6 +7,10 @@
 
 package horarios.service;
 
+import horarios.model.Dia;
+import horarios.model.DiaDto;
+import horarios.model.Horario;
+import horarios.model.HorarioDto;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +21,8 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import horarios.model.Puesto;
 import horarios.model.PuestoDto;
+import horarios.model.Rol;
+import horarios.model.RolDto;
 import horarios.util.EntityManagerHelper;
 import horarios.util.Respuesta;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -42,7 +48,44 @@ public class PuestoService {
             Logger.getLogger(PuestoService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar el Puesto.", ex);
             return new Respuesta(false, "Ocurrio un error al consultar el Puesto.", "getPuesto " + ex.getMessage());
         }
-    }    
+    }  
+    
+    public Respuesta getRoles(Integer puestoID) {
+        try {
+            Query qryPuesto = em.createNamedQuery("Puesto.findByPueCodigo", Puesto.class);
+            qryPuesto.setParameter("pueCodigo", puestoID);
+            ArrayList <RolDto> roles = new ArrayList <>();
+            for(Rol rol : ((Puesto) qryPuesto.getSingleResult()).getRolList()){
+                RolDto rolDto = new RolDto(rol);
+                System.out.println("Rol");
+                ArrayList <DiaDto> dias = new ArrayList<>();
+                HorarioDto horarioDto = new HorarioDto(rol.getHorario());
+                for(Dia dia: rol.getHorario().getHorDiaList()){
+                    System.out.println("Dia");
+                    dias.add(new DiaDto(dia));
+                }
+                horarioDto.setDias(dias);
+                rolDto.setHorario(horarioDto);
+                roles.add(rolDto);
+                //((Puesto) qryPuesto.getSingleResult()).getRolList()
+            }
+            
+            
+            
+            PuestoDto puesto = new PuestoDto((Puesto) qryPuesto.getSingleResult());
+            puesto.setRoles(roles);
+            
+            return new Respuesta(true, "Encontrado exitosamente", "", "roles", puesto);
+        }  catch (NoResultException ex) {
+            return new Respuesta(false, "No existe un Puesto con el código ingresado.", "getPuesto NoResultException");
+        } catch (NonUniqueResultException ex) {
+            Logger.getLogger(PuestoService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar el Puesto.", ex);
+            return new Respuesta(false, "Ocurrio un error al consultar el Puesto.", "getPuesto NonUniqueResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(PuestoService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar el Puesto.", ex);
+            return new Respuesta(false, "Ocurrio un error al consultar el Puesto.", "getPuesto " + ex.getMessage());
+        }
+    }  
     
     public Respuesta guardarPuesto(PuestoDto PuestoDto) {
         try {
@@ -116,4 +159,5 @@ public class PuestoService {
             return new Respuesta(false, "Ocurrio un error al eliminar el Puesto.", "EliminarPuesto " + ex.getMessage());
         }
     } 
+  
 }

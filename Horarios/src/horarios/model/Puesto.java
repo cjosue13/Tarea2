@@ -40,10 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Puesto.findByPueVersion", query = "SELECT p FROM Puesto p WHERE p.pueVersion = :pueVersion")})
 public class Puesto implements Serializable {
 
-    @Basic(optional = false)
-    @Column(name = "PUE_VERSION")
-    private Integer pueVersion;
-
+    
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -57,6 +54,9 @@ public class Puesto implements Serializable {
     private String pueNombrepuesto;
     @Column(name = "PUE_DESCRIPCION")
     private String pueDescripcion;
+    @Basic(optional = false)
+    @Column(name = "PUE_VERSION")
+    private Integer pueVersion;
     @JoinTable(name = "HOR_PUE_ROL", joinColumns = {
         @JoinColumn(name = "PUE_CODIGO", referencedColumnName = "PUE_CODIGO")}, inverseJoinColumns = {
         @JoinColumn(name = "ROL_ID", referencedColumnName = "ROL_ID")})
@@ -123,7 +123,7 @@ public class Puesto implements Serializable {
         this.pueVersion = pueVersion;
     }
 
-    @XmlTransient
+    
     public List<Rol> getRolList() {
         return rolList;
     }

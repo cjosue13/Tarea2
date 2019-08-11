@@ -102,10 +102,9 @@ public class HorariosController extends Controller {
                 PuestoDto puestoDto = listaEmpleados.getSelectionModel().getSelectedItem();
                 ArrayList<RolDto> lista = puestoDto.getRoles();
                 resp = puesService.getRoles(puestoDto.getId());
-                puestoDto = (PuestoDto)resp.getResultado("Roles");
-                //System.out.println(puestoDto.getRoles().size());
-                //itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
-               // tableRol.setItems(itemsRoles);
+                puestoDto = (PuestoDto)resp.getResultado("roles");
+                itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
+                tableRol.setItems(itemsRoles);
             }       
         }
     }

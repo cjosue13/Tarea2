@@ -6,6 +6,7 @@
 package horarios.controller;
 
 import com.jfoenix.controls.JFXTextField;
+import horarios.model.DiaDto;
 import horarios.model.EmpleadoDto;
 import horarios.model.PuestoDto;
 import horarios.model.RolDto;
@@ -32,7 +33,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Jose Pablo Bermudez
  */
-public class HorariosController extends Controller {   
+public class HorariosController extends Controller {
 
     @FXML
     private ScrollPane HorarioDiasNaturales;
@@ -76,41 +77,116 @@ public class HorariosController extends Controller {
     private Respuesta RespuestaRol;
     @FXML
     private TableColumn<RolDto, String> COL_NOMBRE_ROL;
+    @FXML
+    private Label lblHoraInicioLunes;
+    @FXML
+    private Label lblHoraFinalLunes;
+    @FXML
+    private Label lblHoraInicioMartes;
+    @FXML
+    private Label lblHoraFinalMartes;
+    @FXML
+    private Label lblHoraInicioMiercoles;
+    @FXML
+    private Label lblHoraFinalMiercoles;
+    @FXML
+    private Label lblHoraInicioJueves;
+    @FXML
+    private Label lblHoraFinalJueves;
+    @FXML
+    private Label lblHoraInicioViernes;
+    @FXML
+    private Label lblHoraFinalViernes;
+    @FXML
+    private Label lblHoraInicioSabado;
+    @FXML
+    private Label lblHoraFinalSabado;
+    @FXML
+    private Label lblHoraInicioDomingo;
+    @FXML
+    private Label lblHoraFinalDomingo;
+
     @Override
     public void initialize() {
         puesService = new PuestoService();
         resp = puesService.getPuestos();
         empleados = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
         COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEmpleado().getNombre()));
-        COL_NOMBRE_PUE.setCellValueFactory(value-> new SimpleStringProperty(value.getValue().getNombrePuesto()));
+        COL_NOMBRE_PUE.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
         items = FXCollections.observableArrayList(empleados);
-        listaEmpleados.setItems(items);   
-        
+        listaEmpleados.setItems(items);
+
         rolService = new RolService();
         RespuestaRol = rolService.getRoles();
         roles = ((ArrayList<RolDto>) RespuestaRol.getResultado("Roles"));
-        COL_NOMBRE_ROL.setCellValueFactory(value-> new SimpleStringProperty(value.getValue().getNombreRol()));
+        COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
         itemsRoles = FXCollections.observableArrayList(roles);
         //tableRol.setItems(itemsRoles);
     }
 
     @FXML
     private void SeleccionaEmpleado(MouseEvent event) {
-        if(listaEmpleados.getSelectionModel()!=null){
-            if(listaEmpleados.getSelectionModel().getSelectedItem()!=null){
+        if (listaEmpleados.getSelectionModel() != null) {
+            if (listaEmpleados.getSelectionModel().getSelectedItem() != null) {
                 tableRol.getItems().clear();
                 PuestoDto puestoDto = listaEmpleados.getSelectionModel().getSelectedItem();
-                ArrayList<RolDto> lista = puestoDto.getRoles();
                 resp = puesService.getRoles(puestoDto.getId());
-                puestoDto = (PuestoDto)resp.getResultado("roles");
+                puestoDto = (PuestoDto) resp.getResultado("roles");
                 itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
                 tableRol.setItems(itemsRoles);
-            }       
+            }
         }
     }
 
     @FXML
     private void SeleccionaRol(MouseEvent event) {
+        if (tableRol.getSelectionModel() != null) {
+            if (tableRol.getSelectionModel().getSelectedItem() != null) {
+                RolDto roldto = tableRol.getSelectionModel().getSelectedItem();
+                ArrayList<DiaDto> diadto = roldto.getHorario().getDias();
+                diadto.stream().forEach(dia -> {
+                    switch (dia.getNombre()) {
+                        case "Lunes":
+                            Lunes.setId("button2");
+                            lblHoraInicioLunes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            lblHoraFinalLunes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            break;
+                        case "Martes":
+                            Martes.setId("button2");
+                            lblHoraInicioMartes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            lblHoraFinalMartes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            break;
+                        case "Miercoles":
+                            Miercoles.setId("button2");
+                            lblHoraInicioMiercoles.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            lblHoraFinalMiercoles.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            break;
+                        case "Jueves":
+                            Jueves.setId("button2");
+                            lblHoraInicioJueves.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            lblHoraFinalJueves.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            break;
+                        case "Viernes":
+                            Viernes.setId("button2");
+                            lblHoraInicioViernes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            lblHoraFinalViernes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            break;
+                        case "Sabado":
+                            Sabado.setId("button2");
+                            lblHoraInicioSabado.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            lblHoraFinalSabado.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            break;
+                        case "Domingo":
+                            Domingo.setId("button2");
+                            lblHoraInicioDomingo.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            lblHoraFinalDomingo.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
+        }
     }
-    
+
 }

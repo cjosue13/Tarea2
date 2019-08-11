@@ -275,7 +275,6 @@ public class AsignacionHorarioController extends Controller{
         txtCantidadHoras.setOnKeyReleased(aceptaNumeros);
         dateFechaIni.setOnKeyReleased(noEscribir);
         txtHoraFinal.setOnKeyReleased(noEscribir);
-
     }
     
     private EventHandler<KeyEvent> aceptaCaracteres = (KeyEvent event) -> {

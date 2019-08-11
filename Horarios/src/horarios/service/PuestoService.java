@@ -56,25 +56,17 @@ public class PuestoService {
             qryPuesto.setParameter("pueCodigo", puestoID);
             ArrayList <RolDto> roles = new ArrayList <>();
            
-            //System.out.println(puesto2.getRolList().size());
-            //System.out.println("Puesto "+ puesto2.getPueCodigo());
             for(Rol rol : ((Puesto) qryPuesto.getSingleResult()).getRolList()){
                 RolDto rolDto = new RolDto(rol);
-                System.out.println("Rol");
                 ArrayList <DiaDto> dias = new ArrayList<>();
                 HorarioDto horarioDto = new HorarioDto(rol.getHorario());
                 for(Dia dia: rol.getHorario().getHorDiaList()){
-                    System.out.println("Dia");
                     dias.add(new DiaDto(dia));
                 }
                 horarioDto.setDias(dias);
                 rolDto.setHorario(horarioDto);
                 roles.add(rolDto);
-                //((Puesto) qryPuesto.getSingleResult()).getRolList()
             }
-            
-            
-            
             PuestoDto puesto = new PuestoDto((Puesto) qryPuesto.getSingleResult());
             puesto.setRoles(roles);
             

@@ -57,7 +57,7 @@ public class EmpleadosController extends Controller {
     private JFXTextField txtCedula;
     @FXML
     private JFXTextField txtCorreo;
-    
+
     private EmpleadoDto empleado;
     private EmpleadoService empService;
     private Respuesta resp;
@@ -83,30 +83,34 @@ public class EmpleadosController extends Controller {
 
     @FXML
     private void editar(ActionEvent event) {
-        
-        if (registroCorrecto()) {
-            Integer id = empleado.getId();
-            String nombre = txtNombre.getText();
-            String apellido = txtApellidos.getText();
-            String correo = txtCorreo.getText();
-            String cedula = txtCedula.getText();
+        if (table.getSelectionModel() != null) {
+            if (table.getSelectionModel().getSelectedItem() != null) {
+                if (registroCorrecto()) {
+                    Integer id = empleado.getId();
+                    String nombre = txtNombre.getText();
+                    String apellido = txtApellidos.getText();
+                    String correo = txtCorreo.getText();
+                    String cedula = txtCedula.getText();
 
-            empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, 1, id);
-            try {
-                resp = empService.guardarEmpleado(empleado);
-                ms.showModal(AlertType.INFORMATION, "Informacion de Edición",this.getStage() ,resp.getMensaje());
-                limpiarValores();
-                empleados = (ArrayList) empService.getEmpleados().getResultado("Empleados");
-                table.getItems().clear();
-                items = FXCollections.observableArrayList(empleados);
-                table.setItems(items);
-
-            } catch (Exception e) {
-                ms.showModal(AlertType.ERROR, "Informacion de guardado",this.getStage() ,"Hubo un error al momento de guardar el empleado.");
+                    empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, 1, id);
+                    try {
+                        resp = empService.guardarEmpleado(empleado);
+                        ms.showModal(AlertType.INFORMATION, "Informacion de Edición", this.getStage(), resp.getMensaje());
+                        limpiarValores();
+                        empleados = (ArrayList) empService.getEmpleados().getResultado("Empleados");
+                        table.getItems().clear();
+                        items = FXCollections.observableArrayList(empleados);
+                        table.setItems(items);
+                    } catch (Exception e) {
+                        ms.showModal(AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el empleado.");
+                    }
+                } else {
+                    ms.showModal(AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
+                            + "verifica que todos los datos esten llenos.");
+                }
+            } else {
+                ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a eliminar");
             }
-        } else {
-            ms.showModal(AlertType.ERROR, "Informacion acerca del guardado", this.getStage() ,"Existen datos erroneos en el registro, "
-                    + "verifica que todos los datos esten llenos.");
         }
     }
 
@@ -116,15 +120,16 @@ public class EmpleadosController extends Controller {
             if (table.getSelectionModel().getSelectedItem() != null) {
 
                 empService.eliminarEmpleado(table.getSelectionModel().getSelectedItem().getId());
-                ms.showModal(Alert.AlertType.INFORMATION, "Información",this.getStage() ,"Datos Eliminados correctamente");
-                
+                ms.showModal(Alert.AlertType.INFORMATION, "Información", this.getStage(), "Datos Eliminados correctamente");
+
                 Respuesta respuesta = empService.getEmpleados();
                 items.clear();
-                empleados = (ArrayList<EmpleadoDto>) respuesta.getResultado("Empleados");
+                empleados = (ArrayList) respuesta.getResultado("Empleados");
                 items = FXCollections.observableArrayList(empleados);
                 table.setItems(items);
+                limpiarValores();
             } else {
-                ms.showModal(Alert.AlertType.WARNING, "Información",this.getStage() ,"Debes seleccionar el elemento a eliminar");
+                ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a eliminar");
             }
         }
     }
@@ -141,7 +146,7 @@ public class EmpleadosController extends Controller {
             empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, 1, null);
             try {
                 resp = empService.guardarEmpleado(empleado);
-                ms.showModal(AlertType.INFORMATION, "Informacion de guardado",this.getStage() ,resp.getMensaje());
+                ms.showModal(AlertType.INFORMATION, "Informacion de guardado", this.getStage(), resp.getMensaje());
                 limpiarValores();
                 empleados = (ArrayList) empService.getEmpleados().getResultado("Empleados");
                 table.getItems().clear();
@@ -149,19 +154,19 @@ public class EmpleadosController extends Controller {
                 table.setItems(items);
 
             } catch (Exception e) {
-                ms.showModal(AlertType.ERROR, "Informacion de guardado", this.getStage() ,"Hubo un error al momento de guardar el empleado.");
+                ms.showModal(AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el empleado.");
             }
 
         } else {
-            ms.show(AlertType.ERROR, "Informacion acerca del guardado", "Existen datos erroneos en el registro, "
+            ms.showModal(AlertType.ERROR, "Informacion acerca del guardado",this.getStage() ,"Existen datos erroneos en el registro, "
                     + "verifica que todos los datos esten llenos.");
         }
 
     }
 
     boolean registroCorrecto() {
-        return !txtNombre.getText().isEmpty() && !txtApellidos.getText().isEmpty() && 
-                !txtCorreo.getText().isEmpty() && !txtCedula.getText().isEmpty();
+        return !txtNombre.getText().isEmpty() && !txtApellidos.getText().isEmpty()
+                && !txtCorreo.getText().isEmpty() && !txtCedula.getText().isEmpty();
     }
 
     void limpiarValores() {
@@ -169,8 +174,10 @@ public class EmpleadosController extends Controller {
         txtApellidos.clear();
         txtCorreo.clear();
         txtCedula.clear();
+        table.getSelectionModel().clearSelection();
+
     }
-    
+
     @FXML
     private void DatosEmpleado(MouseEvent event) {
         if (table.getSelectionModel() != null) {
@@ -183,5 +190,10 @@ public class EmpleadosController extends Controller {
             }
         }
     }
-    
+
+    @FXML
+    private void limpiarRegistro(ActionEvent event) {
+        limpiarValores();
+    }
+
 }

@@ -36,6 +36,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 /**
@@ -85,11 +87,71 @@ public class AsignacionHorarioController extends Controller {
     private AnchorPane anchorAux;
     private RolService rolService;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    @FXML
+    private ImageView monday;
+    @FXML
+    private ImageView tuesday;
+    @FXML
+    private ImageView wednesday;
+    @FXML
+    private ImageView thursday;
+    @FXML
+    private ImageView friday;
+    @FXML
+    private ImageView saturday;
+    @FXML
+    private ImageView sunday;
+    @FXML
+    private JFXButton agregarhorario;
+    @FXML
+    private JFXButton atras;
     @Override
     public void initialize() {
         inicio();
         Callback<DatePicker, DateCell> dayCellFactory= this.getDayCellFactory();
         dateFechaIni.setDayCellFactory(dayCellFactory);
+        /*Image img;
+        try {
+            img = new Image("/horarios/resources/monday.png");
+            monday.setImage(img);
+        } catch (Exception e) {
+        }
+        Image img1;
+        try {
+            img1 = new Image("/horarios/resources/tuesday.png");
+            tuesday.setImage(img1);
+        } catch (Exception e) {
+        }
+        Image img2;
+        try {
+            img2 = new Image("/horarios/resources/wednesday.png");
+            wednesday.setImage(img2);
+        } catch (Exception e) {
+        }
+        Image img3;
+        try {
+            img3 = new Image("/horarios/resources/thursday.png");
+            thursday.setImage(img3);
+        } catch (Exception e) {
+        }
+        Image img4;
+        try {
+            img4 = new Image("/horarios/resources/friday.png");
+            friday.setImage(img4);
+        } catch (Exception e) {
+        }
+        Image img5;
+        try {
+            img5 = new Image("/horarios/resources/saturday.png");
+            saturday.setImage(img5);
+        } catch (Exception e) {
+        }
+        Image img6;
+        try {
+            img6 = new Image("/horarios/resources/sunday.png");
+            sunday.setImage(img6);
+        } catch (Exception e) {
+        }*/
     }
     
     public void inicio() {

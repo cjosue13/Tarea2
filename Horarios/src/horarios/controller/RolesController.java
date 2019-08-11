@@ -86,7 +86,8 @@ public class RolesController extends Controller {
 
     @FXML
     private void editar(ActionEvent event) {
-        if (registroCorrecto()) {
+        if (!txtNombre.getText().isEmpty() && (!RotativoRadioButtonN.getText().isEmpty()
+                || !RotativoRadioButtonY.getText().isEmpty())) {
             if (table.getSelectionModel() != null) {
                 if (table.getSelectionModel().getSelectedItem() != null) {
                     String rotar = null;
@@ -228,6 +229,7 @@ public class RolesController extends Controller {
         AppContext.getInstance().delete("horario");
         AppContext.getInstance().delete("Rol");
         table.getSelectionModel().clearSelection();
+        System.out.println("MODEL "+table.getSelectionModel().getSelectedItem());
         RotativoRadioButtonN.setSelected(true);
 
     }

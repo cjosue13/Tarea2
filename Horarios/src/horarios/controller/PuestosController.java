@@ -128,7 +128,7 @@ public class PuestosController extends Controller {
                         tablePuesto.setItems(itemsPues);
 
                     } catch (Exception e) {
-                        ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el hospital. "
+                        ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el Puesto. "
                                 + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
                     }
                 } else {
@@ -138,6 +138,24 @@ public class PuestosController extends Controller {
 
             } else {
                 ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a editar");
+        if (registroCorrecto()) {
+            String nombre = txtNombre.getText();
+            String descripcion = txtDescripcion.getText();
+            Integer id = puesto.getId();
+            puesto = new PuestoDto(nombre, descripcion, 1, empleado, id);
+            try {
+                resp = puesService.guardarPuesto(puesto);
+
+                ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado",this.getStage() ,resp.getMensaje());
+                limpiarValores();
+                puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
+                tablePuesto.getItems().clear();
+                itemsPues = FXCollections.observableArrayList(puestos);
+                tablePuesto.setItems(itemsPues);
+
+            } catch (Exception e) {
+                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el Puesto. "
+                        + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
             }
         }
 
@@ -179,8 +197,9 @@ public class PuestosController extends Controller {
                 tablePuesto.setItems(itemsPues);
 
             } catch (Exception e) {
-                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el hospital. "
-                        + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
+
+                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el Puesto. "
+                        + "Verifica que todos los datos esten llenos correctamente o que el empleado no tenga un puesto asignado");
 
             }
 

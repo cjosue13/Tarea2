@@ -123,7 +123,6 @@ public class Puesto implements Serializable {
         this.pueVersion = pueVersion;
     }
 
-    
     public List<Rol> getRolList() {
         return rolList;
     }

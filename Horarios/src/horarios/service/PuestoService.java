@@ -55,6 +55,9 @@ public class PuestoService {
             Query qryPuesto = em.createNamedQuery("Puesto.findByPueCodigo", Puesto.class);
             qryPuesto.setParameter("pueCodigo", puestoID);
             ArrayList <RolDto> roles = new ArrayList <>();
+           
+            //System.out.println(puesto2.getRolList().size());
+            //System.out.println("Puesto "+ puesto2.getPueCodigo());
             for(Rol rol : ((Puesto) qryPuesto.getSingleResult()).getRolList()){
                 RolDto rolDto = new RolDto(rol);
                 System.out.println("Rol");

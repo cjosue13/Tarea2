@@ -17,9 +17,12 @@ import horarios.model.RolDto;
 import horarios.service.RolService;
 import horarios.util.AppContext;
 import horarios.util.Mensaje;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.chrono.HijrahChronology;
+import java.time.format.DateTimeFormatter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -31,7 +34,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 /**
  * FXML Controller class
  *
@@ -78,12 +84,14 @@ public class AsignacionHorarioController extends Controller {
     private HorarioDto horario;
     private AnchorPane anchorAux;
     private RolService rolService;
-
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     @Override
     public void initialize() {
         inicio();
+        Callback<DatePicker, DateCell> dayCellFactory= this.getDayCellFactory();
+        dateFechaIni.setDayCellFactory(dayCellFactory);
     }
-
+    
     public void inicio() {
         typeKeys();
         ms = new Mensaje();
@@ -266,6 +274,7 @@ public class AsignacionHorarioController extends Controller {
         txtHoraFinal.setOnKeyReleased(noEscribir);
 
     }
+    
     private EventHandler<KeyEvent> aceptaCaracteres = (KeyEvent event) -> {
         if (Character.isDigit(event.getCharacter().charAt(0))) {
             event.consume();
@@ -277,7 +286,23 @@ public class AsignacionHorarioController extends Controller {
             event.consume();
         }
     };
+    
     private EventHandler<KeyEvent> noEscribir = (KeyEvent event) -> {
         event.consume();
     };
+    
+    private Callback<DatePicker, DateCell> getDayCellFactory() {
+        final Callback<DatePicker, DateCell> dayCellFactory = (final DatePicker datePicker) -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                // Disable Monday, Tueday, Wednesday.
+                if (item.getDayOfWeek() != DayOfWeek.MONDAY) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: gray;");
+                }
+            }
+        };
+        return dayCellFactory;
+    }
 }

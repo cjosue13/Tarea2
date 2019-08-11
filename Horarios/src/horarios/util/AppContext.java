@@ -44,7 +44,7 @@ public class AppContext {
                 this.set("resturl",appProperties.getProperty("propiedades.resturl"));
             }*/
         } catch (IOException io) {
-            System.out.println("Archivo de configuración no encontrado.");
+            //System.out.println("Archivo de configuración no encontrado.");
         }
     }
 

@@ -292,7 +292,7 @@ public class AsignacionHorarioController extends Controller {
             //Cierra la ventana
             getStage().hide();
         } else {
-            ms.showModal(Alert.AlertType.ERROR, "Informacion", this.getStage(), "Los datos no han sido llenado correctamente."
+            ms.showModal(Alert.AlertType.ERROR, "Informacion", this.getStage(), "Los datos no han sido llenados correctamente."
                     + " Verifica que hayas seleccionado un dia de la semana o que se haya elegido una fecha de inicio");
         }
     }

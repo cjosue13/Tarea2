@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.RolesController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.RolesController">
    <children>
       <TableView fx:id="table" layoutX="77.0" layoutY="140.0" onMouseReleased="#DatosRoles" prefHeight="280.0" prefWidth="870.0">
          <columns>
@@ -22,12 +22,12 @@
       <Label fx:id="Titulo" layoutX="468.0" layoutY="40.0" stylesheets="@newCascadeStyleSheet.css" text="Roles" />
       <Label layoutX="72.0" layoutY="570.0" text="Horario Rotativo:" />
       <JFXTextField fx:id="txtNombre" layoutX="77.0" layoutY="485.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre del Rol" />
-      <JFXRadioButton fx:id="RotativoRadioButtonY" layoutX="162.0" layoutY="570.0" styleClass="custom-jfx-radio-button-white" text="Si">
+      <JFXRadioButton fx:id="RotativoRadioButtonY" layoutX="185.0" layoutY="570.0" styleClass="custom-jfx-radio-button-white" text="Si">
          <toggleGroup>
             <ToggleGroup fx:id="rotativo" />
          </toggleGroup></JFXRadioButton>
       <JFXRadioButton fx:id="RotativoRadioButtonN" layoutX="269.0" layoutY="570.0" selected="true" styleClass="custom-jfx-radio-button-white" text="No" toggleGroup="$rotativo" />
-      <HBox layoutX="438.0" layoutY="500.0" prefHeight="100.0" prefWidth="546.0" spacing="20.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="438.0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="500.0">
+      <HBox layoutX="357.0" layoutY="500.0" prefHeight="100.0" prefWidth="627.0" spacing="20.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="357.0" AnchorPane.rightAnchor="46.0" AnchorPane.topAnchor="500.0">
          <padding>
             <Insets left="20.0" right="20.0" top="40.0" />
          </padding>

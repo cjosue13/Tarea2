@@ -17,15 +17,17 @@ import horarios.model.RolDto;
 import horarios.service.RolService;
 import horarios.util.AppContext;
 import horarios.util.Mensaje;
+import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.chrono.HijrahChronology;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,16 +38,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 /**
  * FXML Controller class
  *
  * @author Jose Pablo Bermudez
  */
-public class AsignacionHorarioController extends Controller {
+public class AsignacionHorarioController extends Controller{
 
     @FXML
     private FlowPane flowPane;

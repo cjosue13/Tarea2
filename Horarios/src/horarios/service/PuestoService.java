@@ -108,7 +108,7 @@ public class PuestoService {
             return new Respuesta(true, "Guardado exitosamente", "", "Puesto", new PuestoDto(Puesto));
         } catch (Exception ex) {
             et.rollback();
-            Logger.getLogger(PuestoService.class.getName()).log(Level.SEVERE, "Ocurrio un error al guardar la Puesto.", ex);
+            Logger.getLogger(PuestoService.class.getName()).log(Level.SEVERE, "Ocurrio un error al guardar el Puesto.", ex);
             return new Respuesta(false, "Ocurrio un error al guardar el Puesto.", "guardarPuesto " + ex.getMessage());
         }
     }

@@ -126,7 +126,7 @@ public class PuestosController extends Controller {
                 tablePuesto.setItems(itemsPues);
 
             } catch (Exception e) {
-                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el hospital. "
+                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el Puesto. "
                         + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
 
             }
@@ -173,7 +173,7 @@ public class PuestosController extends Controller {
                 tablePuesto.setItems(itemsPues);
 
             } catch (Exception e) {
-                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el hospital. "
+                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el Puesto. "
                         + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
 
             }

@@ -86,10 +86,10 @@ public class RolesController extends Controller {
 
     @FXML
     private void editar(ActionEvent event) {
-        if (!txtNombre.getText().isEmpty() && (!RotativoRadioButtonN.getText().isEmpty()
-                || !RotativoRadioButtonY.getText().isEmpty())) {
-            if (table.getSelectionModel() != null) {
-                if (table.getSelectionModel().getSelectedItem() != null) {
+        if (table.getSelectionModel() != null) {
+            if (table.getSelectionModel().getSelectedItem() != null) {
+                if (!txtNombre.getText().isEmpty() && (RotativoRadioButtonN.isSelected()
+                        || RotativoRadioButtonY.isSelected())) {
                     String rotar = null;
                     if (RotativoRadioButtonN.isSelected()) {
                         rotar = "N";
@@ -133,12 +133,12 @@ public class RolesController extends Controller {
                         ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de editar el rol.");
                     }
                 } else {
-                    ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento para editar");
+                    ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
+                            + "verifica que todos los datos esten llenos o que ya hayas creado un horario.");
                 }
+            } else {
+                ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento para editar");
             }
-        } else {
-            ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
-                    + "verifica que todos los datos esten llenos o que ya hayas creado un horario.");
         }
     }
 
@@ -166,43 +166,43 @@ public class RolesController extends Controller {
         //Mientras cumpla los datos del registro correcto y no haya seleccionado un dato para editar o elminar
         if (registroCorrecto()) {
             if (table.getSelectionModel().getSelectedItem() == null) {
-                    String rotar = null;
-                    if (RotativoRadioButtonN.isSelected()) {
-                        rotar = "N";
-                    } else {
-                        if (RotativoRadioButtonY.isSelected()) {
-                            rotar = "Y";
-                        }
+                String rotar = null;
+                if (RotativoRadioButtonN.isSelected()) {
+                    rotar = "N";
+                } else {
+                    if (RotativoRadioButtonY.isSelected()) {
+                        rotar = "Y";
                     }
-                    String nombre = txtNombre.getText();
+                }
+                String nombre = txtNombre.getText();
 
-                    rol = new RolDto(nombre, rotar, 1, null, null);
-                    try {
-                        resp = rolservice.guardarRol(rol);
-                        //Guardo el horario en base de datos
-                        HorarioDto horario = (HorarioDto) AppContext.getInstance().get("horario");/*para poder usar los datos desde otra ventana*/
-                        horario.setRol((RolDto) resp.getResultado("Rol"));
+                rol = new RolDto(nombre, rotar, 1, null, null);
+                try {
+                    resp = rolservice.guardarRol(rol);
+                    //Guardo el horario en base de datos
+                    HorarioDto horario = (HorarioDto) AppContext.getInstance().get("horario");/*para poder usar los datos desde otra ventana*/
+                    horario.setRol((RolDto) resp.getResultado("Rol"));
 
-                        HorarioService horService = new HorarioService();
-                        Respuesta respHorario = horService.guardarHorario(horario);
+                    HorarioService horService = new HorarioService();
+                    Respuesta respHorario = horService.guardarHorario(horario);
 
-                        DiaService diaService = new DiaService();
-                        horario.getDias().stream().forEach(dia -> {
-                            dia.setHorario((HorarioDto) respHorario.getResultado("Horario"));
-                            diaService.guardarDia(dia);
-                        });
+                    DiaService diaService = new DiaService();
+                    horario.getDias().stream().forEach(dia -> {
+                        dia.setHorario((HorarioDto) respHorario.getResultado("Horario"));
+                        diaService.guardarDia(dia);
+                    });
 
-                        ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), resp.getMensaje());
-                        roles = (ArrayList) rolservice.getRoles().getResultado("Roles");
-                        table.getItems().clear();
-                        items = FXCollections.observableArrayList(roles);
-                        table.setItems(items);
-                        limpiarValores();
-                    } catch (Exception e) {
-                        //Preguntar a Carranza
-                        ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el rol.");
-                    }
-                
+                    ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), resp.getMensaje());
+                    roles = (ArrayList) rolservice.getRoles().getResultado("Roles");
+                    table.getItems().clear();
+                    items = FXCollections.observableArrayList(roles);
+                    table.setItems(items);
+                    limpiarValores();
+                } catch (Exception e) {
+                    //Preguntar a Carranza
+                    ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el rol.");
+                }
+
             } else {
                 ms.showModal(Alert.AlertType.WARNING, "Informacion acerca del guardado", this.getStage(), "Has seleccionado un rol en la tabla ,solo puedes"
                         + " agregar un registro nuevo. Si agregaras un rol nuevo debes limpiar el registro.");
@@ -219,8 +219,8 @@ public class RolesController extends Controller {
     }
 
     boolean registroCorrecto() {
-        return !txtNombre.getText().isEmpty() && (!RotativoRadioButtonN.getText().isEmpty()
-                || !RotativoRadioButtonY.getText().isEmpty()) && AppContext.getInstance().get("horario") != null;//el app context valida que se haya selecionado una lista de horarios
+        return !txtNombre.getText().isEmpty() && (RotativoRadioButtonN.isSelected()
+                || RotativoRadioButtonY.isSelected()) && AppContext.getInstance().get("horario") != null;//el app context valida que se haya selecionado una lista de horarios
     }
 
     void limpiarValores() {
@@ -229,7 +229,6 @@ public class RolesController extends Controller {
         AppContext.getInstance().delete("horario");
         AppContext.getInstance().delete("Rol");
         table.getSelectionModel().clearSelection();
-        System.out.println("MODEL "+table.getSelectionModel().getSelectedItem());
         RotativoRadioButtonN.setSelected(true);
 
     }

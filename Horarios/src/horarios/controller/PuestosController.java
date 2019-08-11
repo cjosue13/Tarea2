@@ -110,32 +110,37 @@ public class PuestosController extends Controller {
 
     @FXML
     private void editar(ActionEvent event) {
-        if (registroCorrecto()) {
-            String nombre = txtNombre.getText();
-            String descripcion = txtDescripcion.getText();
-            Integer id = puesto.getId();
-            puesto = new PuestoDto(nombre, descripcion, 1, empleado, id);
-            try {
-                resp = puesService.guardarPuesto(puesto);
+        if (tablePuesto.getSelectionModel() != null) {
+            if (tablePuesto.getSelectionModel().getSelectedItem() != null) {
+                if (registroCorrecto()) {
+                    String nombre = txtNombre.getText();
+                    String descripcion = txtDescripcion.getText();
+                    Integer id = puesto.getId();
+                    puesto = new PuestoDto(nombre, descripcion, 1, empleado, id);
+                    try {
+                        resp = puesService.guardarPuesto(puesto);
 
-                ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado",this.getStage() ,resp.getMensaje());
-                limpiarValores();
-                puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
-                tablePuesto.getItems().clear();
-                itemsPues = FXCollections.observableArrayList(puestos);
-                tablePuesto.setItems(itemsPues);
+                        ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), resp.getMensaje());
+                        limpiarValores();
+                        puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
+                        tablePuesto.getItems().clear();
+                        itemsPues = FXCollections.observableArrayList(puestos);
+                        tablePuesto.setItems(itemsPues);
 
-            } catch (Exception e) {
-                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el hospital. "
-                        + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
+                    } catch (Exception e) {
+                        ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el hospital. "
+                                + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
+                    }
+                } else {
+                    ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
+                            + "verifica que todos los datos esten llenos.");
+                }
 
+            } else {
+                ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a editar");
             }
-
-        } else {
-            ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage() ,"Existen datos erroneos en el registro, "
-                    + "verifica que todos los datos esten llenos.");
         }
-        
+
     }
 
     @FXML
@@ -143,15 +148,16 @@ public class PuestosController extends Controller {
         if (tablePuesto.getSelectionModel() != null) {
             if (tablePuesto.getSelectionModel().getSelectedItem() != null) {
                 puesService.EliminarPuesto(tablePuesto.getSelectionModel().getSelectedItem().getId());
-                ms.showModal(Alert.AlertType.INFORMATION, "Información",this.getStage(),"Datos Eliminados correctamente");
-                resp= puesService.getPuestos();
+                ms.showModal(Alert.AlertType.INFORMATION, "Información", this.getStage(), "Datos Eliminados correctamente");
+                resp = puesService.getPuestos();
                 itemsPues.clear();
                 puestos = (ArrayList<PuestoDto>) resp.getResultado("Puestos");
                 itemsPues = FXCollections.observableArrayList(puestos);
                 tablePuesto.setItems(itemsPues);
+                limpiarValores();
             }
         } else {
-            ms.showModal(Alert.AlertType.WARNING, "Información",this.getStage() ,"Debes seleccionar el elemento a eliminar");
+            ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a eliminar");
         }
     }
 
@@ -165,7 +171,7 @@ public class PuestosController extends Controller {
             try {
                 resp = puesService.guardarPuesto(puesto);
 
-                ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado",this.getStage() ,resp.getMensaje());
+                ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), resp.getMensaje());
                 limpiarValores();
                 puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
                 tablePuesto.getItems().clear();
@@ -173,20 +179,20 @@ public class PuestosController extends Controller {
                 tablePuesto.setItems(itemsPues);
 
             } catch (Exception e) {
-                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Hubo un error al momento de guardar el hospital. "
+                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el hospital. "
                         + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
 
             }
 
         } else {
-            ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage() ,"Existen datos erroneos en el registro, "
+            ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
                     + "verifica que todos los datos esten llenos.");
         }
 
     }
 
     boolean registroCorrecto() {
-        return !txtNombre.getText().isEmpty() && empleado != null;
+        return !txtNombre.getText().isEmpty() && !txtEmpleado.getText().isEmpty()/*empleado != null*/;
     }
 
     void limpiarValores() {
@@ -194,6 +200,8 @@ public class PuestosController extends Controller {
         txtDescripcion.clear();
         txtEmpleado.clear();
         empleado = null;
+        tableEmpleado.getSelectionModel().clearSelection();
+        tablePuesto.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -202,10 +210,13 @@ public class PuestosController extends Controller {
             if (tableEmpleado.getSelectionModel().getSelectedItem() != null) {
                 empleado = tableEmpleado.getSelectionModel().getSelectedItem();
                 txtEmpleado.setText(empleado.getNombre() + " " + empleado.getApellido());
+                txtNombre.clear();
+                txtDescripcion.clear();
+                tablePuesto.getSelectionModel().clearSelection();
             }
         }
     }
-    
+
     @FXML
     private void DatosPuestos(MouseEvent event) {
         if (tablePuesto.getSelectionModel() != null) {
@@ -213,8 +224,15 @@ public class PuestosController extends Controller {
                 puesto = tablePuesto.getSelectionModel().getSelectedItem();
                 txtNombre.setText(puesto.getNombrePuesto());
                 txtDescripcion.setText(puesto.getDescripcion());
+                txtEmpleado.setText(puesto.getEmpleado().getNombre() + " " + puesto.getEmpleado().getApellido());
+                tableEmpleado.getSelectionModel().clearSelection();
             }
         }
     }
-    
+
+    @FXML
+    private void limpiarRegistro(ActionEvent event) {
+        limpiarValores();
+    }
+
 }

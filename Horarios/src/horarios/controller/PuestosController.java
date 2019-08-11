@@ -80,32 +80,7 @@ public class PuestosController extends Controller {
 
     @Override
     public void initialize() {
-
-        puesService = new PuestoService();
-        empService = new EmpleadoService();
-
-        ms = new Mensaje();
-        resp = puesService.getPuestos();
-
-        puestos = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
-        COL_NOMBRE_PUES.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
-        COL_DESCRIPCION_PUES.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getDescripcion()));
-        COL_CODIGO_PUES.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
-        COL_EMPLEADO_PUE.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEmpleado().getNombre() + " "
-                + value.getValue().getEmpleado().getApellido()));
-
-        resp = empService.getEmpleados();
-        empleados = (ArrayList) resp.getResultado("Empleados");
-
-        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre()));
-        COL_APELLIDO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getApellido()));
-        COL_ID_EMP.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
-
-        itemsPues = FXCollections.observableArrayList(puestos);
-        itemsEmp = FXCollections.observableArrayList(empleados);
-        tablePuesto.setItems(itemsPues);
-        tableEmpleado.setItems(itemsEmp);
-
+        inicio();
     }
 
     @FXML
@@ -199,6 +174,33 @@ public class PuestosController extends Controller {
         empleado = null;
         tableEmpleado.getSelectionModel().clearSelection();
         tablePuesto.getSelectionModel().clearSelection();
+    }
+
+    public void inicio() {
+        puesService = new PuestoService();
+        empService = new EmpleadoService();
+
+        ms = new Mensaje();
+        resp = puesService.getPuestos();
+
+        puestos = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
+        COL_NOMBRE_PUES.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
+        COL_DESCRIPCION_PUES.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getDescripcion()));
+        COL_CODIGO_PUES.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
+        COL_EMPLEADO_PUE.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEmpleado().getNombre() + " "
+                + value.getValue().getEmpleado().getApellido()));
+
+        resp = empService.getEmpleados();
+        empleados = (ArrayList) resp.getResultado("Empleados");
+
+        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre()));
+        COL_APELLIDO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getApellido()));
+        COL_ID_EMP.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
+
+        itemsPues = FXCollections.observableArrayList(puestos);
+        itemsEmp = FXCollections.observableArrayList(empleados);
+        tablePuesto.setItems(itemsPues);
+        tableEmpleado.setItems(itemsEmp);
     }
 
     @FXML

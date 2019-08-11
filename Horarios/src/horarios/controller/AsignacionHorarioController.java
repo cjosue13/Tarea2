@@ -297,9 +297,9 @@ public class AsignacionHorarioController extends Controller {
             public void updateItem(LocalDate item, boolean empty) {
                 super.updateItem(item, empty);
                 // Disable Monday, Tueday, Wednesday.
-                if (item.getDayOfWeek() != DayOfWeek.MONDAY) {
+                if (item.getDayOfWeek() != DayOfWeek.MONDAY || item.compareTo(LocalDate.now()) < 0) {
                     setDisable(true);
-                    setStyle("-fx-background-color: gray;");
+                    setStyle("-fx-background-color: lightgray;");
                 }
             }
         };

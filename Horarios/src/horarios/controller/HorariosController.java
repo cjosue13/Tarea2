@@ -115,12 +115,9 @@ public class HorariosController extends Controller {
         COL_NOMBRE_PUE.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
         items = FXCollections.observableArrayList(empleados);
         listaEmpleados.setItems(items);
-
-        rolService = new RolService();
-        RespuestaRol = rolService.getRoles();
-        roles = ((ArrayList<RolDto>) RespuestaRol.getResultado("Roles"));
+        
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-        itemsRoles = FXCollections.observableArrayList(roles);
+ 
 
     }
 
@@ -128,11 +125,13 @@ public class HorariosController extends Controller {
     private void SeleccionaEmpleado(MouseEvent event) {
         if (listaEmpleados.getSelectionModel() != null) {
             if (listaEmpleados.getSelectionModel().getSelectedItem() != null) {
+                limpiarHorario();
                 tableRol.getItems().clear();
                 PuestoDto puestoDto = listaEmpleados.getSelectionModel().getSelectedItem();
                 resp = puesService.getRoles(puestoDto.getId());
                 puestoDto = (PuestoDto) resp.getResultado("roles");
                 itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
+                CantidadRoles.setText(String.valueOf(puestoDto.getRoles().size()));
                 tableRol.setItems(itemsRoles);
             }
         }

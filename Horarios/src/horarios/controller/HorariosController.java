@@ -5,6 +5,8 @@
  */
 package horarios.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextField;
 import horarios.model.DiaDto;
 import horarios.model.EmpleadoDto;
@@ -13,14 +15,22 @@ import horarios.model.RolDto;
 import horarios.service.EmpleadoService;
 import horarios.service.PuestoService;
 import horarios.service.RolService;
+import horarios.util.Excel;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.SimpleStyleableStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
@@ -28,6 +38,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.util.Duration;
+import javax.mail.MessagingException;
 
 /**
  * FXML Controller class
@@ -104,10 +116,22 @@ public class HorariosController extends Controller {
     private ObservableList itemsRoles;
     private RolService rolService;
     private Respuesta RespuestaRol;
-	
+    @FXML
+    private JFXButton btnCorreo;
+    Mensaje m = new Mensaje();
+    @FXML
+    private JFXProgressBar progressBar;
+    private double progreso;
+    private final Timeline timeProgress = new Timeline(new KeyFrame(Duration.ZERO, event -> correrBarWarning()), new KeyFrame(Duration.seconds(0.017)));
+    private final Timeline timeprogress = new Timeline(new KeyFrame(Duration.ZERO, event -> correrBarInformation()), new KeyFrame(Duration.seconds(0.017)));
+    private Excel correo = new Excel();
+    int porcentaje;
+    @FXML
+    private Label lblPorcentaje;
+
     @Override
     public void initialize() {
-        
+
         puesService = new PuestoService();
         resp = puesService.getPuestos();
         empleados = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
@@ -115,10 +139,10 @@ public class HorariosController extends Controller {
         COL_NOMBRE_PUE.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
         items = FXCollections.observableArrayList(empleados);
         listaEmpleados.setItems(items);
-        
-        COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
- 
 
+        COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
+
+        progressBar.setVisible(false);
     }
 
     @FXML
@@ -185,7 +209,7 @@ public class HorariosController extends Controller {
                             break;
                     }
                 });
-                
+
             }
         }
     }
@@ -196,5 +220,62 @@ public class HorariosController extends Controller {
             ((Label) ((AnchorPane) node).getChildren().get(3)).setText("");
             ((Label) ((AnchorPane) node).getChildren().get(4)).setText("");
         });
+    }
+
+    @FXML
+    private void EnviarCorreo(ActionEvent event) {
+        progressBar.setVisible(true);
+         lblPorcentaje.setVisible(true);
+        progressBar.setProgress(0);
+        progreso = 0;
+        if (listaEmpleados.getSelectionModel() != null) {
+            if (listaEmpleados.getSelectionModel().getSelectedItem() != null) {
+                timeprogress.setCycleCount(Timeline.INDEFINITE);
+                correrBarInformation();
+                timeprogress.play();
+            } else {
+                progressBar.setVisible(true);
+                timeProgress.setCycleCount(Timeline.INDEFINITE);
+                correrBarWarning();
+                timeProgress.play();
+
+            }
+        } else {
+            progressBar.setVisible(true);
+            timeProgress.setCycleCount(Timeline.INDEFINITE);
+            correrBarWarning();
+            timeProgress.play();
+
+        }
+    }
+
+    public void correrBarWarning() {
+        progreso += 0.01;
+        progressBar.setProgress(progreso);
+        porcentaje = (int) (progreso * 100);
+        lblPorcentaje.setText(String.valueOf(porcentaje) + "%");
+        if (progreso > 0.9) {
+            timeProgress.stop();
+            progressBar.setVisible(false);
+            lblPorcentaje.setVisible(false);
+            m.show(Alert.AlertType.WARNING, "Envio de Correo", "Debes seleccionar el empleado");
+        }
+    }
+
+    public void correrBarInformation() {
+        progreso += 0.01;
+        progressBar.setProgress(progreso);
+        porcentaje = (int) (progreso * 100);
+        lblPorcentaje.setText(String.valueOf(porcentaje) + "%");
+        if (progreso > 0.9) {
+            timeprogress.stop();
+            progressBar.setVisible(false);
+            lblPorcentaje.setVisible(false);
+            try {
+                correo.SendMail(listaEmpleados.getSelectionModel().getSelectedItem().getEmpleado().getCorreo());
+            } catch (MessagingException | IOException ex) {
+                m.show(Alert.AlertType.ERROR, "Envio de Correo", "Ha ocurrido un error inesperado al enviar su correo");
+            }
+        }
     }
 }

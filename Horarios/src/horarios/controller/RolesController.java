@@ -164,8 +164,7 @@ public class RolesController extends Controller {
     private void agregar(ActionEvent event) {
         //Mientras cumpla los datos del registro correcto y no haya seleccionado un dato para editar o elminar
         if (registroCorrecto()) {
-            if (table.getSelectionModel() == null) {
-                if (table.getSelectionModel().getSelectedItem() == null) {
+            if (table.getSelectionModel().getSelectedItem() == null) {
                     String rotar = null;
                     if (RotativoRadioButtonN.isSelected()) {
                         rotar = "N";
@@ -202,7 +201,7 @@ public class RolesController extends Controller {
                         //Preguntar a Carranza
                         ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el rol.");
                     }
-                }
+                
             } else {
                 ms.showModal(Alert.AlertType.WARNING, "Informacion acerca del guardado", this.getStage(), "Has seleccionado un rol en la tabla ,solo puedes"
                         + " agregar un registro nuevo. Si agregaras un rol nuevo debes limpiar el registro.");

@@ -105,9 +105,24 @@ public class HorariosController extends Controller {
     private Label lblHoraInicioDomingo;
     @FXML
     private Label lblHoraFinalDomingo;
+    private boolean TLunes;
+    private boolean TMartes;
+    private boolean TMiercoles;
+    private boolean TJueves;
+    private boolean TViernes;
+    private boolean TSabado;
+    private boolean TDomingo;
 
     @Override
     public void initialize() {
+        TLunes = false;
+        TMartes = false;
+        TMiercoles = false;
+        TJueves = false;
+        TViernes = false;
+        TSabado = false;
+        TDomingo = false;
+        
         puesService = new PuestoService();
         resp = puesService.getPuestos();
         empleados = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
@@ -121,7 +136,7 @@ public class HorariosController extends Controller {
         roles = ((ArrayList<RolDto>) RespuestaRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
         itemsRoles = FXCollections.observableArrayList(roles);
-        //tableRol.setItems(itemsRoles);
+
     }
 
     @FXML
@@ -147,44 +162,91 @@ public class HorariosController extends Controller {
                 diadto.stream().forEach(dia -> {
                     switch (dia.getNombre()) {
                         case "Lunes":
-                            Lunes.setId("button2");
+                            Lunes.setStyle("-fx-background-color: green");
                             lblHoraInicioLunes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalLunes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TLunes = true;
                             break;
                         case "Martes":
-                            Martes.setId("button2");
+                            Martes.setStyle("-fx-background-color: green");
                             lblHoraInicioMartes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalMartes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TMartes = true;
                             break;
                         case "Miercoles":
-                            Miercoles.setId("button2");
+                            Miercoles.setStyle("-fx-background-color: green");
                             lblHoraInicioMiercoles.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalMiercoles.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TMiercoles = true;
                             break;
                         case "Jueves":
-                            Jueves.setId("button2");
+                            Jueves.setStyle("-fx-background-color: green");
                             lblHoraInicioJueves.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalJueves.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TJueves = true;
                             break;
                         case "Viernes":
-                            Viernes.setId("button2");
+                            Viernes.setStyle("-fx-background-color: green");
                             lblHoraInicioViernes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalViernes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TViernes = true;
                             break;
                         case "Sabado":
-                            Sabado.setId("button2");
+                            Sabado.setStyle("-fx-background-color: green");
                             lblHoraInicioSabado.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalSabado.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TSabado = true;
                             break;
                         case "Domingo":
-                            Domingo.setId("button2");
+                            Domingo.setStyle("-fx-background-color: green");
                             lblHoraInicioDomingo.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalDomingo.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TDomingo = true;
                             break;
                         default:
                             break;
                     }
                 });
+                if (!TLunes) {
+                    Lunes.setStyle("-fx-background-color: black");
+                    lblHoraInicioLunes.setText("");
+                    lblHoraFinalLunes.setText("");
+
+                }if (!TMartes) {
+                    Martes.setStyle("-fx-background-color: black");
+                    lblHoraInicioMartes.setText("");
+                    lblHoraFinalMartes.setText("");
+
+                }if (!TMiercoles) {
+                    Miercoles.setStyle("-fx-background-color: black");
+                    lblHoraInicioMiercoles.setText("");
+                    lblHoraFinalMiercoles.setText("");
+
+                }if (!TJueves) {
+                    Jueves.setStyle("-fx-background-color: black");
+                    lblHoraInicioJueves.setText("");
+                    lblHoraFinalJueves.setText("");
+
+                }if (!TViernes) {
+                    Viernes.setStyle("-fx-background-color: black");
+                    lblHoraInicioViernes.setText("");
+                    lblHoraFinalViernes.setText("");
+                }if (!TSabado) {
+                    Sabado.setStyle("-fx-background-color: black");
+                    lblHoraInicioSabado.setText("");
+                    lblHoraFinalSabado.setText("");
+                }if (!TDomingo) {
+                    Domingo.setStyle("-fx-background-color: black");
+                    lblHoraInicioDomingo.setText("");
+                    lblHoraFinalDomingo.setText("");
+                }
+                TLunes = false;
+                TMartes = false;
+                TMiercoles = false;
+                TJueves = false;
+                TViernes = false;
+                TSabado = false;
+                TDomingo = false;
             }
         }
     }

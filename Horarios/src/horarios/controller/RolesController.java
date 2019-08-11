@@ -116,8 +116,9 @@ public class RolesController extends Controller {
 
                     String nombre = txtNombre.getText();
                     Integer id = rol.getId();
-
-                    rol = new RolDto(nombre, rotar, 1, id, null);
+                    Integer version = rol.getVersion()+1;
+                    horarioDto.setVersion(horarioDto.getVersion()+1);
+                    rol = new RolDto(nombre, rotar, version, id, null);
                     try {
                         resp = rolservice.guardarRol(rol);
 
@@ -125,7 +126,7 @@ public class RolesController extends Controller {
                         if (!rol.getId().equals(horarioDto.getRol().getId())) {
                             horarioDto.setRol((RolDto) resp.getResultado("Rol"));
                         }
-
+                        
                         resp = horarioService.guardarHorario(horarioDto);
                         DiaService diaService = new DiaService();
                         horarioDto.getDias().stream().forEach(dia -> {

@@ -91,8 +91,9 @@ public class EmpleadosController extends Controller {
                     String apellido = txtApellidos.getText();
                     String correo = txtCorreo.getText();
                     String cedula = txtCedula.getText();
-
-                    empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, 1, id);
+                    Integer version = table.getSelectionModel().getSelectedItem().getVersion()+1;
+                    //Introducir la cantidad de horas trabajadas al empleado
+                    empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, version, id);
                     try {
                         resp = empService.guardarEmpleado(empleado);
                         ms.showModal(AlertType.INFORMATION, "Informacion de Edición", this.getStage(), resp.getMensaje());

@@ -87,6 +87,10 @@ public class AsignacionHorarioController extends Controller{
     private AnchorPane anchorAux;
     private RolService rolService;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    @FXML
+    private JFXButton agregarhorario;
+    @FXML
+    private JFXButton atras;
     @Override
     public void initialize() {
         inicio();

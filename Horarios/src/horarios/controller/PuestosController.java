@@ -91,7 +91,8 @@ public class PuestosController extends Controller {
                     String nombre = txtNombre.getText();
                     String descripcion = txtDescripcion.getText();
                     Integer id = puesto.getId();
-                    puesto = new PuestoDto(nombre, descripcion, 1, empleado, id);
+                    Integer version = puesto.getVersion()+1;
+                    puesto = new PuestoDto(nombre, descripcion, version, empleado, id);
                     try {
                         resp = puesService.guardarPuesto(puesto);
 

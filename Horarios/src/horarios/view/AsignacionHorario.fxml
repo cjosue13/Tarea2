@@ -14,17 +14,17 @@
    <children>
       <AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="804.0">
          <children>
-            <Label fx:id="Titulo" layoutX="166.0" layoutY="14.0" text="Asignación de Horario" />
-            <FlowPane fx:id="flowPane" layoutX="26.0" layoutY="130.0" prefHeight="303.0" prefWidth="450.0">
+            <Label fx:id="Titulo" layoutX="247.0" layoutY="19.0" stylesheets="@newCascadeStyleSheet.css" text="Asignación de Horario" />
+            <FlowPane fx:id="flowPane" layoutX="26.0" layoutY="130.0" prefHeight="303.0" prefWidth="502.0">
                <children>
                   <AnchorPane id="button2" fx:id="anchorLunes" focusTraversable="true" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="38.0" layoutY="42.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Lunes" />
+                        <Label layoutX="44.0" layoutY="42.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Lunes" />
                      </children>
                   </AnchorPane>
                   <AnchorPane id="button2" fx:id="anchorMartes" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="29.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Martes">
+                        <Label layoutX="42.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Martes">
                            <font>
                            </font>
                         </Label>
@@ -32,7 +32,7 @@
                   </AnchorPane>
                   <AnchorPane id="button2" fx:id="anchorMiercoles" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="19.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Miercoles">
+                        <Label layoutX="34.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Miercoles">
                            <font>
                            </font>
                         </Label>
@@ -40,7 +40,7 @@
                   </AnchorPane>
                   <AnchorPane id="button2" fx:id="anchorJueves" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="31.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Jueves">
+                        <Label layoutX="41.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Jueves">
                            <font>
                            </font>
                         </Label>
@@ -48,7 +48,7 @@
                   </AnchorPane>
                   <AnchorPane id="button2" fx:id="anchorViernes" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="31.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Viernes">
+                        <Label layoutX="38.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Viernes">
                            <font>
                            </font>
                         </Label>
@@ -56,7 +56,7 @@
                   </AnchorPane>
                   <AnchorPane id="button2" fx:id="anchorSabado" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="28.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Sabado">
+                        <Label layoutX="37.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Sabado">
                            <font>
                            </font>
                         </Label>
@@ -64,7 +64,7 @@
                   </AnchorPane>
                   <AnchorPane id="button2" fx:id="anchorDomingo" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="18.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Domingo">
+                        <Label layoutX="35.0" layoutY="40.0" styleClass="scroll-bar" stylesheets="@newCascadeStyleSheet.css" text="Domingo">
                            <font>
                            </font>
                         </Label>
@@ -73,9 +73,9 @@
                </children>
             </FlowPane>
             <JFXButton fx:id="btnAgregarDia" layoutX="731.0" layoutY="222.0" onAction="#agregarDia" stylesheets="@newCascadeStyleSheet.css" text="Agregar Dia" textFill="WHITE" visible="false" />
-            <JFXTimePicker fx:id="txtHoraInicial" editable="true" layoutX="662.0" layoutY="88.0" prefHeight="29.0" prefWidth="250.0" promptText="Hora Inicial" visible="false" />
-            <JFXTimePicker fx:id="txtHoraFinal" editable="true" layoutX="662.0" layoutY="130.0" prefHeight="29.0" prefWidth="250.0" promptText="Hora Final" visible="false" />
-            <JFXTextField fx:id="txtCantidadHoras" labelFloat="true" layoutX="662.0" layoutY="172.0" prefHeight="29.0" prefWidth="250.0" promptText="Cantidad de horas libre" visible="false" />
+            <JFXTimePicker fx:id="txtHoraInicial" editable="true" layoutX="662.0" layoutY="88.0" prefHeight="29.0" prefWidth="250.0" promptText="Hora Inicial" styleClass="label" stylesheets="@newCascadeStyleSheet.css" visible="false" />
+            <JFXTimePicker fx:id="txtHoraFinal" editable="true" layoutX="662.0" layoutY="130.0" prefHeight="29.0" prefWidth="250.0" promptText="Hora Final" styleClass="label" stylesheets="@newCascadeStyleSheet.css" visible="false" />
+            <JFXTextField fx:id="txtCantidadHoras" labelFloat="true" layoutX="662.0" layoutY="172.0" prefHeight="29.0" prefWidth="250.0" promptText="Cantidad de horas libre" styleClass="label" stylesheets="@newCascadeStyleSheet.css" visible="false" />
             <JFXDatePicker fx:id="dateFechaIni" layoutX="30.0" layoutY="89.0" prefHeight="29.0" prefWidth="250.0" promptText="Fecha de inicio" showWeekNumbers="true" styleClass="label" stylesheets="@newCascadeStyleSheet.css" />
             <Button fx:id="btnCancelar" layoutX="840.0" layoutY="222.0" mnemonicParsing="false" onAction="#cancelarDia" stylesheets="@newCascadeStyleSheet.css" text="Cancelar" textFill="WHITE" visible="false" />
             <JFXButton fx:id="Ayuda" buttonType="RAISED" layoutX="713.0" layoutY="486.0" onAction="#ayudar" ripplerFill="#006e7a" stylesheets="@newCascadeStyleSheet.css" text="Ayuda" textFill="WHITE" />

@@ -27,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 
 /**
  * FXML Controller class
@@ -35,8 +36,6 @@ import javafx.scene.layout.AnchorPane;
  */
 public class HorariosController extends Controller {
 
-    @FXML
-    private ScrollPane HorarioDiasNaturales;
     @FXML
     private AnchorPane Lunes;
     @FXML
@@ -63,18 +62,8 @@ public class HorariosController extends Controller {
     private Label CantidadRoles;
     @FXML
     private Label Titulo;
-
-    private JFXTextField txtCorreo;
-    private PuestoService puesService;
-    private Respuesta resp;
-    private ArrayList<PuestoDto> empleados;
-    private ObservableList items;
     @FXML
     private TableView<RolDto> tableRol;
-    private ArrayList<RolDto> roles;
-    private ObservableList itemsRoles;
-    private RolService rolService;
-    private Respuesta RespuestaRol;
     @FXML
     private TableColumn<RolDto, String> COL_NOMBRE_ROL;
     @FXML
@@ -105,6 +94,16 @@ public class HorariosController extends Controller {
     private Label lblHoraInicioDomingo;
     @FXML
     private Label lblHoraFinalDomingo;
+    private PuestoService puesService;
+    private Respuesta resp;
+    private ArrayList<PuestoDto> empleados;
+    private ObservableList items;
+    private ArrayList<RolDto> roles;
+    private ObservableList itemsRoles;
+    private RolService rolService;
+    private Respuesta RespuestaRol;
+    @FXML
+    private FlowPane flowPane;
 
     @Override
     public void initialize() {
@@ -142,42 +141,43 @@ public class HorariosController extends Controller {
     private void SeleccionaRol(MouseEvent event) {
         if (tableRol.getSelectionModel() != null) {
             if (tableRol.getSelectionModel().getSelectedItem() != null) {
+                limpiarHorario();
                 RolDto roldto = tableRol.getSelectionModel().getSelectedItem();
                 ArrayList<DiaDto> diadto = roldto.getHorario().getDias();
                 diadto.stream().forEach(dia -> {
                     switch (dia.getNombre()) {
                         case "Lunes":
-                            Lunes.setId("button2");
+                            Lunes.setId("buttonSelec");
                             lblHoraInicioLunes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalLunes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             break;
                         case "Martes":
-                            Martes.setId("button2");
+                            Martes.setId("buttonSelec");
                             lblHoraInicioMartes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalMartes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             break;
                         case "Miercoles":
-                            Miercoles.setId("button2");
+                            Miercoles.setId("buttonSelec");
                             lblHoraInicioMiercoles.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalMiercoles.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             break;
                         case "Jueves":
-                            Jueves.setId("button2");
+                            Jueves.setId("buttonSelec");
                             lblHoraInicioJueves.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalJueves.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             break;
                         case "Viernes":
-                            Viernes.setId("button2");
+                            Viernes.setId("buttonSelec");
                             lblHoraInicioViernes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalViernes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             break;
                         case "Sabado":
-                            Sabado.setId("button2");
+                            Sabado.setId("buttonSelec");
                             lblHoraInicioSabado.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalSabado.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             break;
                         case "Domingo":
-                            Domingo.setId("button2");
+                            Domingo.setId("buttonSelec");
                             lblHoraInicioDomingo.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalDomingo.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             break;
@@ -189,4 +189,13 @@ public class HorariosController extends Controller {
         }
     }
 
+    public void limpiarHorario() {
+        System.out.println("FlowPane "+flowPane);
+        flowPane.getChildren().stream().forEach(node -> {
+            ((AnchorPane) node).setId("button2");
+            ((Label) ((AnchorPane) node).getChildren().get(3)).setText("");
+            ((Label) ((AnchorPane) node).getChildren().get(4)).setText("");
+        });
+
+    }
 }

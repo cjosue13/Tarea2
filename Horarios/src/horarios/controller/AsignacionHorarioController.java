@@ -129,6 +129,7 @@ public class AsignacionHorarioController extends Controller{
                     }
                 });
             });
+            
             dateFechaIni.setValue(horario.getFechaInicio());
             //Revisar mas adelante 
             AppContext.getInstance().set("horario", horario);

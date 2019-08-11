@@ -6,13 +6,12 @@
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackpane" style="-fx-background-color: #2a2a2a;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
+<StackPane fx:id="stackpane" style="-fx-background-color: #2a2a2a;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionHorarioController">
    <children>
       <AnchorPane prefHeight="550.0" prefWidth="950.0">
          <children>
@@ -23,7 +22,7 @@
             </Label>
             <FlowPane fx:id="flowPane" layoutX="30.0" layoutY="159.0" prefHeight="224.0" prefWidth="495.0">
                <children>
-                  <AnchorPane id="button2" fx:id="anchorLunes" focusTraversable="true" prefHeight="100.0" prefWidth="100.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+                  <AnchorPane id="button2" fx:id="anchorLunes" focusTraversable="true" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
                         <Label layoutX="35.0" layoutY="40.0" text="Lunes">
                            <font>
@@ -32,55 +31,54 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane id="button2" fx:id="anchorMartes" prefHeight="100.0" prefWidth="100.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+                  <AnchorPane id="button2" fx:id="anchorMartes" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="38.0" layoutY="42.0" text="Martes">
+                        <Label layoutX="29.0" layoutY="40.0" text="Martes">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane id="button2" fx:id="anchorMiercoles" prefHeight="100.0" prefWidth="100.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+                  <AnchorPane id="button2" fx:id="anchorMiercoles" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="24.0" layoutY="42.0" text="Miercoles">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="wednesday" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane id="button2" fx:id="anchorJueves" prefHeight="100.0" prefWidth="100.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
-                     <children>
-                        <Label layoutX="38.0" layoutY="42.0" text="Jueves">
+                        <Label layoutX="19.0" layoutY="40.0" text="Miercoles">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane id="button2" fx:id="anchorViernes" prefHeight="100.0" prefWidth="100.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+                  <AnchorPane id="button2" fx:id="anchorJueves" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="35.0" layoutY="39.0" text="Viernes">
+                        <Label layoutX="31.0" layoutY="40.0" text="Jueves">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane id="button2" fx:id="anchorSabado" prefHeight="100.0" prefWidth="100.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+                  <AnchorPane id="button2" fx:id="anchorViernes" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="38.0" layoutY="42.0" text="Sabado">
+                        <Label layoutX="31.0" layoutY="40.0" text="Viernes">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane id="button2" fx:id="anchorDomingo" prefHeight="100.0" prefWidth="100.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+                  <AnchorPane id="button2" fx:id="anchorSabado" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
                      <children>
-                        <Label layoutX="27.0" layoutY="42.0" text="Domingo">
+                        <Label layoutX="28.0" layoutY="40.0" text="Sabado">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane id="button2" fx:id="anchorDomingo" prefHeight="100.0" prefWidth="120.0" styleClass="button" stylesheets="@newCascadeStyleSheet.css">
+                     <children>
+                        <Label layoutX="18.0" layoutY="40.0" text="Domingo">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -93,7 +91,7 @@
             <JFXTimePicker fx:id="txtHoraInicial" editable="true" layoutX="662.0" layoutY="88.0" prefHeight="29.0" prefWidth="250.0" promptText="Hora Inicial" visible="false" />
             <JFXTimePicker fx:id="txtHoraFinal" editable="true" layoutX="662.0" layoutY="130.0" prefHeight="29.0" prefWidth="250.0" promptText="Hora Final" visible="false" />
             <JFXTextField fx:id="txtCantidadHoras" labelFloat="true" layoutX="662.0" layoutY="172.0" prefHeight="29.0" prefWidth="250.0" promptText="Cantidad de horas libre" visible="false" />
-            <JFXDatePicker fx:id="dateFechaIni" layoutX="30.0" layoutY="89.0" prefHeight="29.0" prefWidth="250.0" promptText="Fecha de inicio" showWeekNumbers="true" />
+            <JFXDatePicker fx:id="dateFechaIni" layoutX="30.0" layoutY="89.0" prefHeight="29.0" prefWidth="250.0" promptText="Fecha de inicio" showWeekNumbers="true" styleClass="label" stylesheets="@newCascadeStyleSheet.css" />
             <Button fx:id="btnCancelar" layoutX="840.0" layoutY="222.0" mnemonicParsing="false" onAction="#cancelarDia" stylesheets="@newCascadeStyleSheet.css" text="Cancelar" textFill="WHITE" visible="false" />
             <JFXButton fx:id="Ayuda" buttonType="RAISED" layoutX="713.0" layoutY="486.0" onAction="#ayudar" ripplerFill="#006e7a" stylesheets="@newCascadeStyleSheet.css" text="Ayuda" textFill="WHITE" />
             <JFXButton fx:id="agregarhorario" buttonType="RAISED" layoutX="793.0" layoutY="486.0" onAction="#agregarHorario" stylesheets="@newCascadeStyleSheet.css" text="Agregar Horario" textFill="WHITE" />

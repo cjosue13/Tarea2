@@ -110,48 +110,6 @@ public class AsignacionHorarioController extends Controller{
         inicio();
         Callback<DatePicker, DateCell> dayCellFactory= this.getDayCellFactory();
         dateFechaIni.setDayCellFactory(dayCellFactory);
-        /*Image img;
-        try {
-            img = new Image("/horarios/resources/monday.png");
-            monday.setImage(img);
-        } catch (Exception e) {
-        }
-        Image img1;
-        try {
-            img1 = new Image("/horarios/resources/tuesday.png");
-            tuesday.setImage(img1);
-        } catch (Exception e) {
-        }
-        Image img2;
-        try {
-            img2 = new Image("/horarios/resources/wednesday.png");
-            wednesday.setImage(img2);
-        } catch (Exception e) {
-        }
-        Image img3;
-        try {
-            img3 = new Image("/horarios/resources/thursday.png");
-            thursday.setImage(img3);
-        } catch (Exception e) {
-        }
-        Image img4;
-        try {
-            img4 = new Image("/horarios/resources/friday.png");
-            friday.setImage(img4);
-        } catch (Exception e) {
-        }
-        Image img5;
-        try {
-            img5 = new Image("/horarios/resources/saturday.png");
-            saturday.setImage(img5);
-        } catch (Exception e) {
-        }
-        Image img6;
-        try {
-            img6 = new Image("/horarios/resources/sunday.png");
-            sunday.setImage(img6);
-        } catch (Exception e) {
-        }*/
     }
     
     public void inicio() {

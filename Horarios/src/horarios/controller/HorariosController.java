@@ -192,12 +192,10 @@ public class HorariosController extends Controller {
     }
 
     public void limpiarHorario() {
-        System.out.println("FlowPane "+flowPane);
         flowPane.getChildren().stream().forEach(node -> {
             ((AnchorPane) node).setId("button2");
             ((Label) ((AnchorPane) node).getChildren().get(3)).setText("");
             ((Label) ((AnchorPane) node).getChildren().get(4)).setText("");
         });
-
     }
 }

@@ -94,6 +94,8 @@ public class HorariosController extends Controller {
     private Label lblHoraInicioDomingo;
     @FXML
     private Label lblHoraFinalDomingo;
+    @FXML
+    private FlowPane flowPane;
     private PuestoService puesService;
     private Respuesta resp;
     private ArrayList<PuestoDto> empleados;
@@ -102,11 +104,17 @@ public class HorariosController extends Controller {
     private ObservableList itemsRoles;
     private RolService rolService;
     private Respuesta RespuestaRol;
-    @FXML
-    private FlowPane flowPane;
-
+	
     @Override
     public void initialize() {
+        TLunes = false;
+        TMartes = false;
+        TMiercoles = false;
+        TJueves = false;
+        TViernes = false;
+        TSabado = false;
+        TDomingo = false;
+        
         puesService = new PuestoService();
         resp = puesService.getPuestos();
         empleados = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
@@ -120,7 +128,7 @@ public class HorariosController extends Controller {
         roles = ((ArrayList<RolDto>) RespuestaRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
         itemsRoles = FXCollections.observableArrayList(roles);
-        //tableRol.setItems(itemsRoles);
+
     }
 
     @FXML
@@ -150,41 +158,49 @@ public class HorariosController extends Controller {
                             Lunes.setId("buttonSelec");
                             lblHoraInicioLunes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalLunes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TLunes = true;
                             break;
                         case "Martes":
                             Martes.setId("buttonSelec");
                             lblHoraInicioMartes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalMartes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TMartes = true;
                             break;
                         case "Miercoles":
                             Miercoles.setId("buttonSelec");
                             lblHoraInicioMiercoles.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalMiercoles.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TMiercoles = true;
                             break;
                         case "Jueves":
                             Jueves.setId("buttonSelec");
                             lblHoraInicioJueves.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalJueves.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TJueves = true;
                             break;
                         case "Viernes":
                             Viernes.setId("buttonSelec");
                             lblHoraInicioViernes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalViernes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TViernes = true;
                             break;
                         case "Sabado":
                             Sabado.setId("buttonSelec");
                             lblHoraInicioSabado.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalSabado.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TSabado = true;
                             break;
                         case "Domingo":
                             Domingo.setId("buttonSelec");
                             lblHoraInicioDomingo.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
                             lblHoraFinalDomingo.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            TDomingo = true;
                             break;
                         default:
                             break;
                     }
                 });
+                
             }
         }
     }

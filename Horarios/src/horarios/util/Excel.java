@@ -94,4 +94,8 @@ public class Excel {
         t.sendMessage(mensaje, mensaje.getAllRecipients());
         t.close();
     }
+    public void crearExcel(){
+     //   Workbook work = new XSSFWorkbook();
+    }
+    
 }

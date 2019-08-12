@@ -40,7 +40,7 @@ public class Excel {
             // esto es para obtener la dirección del proyecto
             File miDir = new File(".");
             String r = miDir.getCanonicalPath();
-            System.out.println(r);
+
             // Configuración necesaria
             WorkbookSettings conf = new WorkbookSettings();
             conf.setEncoding("ISO-8859-1");

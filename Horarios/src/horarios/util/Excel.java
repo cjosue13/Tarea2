@@ -102,4 +102,8 @@ public class Excel {
           message.show(Alert.AlertType.ERROR, "Error en el envío", "El archivo a enviar no ha sido encontrado");
         }
     }
+    public void crearExcel(){
+     //   Workbook work = new XSSFWorkbook();
+    }
+    
 }

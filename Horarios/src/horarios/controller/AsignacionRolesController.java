@@ -72,16 +72,21 @@ public class AsignacionRolesController extends Controller {
 
     @Override
     public void initialize() {
-        // limpiarValores();
+        inicio();
+    }
+
+    private void inicio() {
         btnAsignarRol.setCursor(Cursor.HAND);
         puesService = new PuestoService();
         ms = new Mensaje();
         respPues = puesService.getPuestos();
         puestos = ((ArrayList) respPues.getResultado("Puestos"));
 
-        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEmpleado().getNombre() + " " + value.getValue().getEmpleado().getApellido()));
+        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty((value.getValue().getEmpleado() != null) ? value.getValue().
+                getEmpleado().getNombre() + " " + value.getValue().getEmpleado().getApellido() : "Sin asignar"));
         COL_PUESTO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
-        COL_FOLIO_EMP.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getEmpleado().getId()));
+        COL_FOLIO_EMP.setCellValueFactory(value -> new SimpleIntegerProperty((value.getValue().getEmpleado()!=null)?value.getValue().
+                getEmpleado().getId():0));
         itemsPuestos = FXCollections.observableArrayList(puestos);
         tablePuestos.setItems(itemsPuestos);
 
@@ -89,13 +94,12 @@ public class AsignacionRolesController extends Controller {
         respRol = rolservice.getRoles();
         roles = ((ArrayList) respRol.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-        
+
         itemsRoles = FXCollections.observableArrayList(roles);
         tableRoles.setItems(itemsRoles);
-
     }
 
-    public boolean ValidarAsignacion() {
+    private boolean ValidarAsignacion() {
         if (tablePuestos.getSelectionModel() == null || tableRoles.getSelectionModel() == null) {
             return false;
         } else {
@@ -108,18 +112,21 @@ public class AsignacionRolesController extends Controller {
     private void AsignarRol(ActionEvent event) {
 
         if (ValidarAsignacion()) { // si devuelve true entonces seleccionó bien
-            rol.getPuestos().add(puesto);
-            try {
-                respPues = rolservice.guardarRol(rol);
-                ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado",this.getStage() ,respPues.getMensaje());
-                limpiarValores();
+            if (puesto.getEmpleado() != null) {
+                rol.getPuestos().add(puesto);
+                try {
+                    respPues = rolservice.guardarRol(rol);
+                    ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), respPues.getMensaje());
+                    limpiarValores();
 
-            } catch (Exception e) {
-                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(),"Ocurrio un error al asignar un rol al empleado");
+                } catch (Exception e) {
+                    ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Ocurrio un error al asignar un rol al empleado");
+                }
+            } else {
+                ms.showModal(Alert.AlertType.WARNING, "Informacion de registro", this.getStage(), "El puesto no tiene asignado ningun empleado. Debes asignarle un empledo previamente");
             }
-
         } else {
-            ms.showModal(Alert.AlertType.ERROR, "Informacion de registro",this.getStage() ,"No has seleccionado alguno de los datos de la tabla.");
+            ms.showModal(Alert.AlertType.WARNING, "Informacion de registro", this.getStage(), "No has seleccionado alguno de los datos de la tabla.");
         }
     }
 
@@ -128,8 +135,9 @@ public class AsignacionRolesController extends Controller {
         if (tablePuestos.getSelectionModel() != null) {
             if (tablePuestos.getSelectionModel().getSelectedItem() != null) {
                 puesto = tablePuestos.getSelectionModel().getSelectedItem();
-                txtfolio.setText(String.valueOf(puesto.getId()));
-                txtNombre.setText(puesto.getEmpleado().getNombre() + " " + puesto.getEmpleado().getApellido());
+                txtfolio.setText(String.valueOf((puesto.getEmpleado() != null)?puesto.getEmpleado().getId():0));
+                txtNombre.setText((puesto.getEmpleado() != null) ? puesto.getEmpleado().getNombre() + " "
+                        + puesto.getEmpleado().getApellido() : " ");
                 txtPuesto.setText(puesto.getNombrePuesto());
             }
         }
@@ -148,7 +156,7 @@ public class AsignacionRolesController extends Controller {
         }
     }
 
-    void limpiarValores() {
+    private void limpiarValores() {
         txtRol.clear();
         txtfolio.clear();
         txtNombre.clear();

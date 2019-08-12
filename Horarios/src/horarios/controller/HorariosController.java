@@ -118,7 +118,7 @@ public class HorariosController extends Controller {
     private Respuesta RespuestaRol;
     @FXML
     private JFXButton btnCorreo;
-    Mensaje m = new Mensaje();
+    private Mensaje m = new Mensaje();
     @FXML
     private JFXProgressBar progressBar;
     private double progreso;
@@ -131,11 +131,16 @@ public class HorariosController extends Controller {
 
     @Override
     public void initialize() {
+        inicio();
+    }
+
+    private void inicio() {
 
         puesService = new PuestoService();
         resp = puesService.getPuestos();
         empleados = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
-        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEmpleado().getNombre()));
+        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty((value.getValue().getEmpleado()!=null)?value.getValue().
+                getEmpleado().getNombre():"Sin asignar"));
         COL_NOMBRE_PUE.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
         items = FXCollections.observableArrayList(empleados);
         listaEmpleados.setItems(items);
@@ -256,7 +261,7 @@ public class HorariosController extends Controller {
             timeProgress.stop();
             progressBar.setVisible(false);
             lblPorcentaje.setVisible(false);
-            m.show(Alert.AlertType.WARNING, "Envio de Correo", "Debes seleccionar el empleado");
+            m.showModal(Alert.AlertType.WARNING, "Envio de Correo", this.getStage(), "Debes seleccionar el empleado");
         }
     }
 

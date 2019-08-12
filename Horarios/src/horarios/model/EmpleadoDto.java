@@ -18,6 +18,7 @@ public class EmpleadoDto {
     private Integer CantidadHoras;
     private Integer version;
     private Integer Id;
+    private PuestoDto puesto;
 
     public EmpleadoDto(String Nombre, String Apellido, String Cedula, String Correo, Integer CantidadHoras, Integer version, Integer Id) {
         this.Nombre = Nombre;
@@ -36,6 +37,7 @@ public class EmpleadoDto {
         this.CantidadHoras = empleado.getEmpCantidadhorastrabajadas();
         this.version = empleado.getEmpVersion();
         this.Id = empleado.getEmpFolio();
+        //this.puesto = new PuestoDto(empleado.getPuesto());
     }
 
     public String getNombre() {
@@ -92,6 +94,14 @@ public class EmpleadoDto {
 
     public void setId(Integer Id) {
         this.Id = Id;
+    }
+
+    public PuestoDto getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(PuestoDto puesto) {
+        this.puesto = puesto;
     }
 
     

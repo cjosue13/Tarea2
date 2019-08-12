@@ -12,12 +12,13 @@ import java.util.ArrayList;
  * @author Jose Pablo Bermudez
  */
 public class PuestoDto {
-    
-    private String NombrePuesto,Descripcion;
+
+    private String NombrePuesto, Descripcion;
     private Integer version;
     private EmpleadoDto empleado;
     private Integer id;
-    private ArrayList <RolDto> roles; 
+    private ArrayList<RolDto> roles;
+
     public PuestoDto(String NombrePuesto, String Descripcion, Integer version, EmpleadoDto empleado, Integer id) {
         this.NombrePuesto = NombrePuesto;
         this.Descripcion = Descripcion;
@@ -25,11 +26,17 @@ public class PuestoDto {
         this.empleado = empleado;
         this.id = id;
     }
+
     public PuestoDto(Puesto puesto) {
         this.NombrePuesto = puesto.getPueNombrepuesto();
         this.Descripcion = puesto.getPueDescripcion();
         this.version = puesto.getPueVersion();
-        this.empleado = new EmpleadoDto(puesto.getPueEmpleado());
+        if (puesto.getPueEmpleado() != null) {
+            this.empleado = new EmpleadoDto(puesto.getPueEmpleado());
+        }else{
+            this.empleado = null;
+        }
+
         this.id = puesto.getPueCodigo();
     }
 
@@ -74,19 +81,17 @@ public class PuestoDto {
     }
 
     public ArrayList<RolDto> getRoles() {
-        if(roles!= null){
+        if (roles != null) {
             return roles;
-        }
-        else{
+        } else {
             roles = new ArrayList<>();
             return roles;
         }
-        
+
     }
 
     public void setRoles(ArrayList<RolDto> roles) {
         this.roles = roles;
     }
-    
-    
+
 }

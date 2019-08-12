@@ -123,7 +123,7 @@ public class HorariosController extends Controller {
     private JFXProgressBar progressBar;
     private double progreso;
     private final Timeline timeProgress = new Timeline(new KeyFrame(Duration.ZERO, event -> correrBarWarning()), new KeyFrame(Duration.seconds(0.017)));
-    private final Timeline timeprogress = new Timeline(new KeyFrame(Duration.ZERO, event -> correrBarInformation()), new KeyFrame(Duration.seconds(0.017)));
+    private final Timeline time = new Timeline(new KeyFrame(Duration.ZERO, event -> correrBarInformation()), new KeyFrame(Duration.seconds(0.017)));
     private Excel correo = new Excel();
     int porcentaje;
     @FXML
@@ -235,22 +235,20 @@ public class HorariosController extends Controller {
         progreso = 0;
         if (listaEmpleados.getSelectionModel() != null) {
             if (listaEmpleados.getSelectionModel().getSelectedItem() != null) {
-                timeprogress.setCycleCount(Timeline.INDEFINITE);
+                time.setCycleCount(Timeline.INDEFINITE);
                 correrBarInformation();
-                timeprogress.play();
+                time.play();
             } else {
                 progressBar.setVisible(true);
                 timeProgress.setCycleCount(Timeline.INDEFINITE);
                 correrBarWarning();
                 timeProgress.play();
-
             }
         } else {
             progressBar.setVisible(true);
             timeProgress.setCycleCount(Timeline.INDEFINITE);
             correrBarWarning();
             timeProgress.play();
-
         }
     }
 
@@ -273,7 +271,7 @@ public class HorariosController extends Controller {
         porcentaje = (int) (progreso * 100);
         lblPorcentaje.setText(String.valueOf(porcentaje) + "%");
         if (progreso > 0.9) {
-            timeprogress.stop();
+            time.stop();
             progressBar.setVisible(false);
             lblPorcentaje.setVisible(false);
             try {

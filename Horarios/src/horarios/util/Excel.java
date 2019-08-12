@@ -72,7 +72,8 @@ public class Excel {
             prop.put("mail.smtp.host", "smtp.gmail.com");
             prop.setProperty("mail.smtp.port", "587");
             prop.setProperty("mail.smtp.user", "horarios.mantenenimiento.una@gmail.com");
-
+          
+            
             // Dirección de nuestro proyecto
             File miDir = new File(".");
             String r = miDir.getCanonicalPath();
@@ -98,7 +99,7 @@ public class Excel {
             t.close();
             message.show(Alert.AlertType.INFORMATION, "Envio de Correo", "Su correo ha sido enviado exitosamente a: "+Destinatario);
         } catch (FileNotFoundException e) {    
-        message.show(Alert.AlertType.ERROR, "Error en el envío", "El archivo a enviar no ha sido encontrado");
+          message.show(Alert.AlertType.ERROR, "Error en el envío", "El archivo a enviar no ha sido encontrado");
         }
     }
     public void crearExcel(){

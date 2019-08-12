@@ -170,7 +170,7 @@ public class FlowController {
             controller.getStage().getScene().setRoot(new Pane());
             controller.setStage(null);
         });
-        
+
         controller.setStage(stage);
         Parent root = loader.getRoot();
         Scene scene = new Scene(root);

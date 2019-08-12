@@ -65,7 +65,7 @@ public class Empleado implements Serializable {
     @Basic(optional = false)
     @Column(name = "EMP_VERSION")
     private Integer empVersion;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pueEmpleado", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "pueEmpleado", fetch = FetchType.LAZY)
     private Puesto puesto;
 
     public Empleado() {

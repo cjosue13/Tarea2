@@ -130,6 +130,7 @@ public class RolesController extends Controller {
                         resp = horarioService.guardarHorario(horarioDto);
                         DiaService diaService = new DiaService();
                         horarioDto.getDias().stream().forEach(dia -> {
+                            dia.setVersion(dia.getVersion()+1);
                             diaService.guardarDia(dia);
                         });
 

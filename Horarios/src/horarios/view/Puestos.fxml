@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.PuestosController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.PuestosController">
    <children>
       <TableView fx:id="tablePuesto" layoutX="77.0" layoutY="140.0" onMouseReleased="#DatosPuestos" prefHeight="280.0" prefWidth="870.0">
          <columns>
@@ -31,7 +31,7 @@
       </TableView>
       <JFXTextField fx:id="txtEmpleado" disable="true" layoutX="387.0" layoutY="624.0" prefHeight="29.0" prefWidth="250.0" promptText="Empleado" />
       <JFXTextArea fx:id="txtDescripcion" labelFloat="true" layoutX="77.0" layoutY="557.0" prefHeight="90.0" prefWidth="250.0" promptText="Descripcion" styleClass="text-field" />
-      <HBox layoutX="603.0" layoutY="671.0" prefHeight="100.0" prefWidth="394.0" spacing="20.0">
+      <HBox layoutX="533.0" layoutY="671.0" prefHeight="100.0" prefWidth="477.0" spacing="20.0">
          <padding>
             <Insets left="20.0" right="40.0" top="20.0" />
          </padding>

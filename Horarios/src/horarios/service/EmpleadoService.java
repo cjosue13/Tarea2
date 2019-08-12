@@ -15,6 +15,8 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import horarios.model.Empleado;
 import horarios.model.EmpleadoDto;
+import horarios.model.Puesto;
+import horarios.model.PuestoDto;
 import horarios.util.EntityManagerHelper;
 import horarios.util.Respuesta;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -72,13 +74,19 @@ public class EmpleadoService {
     public Respuesta getEmpleados() {
         try {
             Query qryEmp = em.createNamedQuery("Empleado.findAll", Empleado.class);
-            ArrayList<EmpleadoDto> Empleado = new ArrayList<>();
+            ArrayList<EmpleadoDto> empleados = new ArrayList<>();
 
             qryEmp.getResultList().stream().forEach((emp) -> {
-                Empleado.add(new EmpleadoDto((Empleado) emp));
+                EmpleadoDto empleado = new EmpleadoDto((Empleado) emp);
+
+                if (((Empleado) emp).getPuesto() != null) {
+                    PuestoDto puesto = new PuestoDto(((Empleado) emp).getPuesto());
+                    empleado.setPuesto(puesto);
+                }
+                empleados.add(empleado);
             });
 
-            return new Respuesta(true, "Empleados obtenidos", "", "Empleados", Empleado);
+            return new Respuesta(true, "Empleados obtenidos", "", "Empleados", empleados);
 
         } catch (NoResultException ex) {
             return new Respuesta(false, "No existen empleados", "getEmpleados NoResultException");

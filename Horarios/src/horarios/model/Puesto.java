@@ -40,7 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Puesto.findByPueVersion", query = "SELECT p FROM Puesto p WHERE p.pueVersion = :pueVersion")})
 public class Puesto implements Serializable {
 
-    
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -73,21 +72,27 @@ public class Puesto implements Serializable {
         this.pueCodigo = pueCodigo;
     }
 
-    public Puesto(PuestoDto pues){
+    public Puesto(PuestoDto pues) {
         this.pueCodigo = pues.getId();
         actualizarPuesto(pues);
     }
-    
+
     public Puesto(Integer pueCodigo, String pueNombrepuesto, Integer pueVersion) {
         this.pueCodigo = pueCodigo;
         this.pueNombrepuesto = pueNombrepuesto;
         this.pueVersion = pueVersion;
     }
+
     public void actualizarPuesto(PuestoDto pues) {
         this.pueCodigo = pues.getId();
         this.pueNombrepuesto = pues.getNombrePuesto();
         this.pueVersion = pues.getVersion();
-        this.pueEmpleado = new Empleado(pues.getEmpleado());
+        if (pues.getEmpleado() != null) {
+            this.pueEmpleado = new Empleado(pues.getEmpleado());
+        }
+        else{
+            this.pueEmpleado = null;
+        }
         this.pueDescripcion = pues.getDescripcion();
     }
 
@@ -161,5 +166,4 @@ public class Puesto implements Serializable {
         return "horarios.model.Puesto[ pueCodigo=" + pueCodigo + " ]";
     }
 
-    
 }

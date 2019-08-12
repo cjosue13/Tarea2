@@ -8,7 +8,9 @@ package horarios.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import horarios.model.EmpleadoDto;
+import horarios.model.PuestoDto;
 import horarios.service.EmpleadoService;
+import horarios.service.PuestoService;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.util.ArrayList;
@@ -94,7 +96,6 @@ public class EmpleadosController extends Controller {
                     String correo = txtCorreo.getText();
                     String cedula = txtCedula.getText();
                     Integer version = table.getSelectionModel().getSelectedItem().getVersion() + 1;
-
                     //Introducir la cantidad de horas trabajadas al empleado
                     empleado = new EmpleadoDto(nombre, apellido, cedula, correo, empleado.getCantidadHoras(), version, id);
                     try {
@@ -122,7 +123,12 @@ public class EmpleadosController extends Controller {
     private void eliminar(ActionEvent event) {
         if (table.getSelectionModel() != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
-
+                if(table.getSelectionModel().getSelectedItem().getPuesto()!=null){
+                    PuestoDto puesto = table.getSelectionModel().getSelectedItem().getPuesto();
+                    puesto.setEmpleado(null);
+                    PuestoService puesSer = new PuestoService();
+                    puesSer.guardarPuesto(puesto);
+                }
                 empService.eliminarEmpleado(table.getSelectionModel().getSelectedItem().getId());
                 ms.showModal(Alert.AlertType.INFORMATION, "Información", this.getStage(), "Datos Eliminados correctamente");
 

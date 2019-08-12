@@ -279,7 +279,7 @@ public class HorariosController extends Controller {
             try {
                 correo.SendMail(listaEmpleados.getSelectionModel().getSelectedItem().getEmpleado().getCorreo());
             } catch (MessagingException | IOException ex) {
-                m.showModal(Alert.AlertType.ERROR, "Envio de Correo", this.getStage(), "Ha ocurrido un error inesperado al enviar su correo");
+                m.showModal(Alert.AlertType.ERROR, "Envio de Correo",this.getStage() ,"Ha ocurrido un error inesperado al enviar su correo");
             }
         }
     }

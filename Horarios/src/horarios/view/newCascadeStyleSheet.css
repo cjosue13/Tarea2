@@ -110,7 +110,7 @@
     -fx-prompt-text-fill: #ababab;
     -jfx-focus-color: #04cfd6;
     -jfx-unfocus-color: #09b6bc;
-    -jfx-label-float: true;
+    /*-jfx-label-float: true;*/
     -fx-text-fill: white;
 }
 .button:hover {

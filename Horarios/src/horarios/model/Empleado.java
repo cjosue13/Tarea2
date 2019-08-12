@@ -98,6 +98,7 @@ public class Empleado implements Serializable {
         this.empCorreo = empleado.getCorreo();
         this.empCantidadhorastrabajadas = empleado.getCantidadHoras();
         this.empVersion = empleado.getVersion();
+        //this.puesto = new Puesto(empleado.getPuesto());
     }
 
     public Integer getEmpFolio() {

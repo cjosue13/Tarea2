@@ -67,7 +67,10 @@ public class EmpleadosController extends Controller {
 
     @Override
     public void initialize() {
+        inicio();
+    }
 
+    public void inicio() {
         empService = new EmpleadoService();
         ms = new Mensaje();
         resp = empService.getEmpleados();
@@ -78,7 +81,6 @@ public class EmpleadosController extends Controller {
         COL_CORREO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCorreo()));
         items = FXCollections.observableArrayList(empleados);
         table.setItems(items);
-
     }
 
     @FXML
@@ -91,9 +93,10 @@ public class EmpleadosController extends Controller {
                     String apellido = txtApellidos.getText();
                     String correo = txtCorreo.getText();
                     String cedula = txtCedula.getText();
-                    Integer version = table.getSelectionModel().getSelectedItem().getVersion()+1;
+                    Integer version = table.getSelectionModel().getSelectedItem().getVersion() + 1;
+
                     //Introducir la cantidad de horas trabajadas al empleado
-                    empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, version, id);
+                    empleado = new EmpleadoDto(nombre, apellido, cedula, correo, empleado.getCantidadHoras(), version, id);
                     try {
                         resp = empService.guardarEmpleado(empleado);
                         ms.showModal(AlertType.INFORMATION, "Informacion de Edición", this.getStage(), resp.getMensaje());
@@ -159,7 +162,7 @@ public class EmpleadosController extends Controller {
             }
 
         } else {
-            ms.showModal(AlertType.ERROR, "Informacion acerca del guardado",this.getStage() ,"Existen datos erroneos en el registro, "
+            ms.showModal(AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
                     + "verifica que todos los datos esten llenos.");
         }
 

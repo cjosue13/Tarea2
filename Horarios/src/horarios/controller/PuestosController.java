@@ -91,8 +91,32 @@ public class PuestosController extends Controller {
                     String nombre = txtNombre.getText();
                     String descripcion = txtDescripcion.getText();
                     Integer id = puesto.getId();
-                    Integer version = puesto.getVersion()+1;
+                    Integer version = puesto.getVersion() + 1;
+                    //Si el empleado ya tiene un puesto 
+                    if (empleado != null && empleado.getPuesto() != null) {
+                        //Si el puesto no es igual al que ya tiene
+                        if (!empleado.getPuesto().getId().equals(puesto.getId())) {
+                            //Si ya existe un rol con horario para el nuevo puesto asignado para el empleado
+                            if (!puesto.getRoles().isEmpty()) {
+                                //Deberia enviar un correo al nuevo empleado con el nuevo horario asignado
+
+                            }
+                            try {
+                                //Tomo el puesto anterior que tenia el empleado y lo dejo como vacante libre
+                                PuestoDto pues = empleado.getPuesto();
+                                pues.setEmpleado(null);
+                                puesService.guardarPuesto(pues);
+                            } catch (Exception e) {
+
+                            }
+                        }
+                    } else if (empleado == null) {
+                        System.out.println("");
+                        empleado = puesto.getEmpleado();
+                    }
+
                     puesto = new PuestoDto(nombre, descripcion, version, empleado, id);
+
                     try {
                         resp = puesService.guardarPuesto(puesto);
 
@@ -125,37 +149,43 @@ public class PuestosController extends Controller {
                 ms.showModal(Alert.AlertType.INFORMATION, "Información", this.getStage(), "Datos eliminados correctamente");
                 resp = puesService.getPuestos();
                 itemsPues.clear();
-                puestos = (ArrayList<PuestoDto>) resp.getResultado("Puestos");
+                puestos = (ArrayList) resp.getResultado("Puestos");
                 itemsPues = FXCollections.observableArrayList(puestos);
                 tablePuesto.setItems(itemsPues);
                 limpiarValores();
+            } else {
+                ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a eliminar");
             }
-        } else {
-            ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a eliminar");
         }
     }
 
     @FXML
     private void agregar(ActionEvent event) {
         if (registroCorrecto()) {
-            String nombre = txtNombre.getText();
-            String descripcion = txtDescripcion.getText();
+            if (tablePuesto.getSelectionModel() != null) {
+                if (tablePuesto.getSelectionModel().getSelectedItem() == null) {
+                    String nombre = txtNombre.getText();
+                    String descripcion = txtDescripcion.getText();
 
-            puesto = new PuestoDto(nombre, descripcion, 1, empleado, null);
-            try {
-                resp = puesService.guardarPuesto(puesto);
+                    puesto = new PuestoDto(nombre, descripcion, 1, empleado, null);
+                    try {
+                        resp = puesService.guardarPuesto(puesto);
 
-                ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), resp.getMensaje());
-                limpiarValores();
-                puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
-                tablePuesto.getItems().clear();
-                itemsPues = FXCollections.observableArrayList(puestos);
-                tablePuesto.setItems(itemsPues);
+                        ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), resp.getMensaje());
+                        limpiarValores();
+                        puestos = (ArrayList) puesService.getPuestos().getResultado("Puestos");
+                        tablePuesto.getItems().clear();
+                        itemsPues = FXCollections.observableArrayList(puestos);
+                        tablePuesto.setItems(itemsPues);
 
-            } catch (Exception e) {
-                ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el Puesto. "
-                        + "Verifica que todos los datos esten llenos correctamente o que el empleado no tenga un puesto asignado");
-
+                    } catch (Exception e) {
+                        ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el Puesto. "
+                                + "Verifica que todos los datos esten llenos correctamente o que el empleado no tenga un puesto asignado");
+                    }
+                } else {
+                    ms.showModal(Alert.AlertType.WARNING, "Informacion acerca del guardado", this.getStage(), "Se ha elegido un puesto para editar, "
+                            + "debes limpiar el registro.");
+                }
             }
 
         } else {
@@ -188,8 +218,9 @@ public class PuestosController extends Controller {
         COL_NOMBRE_PUES.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
         COL_DESCRIPCION_PUES.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getDescripcion()));
         COL_CODIGO_PUES.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
-        COL_EMPLEADO_PUE.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getEmpleado().getNombre() + " "
-                + value.getValue().getEmpleado().getApellido()));
+        COL_EMPLEADO_PUE.setCellValueFactory(value -> new SimpleStringProperty((value.getValue().getEmpleado() != null)
+                ? value.getValue().getEmpleado().getNombre() + " "
+                + value.getValue().getEmpleado().getApellido() : " "));
 
         resp = empService.getEmpleados();
         empleados = (ArrayList) resp.getResultado("Empleados");
@@ -210,9 +241,6 @@ public class PuestosController extends Controller {
             if (tableEmpleado.getSelectionModel().getSelectedItem() != null) {
                 empleado = tableEmpleado.getSelectionModel().getSelectedItem();
                 txtEmpleado.setText(empleado.getNombre() + " " + empleado.getApellido());
-                txtNombre.clear();
-                txtDescripcion.clear();
-                tablePuesto.getSelectionModel().clearSelection();
             }
         }
     }
@@ -224,7 +252,7 @@ public class PuestosController extends Controller {
                 puesto = tablePuesto.getSelectionModel().getSelectedItem();
                 txtNombre.setText(puesto.getNombrePuesto());
                 txtDescripcion.setText(puesto.getDescripcion());
-                txtEmpleado.setText(puesto.getEmpleado().getNombre() + " " + puesto.getEmpleado().getApellido());
+                txtEmpleado.setText((puesto.getEmpleado() != null) ? puesto.getEmpleado().getNombre() + " " + puesto.getEmpleado().getApellido() : " ");
                 tableEmpleado.getSelectionModel().clearSelection();
             }
         }

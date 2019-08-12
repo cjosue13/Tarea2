@@ -87,7 +87,7 @@
       <JFXTextField layoutX="27.0" layoutY="131.0" prefHeight="29.0" prefWidth="250.0" promptText="Filtro" />
       <Label layoutX="404.0" layoutY="516.0" text="Total de Horas Trabajadas:" />
       <Label layoutX="404.0" layoutY="565.0" text="Cantidad de Roles Asignados:" />
-      <JFXButton layoutX="880.0" layoutY="664.0" style="-fx-cursor: hand;" text="Exportar a Excel" />
+      <JFXButton fx:id="Exportar" layoutX="880.0" layoutY="664.0" onAction="#Exportar" style="-fx-cursor: hand;" text="Exportar a Excel" />
       <Label fx:id="horasTrabajadas" layoutX="637.0" layoutY="516.0" prefHeight="21.0" prefWidth="189.0" />
       <Label fx:id="CantidadRoles" layoutX="637.0" layoutY="565.0" prefHeight="21.0" prefWidth="189.0" />
       <Label layoutX="404.0" layoutY="135.0" text="Días de trabajo:" />

@@ -27,7 +27,8 @@ public class Horarios extends Application {
         FlowController.getInstance().InitializeFlow(stage, null);
         FlowController.getInstance().goMain();
         
-        
+        Excel excel = new Excel();
+        excel.GenerarReporte();
     }
     
     /**

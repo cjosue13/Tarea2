@@ -40,6 +40,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.util.Duration;
 import javax.mail.MessagingException;
+import jxl.write.WriteException;
 
 /**
  * FXML Controller class
@@ -128,6 +129,8 @@ public class HorariosController extends Controller {
     int porcentaje;
     @FXML
     private Label lblPorcentaje;
+    @FXML
+    private JFXButton Exportar;
 
     @Override
     public void initialize() {
@@ -277,8 +280,16 @@ public class HorariosController extends Controller {
             try {
                 correo.SendMail(listaEmpleados.getSelectionModel().getSelectedItem().getEmpleado().getCorreo());
             } catch (MessagingException | IOException ex) {
-                m.showModal(Alert.AlertType.ERROR, "Envio de Correo",this.getStage() ,"Ha ocurrido un error inesperado al enviar su correo");
+                m.show(Alert.AlertType.ERROR, "Envio de Correo" ,"Ha ocurrido un error inesperado al enviar su correo");
             }
         }
+    }
+
+    @FXML
+    private void Exportar(ActionEvent event) throws WriteException {
+        
+        Excel excel = new Excel();
+        excel.GenerarReporte();
+        
     }
 }

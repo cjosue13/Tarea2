@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.QueryHint;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,12 +34,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "HOR_DIA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Dia.findAll", query = "SELECT d FROM Dia d")
-    , @NamedQuery(name = "Dia.findByDiaId", query = "SELECT d FROM Dia d WHERE d.diaId = :diaId")
-    , @NamedQuery(name = "Dia.findByDiaNombre", query = "SELECT d FROM Dia d WHERE d.diaNombre = :diaNombre")
-    , @NamedQuery(name = "Dia.findByDiaHorainicio", query = "SELECT d FROM Dia d WHERE d.diaHorainicio = :diaHorainicio")
-    , @NamedQuery(name = "Dia.findByDiaHorasalida", query = "SELECT d FROM Dia d WHERE d.diaHorasalida = :diaHorasalida")
-    , @NamedQuery(name = "Dia.findByDiaVersion", query = "SELECT d FROM Dia d WHERE d.diaVersion = :diaVersion")})
+    @NamedQuery(name = "Dia.findAll", query = "SELECT d FROM Dia d", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Dia.findByDiaId", query = "SELECT d FROM Dia d WHERE d.diaId = :diaId", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Dia.findByDiaNombre", query = "SELECT d FROM Dia d WHERE d.diaNombre = :diaNombre", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Dia.findByDiaHorainicio", query = "SELECT d FROM Dia d WHERE d.diaHorainicio = :diaHorainicio", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Dia.findByDiaHorasalida", query = "SELECT d FROM Dia d WHERE d.diaHorasalida = :diaHorasalida", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Dia.findByDiaVersion", query = "SELECT d FROM Dia d WHERE d.diaVersion = :diaVersion", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))})
 public class Dia implements Serializable {
 
     private static final long serialVersionUID = 1L;

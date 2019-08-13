@@ -14,15 +14,18 @@ import com.jfoenix.controls.JFXTimePicker;
 import horarios.model.DiaDto;
 import horarios.model.HorarioDto;
 import horarios.model.RolDto;
+import horarios.service.DiaService;
 import horarios.service.RolService;
 import horarios.util.AppContext;
 import horarios.util.Mensaje;
+import horarios.util.Respuesta;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,12 +43,13 @@ import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
+
 /**
  * FXML Controller class
  *
  * @author Jose Pablo Bermudez
  */
-public class AsignacionHorarioController extends Controller{
+public class AsignacionHorarioController extends Controller {
 
     @FXML
     private FlowPane flowPane;
@@ -91,13 +95,14 @@ public class AsignacionHorarioController extends Controller{
     private JFXButton agregarhorario;
     @FXML
     private JFXButton atras;
+
     @Override
     public void initialize() {
         inicio();
-        Callback<DatePicker, DateCell> dayCellFactory= this.getDayCellFactory();
+        Callback<DatePicker, DateCell> dayCellFactory = this.getDayCellFactory();
         dateFechaIni.setDayCellFactory(dayCellFactory);
     }
-    
+
     public void inicio() {
         typeKeys();
         ms = new Mensaje();
@@ -115,7 +120,7 @@ public class AsignacionHorarioController extends Controller{
                     }
                 });
             });
-            
+
             dateFechaIni.setValue(horario.getFechaInicio());
             //Revisar mas adelante 
             AppContext.getInstance().set("horario", horario);
@@ -131,6 +136,8 @@ public class AsignacionHorarioController extends Controller{
                 //Si se ha deseleccionado
                 if (node.getId().equals("buttonSelec")) {
                     node.setId("button2");
+                    //System.out.println(((Label)((AnchorPane) node).getChildren().get(0)).getText());
+                    deseleccionar(((Label) ((AnchorPane) node).getChildren().get(0)).getText());
                     ocultarAtributosDia();
                 } else {//Si se ha seleccionado
                     node.setId("buttonSelec");
@@ -160,11 +167,23 @@ public class AsignacionHorarioController extends Controller{
     }
 
     void deseleccionar(String diaSemana) {
-        horario.getDias().stream().forEach((diaSem) -> {
+        ArrayList<DiaDto> dias = horario.getDias();
+        //System.out.println("Dia semana " + diaSemana);
+        DiaDto dia2 = null;
+        for (DiaDto diaSem : horario.getDias()) {
             if (diaSem.getNombre().equals(diaSemana)) {
-                horario.getDias().remove(diaSem);
+                dia2 = diaSem;
             }
-        });
+        }
+        if(dia2.getDiaid()!=null){
+            System.out.println("XD");
+            DiaService diaServ = new DiaService();
+            Respuesta resp = diaServ.EliminarDia(dia2.getDiaid());
+            System.out.println("Mensaje "+ resp.getMensaje());
+            
+        }
+        horario.getDias().remove(dia2);
+
     }
 
     void mostrarAtributosDia() {
@@ -233,6 +252,10 @@ public class AsignacionHorarioController extends Controller{
             horario.setVersion(1);
             horario.calcularHorasLibres();
             horario.setOrdenRotacion(0);
+            horario.getDias().stream().forEach((x)->{
+                System.out.println("DIA SEM "+ x.getNombre());
+            });
+                    
             AppContext.getInstance().set("horario", horario);
             //Cierra la ventana
             getStage().hide();
@@ -280,7 +303,7 @@ public class AsignacionHorarioController extends Controller{
         dateFechaIni.setOnKeyReleased(noEscribir);
         txtHoraFinal.setOnKeyReleased(noEscribir);
     }
-    
+
     private EventHandler<KeyEvent> aceptaCaracteres = (KeyEvent event) -> {
         if (Character.isDigit(event.getCharacter().charAt(0))) {
             event.consume();
@@ -292,11 +315,11 @@ public class AsignacionHorarioController extends Controller{
             event.consume();
         }
     };
-    
+
     private EventHandler<KeyEvent> noEscribir = (KeyEvent event) -> {
         event.consume();
     };
-    
+
     private Callback<DatePicker, DateCell> getDayCellFactory() {
         final Callback<DatePicker, DateCell> dayCellFactory = (final DatePicker datePicker) -> new DateCell() {
             @Override

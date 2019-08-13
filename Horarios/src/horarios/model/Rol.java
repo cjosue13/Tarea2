@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.QueryHint;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,11 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "HOR_ROL")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")
-    , @NamedQuery(name = "Rol.findByRolId", query = "SELECT r FROM Rol r WHERE r.rolId = :rolId")
-    , @NamedQuery(name = "Rol.findByRolNombre", query = "SELECT r FROM Rol r WHERE r.rolNombre = :rolNombre")
-    , @NamedQuery(name = "Rol.findByRolHorariorotativo", query = "SELECT r FROM Rol r WHERE r.rolHorariorotativo = :rolHorariorotativo")
-    , @NamedQuery(name = "Rol.findByRolVersion", query = "SELECT r FROM Rol r WHERE r.rolVersion = :rolVersion")})
+    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Rol.findByRolId", query = "SELECT r FROM Rol r WHERE r.rolId = :rolId", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Rol.findByRolNombre", query = "SELECT r FROM Rol r WHERE r.rolNombre = :rolNombre", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Rol.findByRolHorariorotativo", query = "SELECT r FROM Rol r WHERE r.rolHorariorotativo = :rolHorariorotativo", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Rol.findByRolVersion", query = "SELECT r FROM Rol r WHERE r.rolVersion = :rolVersion", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))})
 public class Rol implements Serializable {
 
     @Basic(optional = false)

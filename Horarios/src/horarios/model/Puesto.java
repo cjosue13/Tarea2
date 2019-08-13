@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.QueryHint;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,11 +34,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "HOR_PUESTOS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Puesto.findAll", query = "SELECT p FROM Puesto p")
-    , @NamedQuery(name = "Puesto.findByPueCodigo", query = "SELECT p FROM Puesto p WHERE p.pueCodigo = :pueCodigo")
-    , @NamedQuery(name = "Puesto.findByPueNombrepuesto", query = "SELECT p FROM Puesto p WHERE p.pueNombrepuesto = :pueNombrepuesto")
-    , @NamedQuery(name = "Puesto.findByPueDescripcion", query = "SELECT p FROM Puesto p WHERE p.pueDescripcion = :pueDescripcion")
-    , @NamedQuery(name = "Puesto.findByPueVersion", query = "SELECT p FROM Puesto p WHERE p.pueVersion = :pueVersion")})
+    @NamedQuery(name = "Puesto.findAll", query = "SELECT p FROM Puesto p", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Puesto.findByPueCodigo", query = "SELECT p FROM Puesto p WHERE p.pueCodigo = :pueCodigo", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Puesto.findByPueNombrepuesto", query = "SELECT p FROM Puesto p WHERE p.pueNombrepuesto = :pueNombrepuesto", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Puesto.findByPueDescripcion", query = "SELECT p FROM Puesto p WHERE p.pueDescripcion = :pueDescripcion", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Puesto.findByPueVersion", query = "SELECT p FROM Puesto p WHERE p.pueVersion = :pueVersion", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))})
 public class Puesto implements Serializable {
 
     private static final long serialVersionUID = 1L;

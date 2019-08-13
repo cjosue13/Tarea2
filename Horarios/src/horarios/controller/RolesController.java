@@ -7,6 +7,7 @@ package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import horarios.model.DiaDto;
 import horarios.model.HorarioDto;
 import horarios.model.RolDto;
 import horarios.service.DiaService;
@@ -116,8 +117,8 @@ public class RolesController extends Controller {
 
                     String nombre = txtNombre.getText();
                     Integer id = rol.getId();
-                    Integer version = rol.getVersion()+1;
-                    horarioDto.setVersion(horarioDto.getVersion()+1);
+                    Integer version = rol.getVersion() + 1;
+                    horarioDto.setVersion(horarioDto.getVersion() + 1);
                     rol = new RolDto(nombre, rotar, version, id, null);
                     try {
                         resp = rolservice.guardarRol(rol);
@@ -126,11 +127,30 @@ public class RolesController extends Controller {
                         if (!rol.getId().equals(horarioDto.getRol().getId())) {
                             horarioDto.setRol((RolDto) resp.getResultado("Rol"));
                         }
-                        
+
                         resp = horarioService.guardarHorario(horarioDto);
+
                         DiaService diaService = new DiaService();
+
+                        Respuesta respuesta = horarioService.getDias(horarioDto.getId());
+                        ArrayList<DiaDto> dias = (ArrayList) respuesta.getResultado("getDias");
+                        
+                        for (DiaDto dia : dias) {
+                            Boolean encontrado=false;
+                            for (DiaDto diaSem : horarioDto.getDias()) {
+                                if(dia.getNombre().equals(diaSem.getNombre())){
+                                    encontrado = true;
+                                    break;
+                                }
+                            }
+                            if(!encontrado){
+                                diaService.EliminarDia(dia.getDiaid());
+                            }
+                        }
+                        
+
                         horarioDto.getDias().stream().forEach(dia -> {
-                            dia.setVersion(dia.getVersion()+1);
+                            dia.setVersion(dia.getVersion() + 1);
                             diaService.guardarDia(dia);
                         });
 

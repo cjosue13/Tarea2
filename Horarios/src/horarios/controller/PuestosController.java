@@ -92,6 +92,7 @@ public class PuestosController extends Controller {
                     String descripcion = txtDescripcion.getText();
                     Integer id = puesto.getId();
                     Integer version = puesto.getVersion() + 1;
+                    
                     //Si el empleado ya tiene un puesto 
                     if (empleado != null && empleado.getPuesto() != null) {
                         //Si el puesto no es igual al que ya tiene
@@ -99,7 +100,7 @@ public class PuestosController extends Controller {
                             //Si ya existe un rol con horario para el nuevo puesto asignado para el empleado
                             if (!puesto.getRoles().isEmpty()) {
                                 //Deberia enviar un correo al nuevo empleado con el nuevo horario asignado
-
+                                
                             }
                             try {
                                 //Tomo el puesto anterior que tenia el empleado y lo dejo como vacante libre

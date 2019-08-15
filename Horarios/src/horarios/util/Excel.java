@@ -71,13 +71,15 @@ public class Excel {
         horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
         HorariosController horariosController = new HorariosController();
         try {
-
+            File directorio=new File("Reporte"); 
+            directorio.mkdir(); 
+            
             // Configuración necesaria
             WorkbookSettings conf = new WorkbookSettings();
             conf.setEncoding("ISO-8859-1");
 
             // Aqui se crea el archivo
-            WritableWorkbook workbook = Workbook.createWorkbook(new File("C:"+"\\Reporte"+"\\archivo.xls"), conf);
+            WritableWorkbook workbook = Workbook.createWorkbook(new File(directorio.getAbsolutePath()+"\\archivo.xls"), conf);
             
             // Aqui podemos crear las hojas del archivo y darles formato y todo lo demás
             WritableSheet sheet = workbook.createSheet("Reporte de Horarios", 0); // Nombre de la hoja y número de hoja
@@ -122,7 +124,7 @@ public class Excel {
             workbook.write(); // escribimos en el archivo
             workbook.close(); // lo cerramos 
             // Con esto se abre automáticamente el archivo
-            Runtime.getRuntime().exec("cmd /c start " + "C:"+"\\Reporte"+"\\archivo.xls");
+            Runtime.getRuntime().exec("cmd /c start " + directorio.getAbsolutePath()+"\\archivo.xls");
 
         } catch (IOException ex) {
         }

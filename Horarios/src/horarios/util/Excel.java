@@ -20,6 +20,7 @@ import static horarios.controller.HorariosController.InicioMartes;
 import static horarios.controller.HorariosController.InicioMiercoles;
 import static horarios.controller.HorariosController.InicioSabado;
 import static horarios.controller.HorariosController.InicioViernes;
+import static horarios.controller.HorariosController.nombreX;
 import horarios.model.HorarioDto;
 import horarios.service.HorarioService;
 import java.io.File;
@@ -107,6 +108,7 @@ public class Excel {
             //sheet.addCell(new jxl.write.Label(0, 3, "Horas Libres:", hformat));
             sheet.addCell(new jxl.write.Label(0, 4, "Salida:", hformat1));
             sheet.addCell(new jxl.write.Label(0, 5, "Emp:", hformat1));
+            sheet.addCell(new jxl.write.Label(1, 5, nombreX, hformat));
             sheet.addCell(new jxl.write.Label(1, 3, InicioLunes, hformat));
             sheet.addCell(new jxl.write.Label(1, 4, FinalLunes, hformat));
             sheet.addCell(new jxl.write.Label(2, 3, InicioMartes, hformat));

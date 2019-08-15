@@ -121,6 +121,7 @@ public class HorariosController extends Controller {
     @FXML
     private Label lblHoraFinalDomingo;
     static public String FinalDomingo = "";
+    static public String nombreX = "";
     @FXML
     private FlowPane flowPane;
     private PuestoService puesService;
@@ -178,6 +179,7 @@ public class HorariosController extends Controller {
                 puestoDto = (PuestoDto) resp.getResultado("roles");
                 itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
                 CantidadRoles.setText(String.valueOf(puestoDto.getRoles().size()));
+                nombreX = puestoDto.getEmpleado().getNombre();
                 tableRol.setItems(itemsRoles);
             }
         }
@@ -320,6 +322,7 @@ public class HorariosController extends Controller {
         if(RolSeleccion){
             Excel excel = new Excel();
             excel.GenerarReporte();
+            nombreX = "     -";
         }        
     }
     public void limpiarDias(){

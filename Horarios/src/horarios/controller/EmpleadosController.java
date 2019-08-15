@@ -24,6 +24,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -66,6 +68,8 @@ public class EmpleadosController extends Controller {
     private ArrayList<EmpleadoDto> empleados;
     private ObservableList items;
     private Mensaje ms;
+    @FXML
+    private ImageView fondoEmp;
 
     @Override
     public void initialize() {
@@ -73,6 +77,7 @@ public class EmpleadosController extends Controller {
     }
 
     public void inicio() {
+        
         empService = new EmpleadoService();
         ms = new Mensaje();
         resp = empService.getEmpleados();
@@ -83,6 +88,12 @@ public class EmpleadosController extends Controller {
         COL_CORREO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCorreo()));
         items = FXCollections.observableArrayList(empleados);
         table.setItems(items);
+        /*Image omg1;
+        try {
+            omg1 = new Image("/horarios/resources/tttttttt.jpg");
+            fondoEmp.setImage(omg1);
+        } catch (Exception e) {
+        }*/
     }
 
     @FXML

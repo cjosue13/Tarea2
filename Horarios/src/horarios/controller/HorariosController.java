@@ -179,7 +179,7 @@ public class HorariosController extends Controller {
                 puestoDto = (PuestoDto) resp.getResultado("roles");
                 itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
                 CantidadRoles.setText(String.valueOf(puestoDto.getRoles().size()));
-                nombreX = puestoDto.getEmpleado().getNombre();
+                nombreX = puestoDto.getEmpleado().getNombre() +" "+ puestoDto.getEmpleado().getApellido();
                 tableRol.setItems(itemsRoles);
             }
         }

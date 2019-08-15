@@ -71,16 +71,13 @@ public class Excel {
         horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
         HorariosController horariosController = new HorariosController();
         try {
-            // esto es para obtener la dirección del proyecto
-            File miDir = new File(".");
-            String r = miDir.getCanonicalPath();
 
             // Configuración necesaria
             WorkbookSettings conf = new WorkbookSettings();
             conf.setEncoding("ISO-8859-1");
 
             // Aqui se crea el archivo
-            WritableWorkbook workbook = Workbook.createWorkbook(new File("C:\\Reporte" + "\\archivo.xls"), conf);
+            WritableWorkbook workbook = Workbook.createWorkbook(new File("C:"+"\\Reporte"+"\\archivo.xls"), conf);
             
             // Aqui podemos crear las hojas del archivo y darles formato y todo lo demás
             WritableSheet sheet = workbook.createSheet("Reporte de Horarios", 0); // Nombre de la hoja y número de hoja
@@ -93,8 +90,7 @@ public class Excel {
             
             hformat.setBackground(Colour.GRAY_25);
             hformat1.setBackground(Colour.AQUA);
-            sheet.addCell(new jxl.write.Label(5, 0, "eado", hformat1));
-            sheet.addCell(new jxl.write.Label(4, 0, "de Empleado", hformat1));
+            sheet.addCell(new jxl.write.Label(4, 0, "de Empleado: ", hformat1));
             sheet.addCell(new jxl.write.Label(3, 0, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
             sheet.addCell(new jxl.write.Label(1, 2, "Lunes", hformat));
             sheet.addCell(new jxl.write.Label(2, 2, "Martes", hformat));
@@ -103,12 +99,12 @@ public class Excel {
             sheet.addCell(new jxl.write.Label(5, 2, "Viernes", hformat));
             sheet.addCell(new jxl.write.Label(6, 2, "Sabado", hformat));
             sheet.addCell(new jxl.write.Label(7, 2, "Domingo", hformat));
-            sheet.addCell(new jxl.write.Label(0, 2, "Horas", hformat1));
+            sheet.addCell(new jxl.write.Label(0, 2, "Dia", hformat1));
             sheet.addCell(new jxl.write.Label(0, 3, "Inicio:", hformat1));
             //sheet.addCell(new jxl.write.Label(0, 3, "Horas Libres:", hformat));
+            
             sheet.addCell(new jxl.write.Label(0, 4, "Salida:", hformat1));
-            sheet.addCell(new jxl.write.Label(0, 5, "Emp:", hformat1));
-            sheet.addCell(new jxl.write.Label(1, 5, nombreX, hformat));
+            sheet.addCell(new jxl.write.Label(5, 0, nombreX, hformat1));
             sheet.addCell(new jxl.write.Label(1, 3, InicioLunes, hformat));
             sheet.addCell(new jxl.write.Label(1, 4, FinalLunes, hformat));
             sheet.addCell(new jxl.write.Label(2, 3, InicioMartes, hformat));
@@ -125,9 +121,8 @@ public class Excel {
             sheet.addCell(new jxl.write.Label(7, 4, FinalDomingo, hformat));
             workbook.write(); // escribimos en el archivo
             workbook.close(); // lo cerramos 
-
             // Con esto se abre automáticamente el archivo
-            Runtime.getRuntime().exec("cmd /c start " + "C:" + "\\Reporte" + "\\archivo.xls");
+            Runtime.getRuntime().exec("cmd /c start " + "C:"+"\\Reporte"+"\\archivo.xls");
 
         } catch (IOException ex) {
         }

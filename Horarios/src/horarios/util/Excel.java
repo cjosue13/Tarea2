@@ -5,11 +5,33 @@
  */
 package horarios.util;
 
+import horarios.controller.HorariosController;
+import static horarios.controller.HorariosController.FinalDomingo;
+import static horarios.controller.HorariosController.FinalJueves;
+import static horarios.controller.HorariosController.FinalLunes;
+import static horarios.controller.HorariosController.FinalMartes;
+import static horarios.controller.HorariosController.FinalMiercoles;
+import static horarios.controller.HorariosController.FinalSabado;
+import static horarios.controller.HorariosController.FinalViernes;
+import static horarios.controller.HorariosController.InicioDomingo;
+import static horarios.controller.HorariosController.InicioJueves;
+import static horarios.controller.HorariosController.InicioLunes;
+import static horarios.controller.HorariosController.InicioMartes;
+import static horarios.controller.HorariosController.InicioMiercoles;
+import static horarios.controller.HorariosController.InicioSabado;
+import static horarios.controller.HorariosController.InicioViernes;
+import horarios.model.HorarioDto;
+import horarios.service.HorarioService;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import static java.util.EnumSet.range;
 import java.util.Properties;
+import static java.util.stream.IntStream.range;
+import static java.util.stream.LongStream.range;
 import javafx.scene.control.Alert;
+import javafx.scene.paint.Color;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
@@ -21,6 +43,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import jxl.Range;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.write.WritableCellFormat;
@@ -28,14 +51,24 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
-
+import  jxl.format.Colour;
 /**
  *
  * @author JORDI RODRIGUEZ
  */
 public class Excel {
+    
+    private HorarioDto horario;
+    private ArrayList<HorarioDto> horarios;
+    private HorarioService horarioService = new HorarioService();
+    private Mensaje ms = new Mensaje();
+    private Respuesta resp = horarioService.getHorarios();
+    
+    
     Mensaje message = new Mensaje();
     public void GenerarReporte() throws WriteException {
+        horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
+        HorariosController horariosController = new HorariosController();
         try {
             // esto es para obtener la dirección del proyecto
             File miDir = new File(".");
@@ -46,18 +79,53 @@ public class Excel {
             conf.setEncoding("ISO-8859-1");
 
             // Aqui se crea el archivo
-            WritableWorkbook workbook = Workbook.createWorkbook(new File(r + "\\Reporte" + "\\archivo.xls"), conf);
-
+            WritableWorkbook workbook = Workbook.createWorkbook(new File("C:\\Reporte" + "\\archivo.xls"), conf);
+            
             // Aqui podemos crear las hojas del archivo y darles formato y todo lo demás
-            WritableSheet sheet = workbook.createSheet("Hoja de Prueba", 0); // Nombre de la oja y número de joja
-            WritableFont h = new WritableFont(WritableFont.ARIAL, 11, WritableFont.NO_BOLD);// Fuente
+            WritableSheet sheet = workbook.createSheet("Reporte de Horarios", 0); // Nombre de la hoja y número de hoja
+            
+            WritableFont h = new WritableFont(WritableFont.ARIAL, 12, WritableFont.NO_BOLD);// Fuente de texto normal
+            WritableFont h1 = new WritableFont(WritableFont.ARIAL, 12, WritableFont.BOLD);// Fuente de titulo
+            
             WritableCellFormat hformat = new WritableCellFormat(h); // se agrega el formato a la celda
-            sheet.addCell(new jxl.write.Label(0, 0, "PRUEBA", hformat));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
+            WritableCellFormat hformat1 = new WritableCellFormat(h1);
+            
+            hformat.setBackground(Colour.GRAY_25);
+            hformat1.setBackground(Colour.AQUA);
+            sheet.addCell(new jxl.write.Label(5, 0, "eado", hformat1));
+            sheet.addCell(new jxl.write.Label(4, 0, "de Empleado", hformat1));
+            sheet.addCell(new jxl.write.Label(3, 0, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
+            sheet.addCell(new jxl.write.Label(1, 2, "Lunes", hformat));
+            sheet.addCell(new jxl.write.Label(2, 2, "Martes", hformat));
+            sheet.addCell(new jxl.write.Label(3, 2, "Miercoles", hformat));
+            sheet.addCell(new jxl.write.Label(4, 2, "Jueves", hformat));
+            sheet.addCell(new jxl.write.Label(5, 2, "Viernes", hformat));
+            sheet.addCell(new jxl.write.Label(6, 2, "Sabado", hformat));
+            sheet.addCell(new jxl.write.Label(7, 2, "Domingo", hformat));
+            sheet.addCell(new jxl.write.Label(0, 2, "Horas", hformat1));
+            sheet.addCell(new jxl.write.Label(0, 3, "Inicio:", hformat1));
+            //sheet.addCell(new jxl.write.Label(0, 3, "Horas Libres:", hformat));
+            sheet.addCell(new jxl.write.Label(0, 4, "Salida:", hformat1));
+            sheet.addCell(new jxl.write.Label(0, 5, "Emp:", hformat1));
+            sheet.addCell(new jxl.write.Label(1, 3, InicioLunes, hformat));
+            sheet.addCell(new jxl.write.Label(1, 4, FinalLunes, hformat));
+            sheet.addCell(new jxl.write.Label(2, 3, InicioMartes, hformat));
+            sheet.addCell(new jxl.write.Label(2, 4, FinalMartes, hformat));
+            sheet.addCell(new jxl.write.Label(3, 3, InicioMiercoles, hformat));
+            sheet.addCell(new jxl.write.Label(3, 4, FinalMiercoles, hformat));
+            sheet.addCell(new jxl.write.Label(4, 3, InicioJueves, hformat));
+            sheet.addCell(new jxl.write.Label(4, 4, FinalJueves, hformat));
+            sheet.addCell(new jxl.write.Label(5, 3, InicioViernes, hformat));
+            sheet.addCell(new jxl.write.Label(5, 4, FinalViernes, hformat));
+            sheet.addCell(new jxl.write.Label(6, 3, InicioSabado, hformat));
+            sheet.addCell(new jxl.write.Label(6, 4, FinalSabado, hformat));
+            sheet.addCell(new jxl.write.Label(7, 3, InicioDomingo, hformat));
+            sheet.addCell(new jxl.write.Label(7, 4, FinalDomingo, hformat));
             workbook.write(); // escribimos en el archivo
             workbook.close(); // lo cerramos 
 
             // Con esto se abre automáticamente el archivo
-            Runtime.getRuntime().exec("cmd /c start " + r + "\\Reporte" + "\\archivo.xls");
+            Runtime.getRuntime().exec("cmd /c start " + "C:" + "\\Reporte" + "\\archivo.xls");
 
         } catch (IOException ex) {
         }
@@ -80,7 +148,7 @@ public class Excel {
 
             Session session = Session.getDefaultInstance(prop, null); // se inicia sesión con las propiedades
             BodyPart adjunto = new MimeBodyPart(); // Aqui se declara lo que será nuestro archivo adjunto
-            adjunto.setDataHandler(new DataHandler(new FileDataSource(r + "\\Reporte\\archivo.xls")));// con esto se le da el archivo que enviaremos
+            adjunto.setDataHandler(new DataHandler(new FileDataSource("C:" + "\\Reporte\\archivo.xls")));// con esto se le da el archivo que enviaremos
             adjunto.setFileName("archivo.xls"); // Nombre del archivo
 
             // Aqui es como guardar al archivo para despues añadirlo al mensaje que enviaremos

@@ -81,32 +81,46 @@ public class HorariosController extends Controller {
     private TableColumn<RolDto, String> COL_NOMBRE_ROL;
     @FXML
     private Label lblHoraInicioLunes;
+    static public String InicioLunes = "";
     @FXML
     private Label lblHoraFinalLunes;
+    static public String FinalLunes = "";
     @FXML
     private Label lblHoraInicioMartes;
+    static public String InicioMartes = "";
     @FXML
     private Label lblHoraFinalMartes;
+    static public String FinalMartes = "";
     @FXML
     private Label lblHoraInicioMiercoles;
+    static public String InicioMiercoles = "";
     @FXML
     private Label lblHoraFinalMiercoles;
+    static public String FinalMiercoles = "";
     @FXML
     private Label lblHoraInicioJueves;
+    static public String InicioJueves = "";
     @FXML
     private Label lblHoraFinalJueves;
+    static public String FinalJueves = "";
     @FXML
     private Label lblHoraInicioViernes;
+    static public String InicioViernes = "";
     @FXML
     private Label lblHoraFinalViernes;
+    static public String FinalViernes = "";
     @FXML
     private Label lblHoraInicioSabado;
+    static public String InicioSabado = "";
     @FXML
     private Label lblHoraFinalSabado;
+    static public String FinalSabado = "";
     @FXML
     private Label lblHoraInicioDomingo;
+    static public String InicioDomingo = "";
     @FXML
     private Label lblHoraFinalDomingo;
+    static public String FinalDomingo = "";
     @FXML
     private FlowPane flowPane;
     private PuestoService puesService;
@@ -131,14 +145,14 @@ public class HorariosController extends Controller {
     private Label lblPorcentaje;
     @FXML
     private JFXButton Exportar;
-
+    static public boolean RolSeleccion = false;
     @Override
     public void initialize() {
         inicio();
     }
 
     private void inicio() {
-
+        RolSeleccion = false;
         puesService = new PuestoService();
         resp = puesService.getPuestos();
         empleados = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
@@ -171,6 +185,7 @@ public class HorariosController extends Controller {
 
     @FXML
     private void SeleccionaRol(MouseEvent event) {
+        limpiarDias();
         if (tableRol.getSelectionModel() != null) {
             if (tableRol.getSelectionModel().getSelectedItem() != null) {
                 limpiarHorario();
@@ -181,37 +196,51 @@ public class HorariosController extends Controller {
                         case "Lunes":
                             Lunes.setId("buttonSelec");
                             lblHoraInicioLunes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            InicioLunes = lblHoraInicioLunes.getText();
                             lblHoraFinalLunes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            FinalLunes = lblHoraFinalLunes.getText();
                             break;
                         case "Martes":
                             Martes.setId("buttonSelec");
                             lblHoraInicioMartes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            InicioMartes = lblHoraInicioMartes.getText();
                             lblHoraFinalMartes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            FinalMartes = lblHoraFinalMartes.getText();
                             break;
                         case "Miercoles":
                             Miercoles.setId("buttonSelec");
                             lblHoraInicioMiercoles.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            InicioMiercoles = lblHoraInicioMiercoles.getText();
                             lblHoraFinalMiercoles.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            FinalMiercoles = lblHoraFinalMiercoles.getText();
                             break;
                         case "Jueves":
                             Jueves.setId("buttonSelec");
                             lblHoraInicioJueves.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            InicioJueves = lblHoraInicioJueves.getText();
                             lblHoraFinalJueves.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            FinalJueves = lblHoraInicioJueves.getText();
                             break;
                         case "Viernes":
                             Viernes.setId("buttonSelec");
                             lblHoraInicioViernes.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            InicioViernes = lblHoraInicioViernes.getText();
                             lblHoraFinalViernes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            FinalViernes = lblHoraFinalViernes.getText();
                             break;
                         case "Sabado":
                             Sabado.setId("buttonSelec");
                             lblHoraInicioSabado.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            InicioSabado = lblHoraInicioSabado.getText();
                             lblHoraFinalSabado.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            FinalSabado = lblHoraFinalSabado.getText();
                             break;
                         case "Domingo":
                             Domingo.setId("buttonSelec");
                             lblHoraInicioDomingo.setText(String.valueOf(dia.getHora_Inicio().toLocalTime()));
+                            InicioDomingo = lblHoraInicioDomingo.getText();
                             lblHoraFinalDomingo.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
+                            FinalDomingo = lblHoraFinalDomingo.getText();
                             break;
                         default:
                             break;
@@ -220,6 +249,7 @@ public class HorariosController extends Controller {
 
             }
         }
+        RolSeleccion = true;
     }
 
     public void limpiarHorario() {
@@ -287,9 +317,25 @@ public class HorariosController extends Controller {
 
     @FXML
     private void Exportar(ActionEvent event) throws WriteException {
-        
-        Excel excel = new Excel();
-        excel.GenerarReporte();
-        
+        if(RolSeleccion){
+            Excel excel = new Excel();
+            excel.GenerarReporte();
+        }        
+    }
+    public void limpiarDias(){
+        InicioLunes = "     -";
+        FinalLunes = "     -";
+        InicioMartes = "     -";
+        FinalMartes = "     -";
+        InicioMiercoles = "     -";
+        FinalMiercoles = "     -";
+        InicioJueves = "     -";
+        FinalJueves = "     -";
+        InicioViernes = "     -";
+        FinalViernes = "     -";
+        InicioSabado = "     -";
+        FinalSabado = "     -";
+        InicioDomingo = "     -";
+        FinalDomingo = "     -";
     }
 }

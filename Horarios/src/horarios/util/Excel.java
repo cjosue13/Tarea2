@@ -64,7 +64,7 @@ public class Excel {
     private HorarioService horarioService = new HorarioService();
     private Mensaje ms = new Mensaje();
     private Respuesta resp = horarioService.getHorarios();
-    private File directorio=new File("Reporte"); 
+    private File directorio=new File("C:\\Reporte"); 
            
     
     Mensaje message = new Mensaje();

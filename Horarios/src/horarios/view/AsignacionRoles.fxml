@@ -2,31 +2,82 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionRolesController">
    <children>
-      <Label fx:id="Titulo" layoutX="286.0" layoutY="40.0" text="Asignaciones de roles" />
-      <TableView fx:id="tablePuestos" layoutX="77.0" layoutY="140.0" onMouseReleased="#DatosEmpleado" prefHeight="280.0" prefWidth="650.0">
-         <columns>
-            <TableColumn fx:id="COL_FOLIO_EMP" prefWidth="216.6" text="Folio" />
-            <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="216.6" text="Nombre Completo" />
-            <TableColumn fx:id="COL_PUESTO_EMP" prefWidth="216.8" text="Puesto" />
-         </columns>
-      </TableView>
-      <TableView fx:id="tableRoles" layoutX="77.0" layoutY="485.0" onMouseReleased="#DatosRol" prefHeight="239.0" prefWidth="371.0">
-        <columns>
-          <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="370.0" text="Roles" />
-        </columns>
-      </TableView>
-      <Label layoutX="77.0" layoutY="444.0" text="Roles:" />
-      <JFXButton fx:id="btnAsignarRol" layoutX="899.0" layoutY="693.0" onAction="#AsignarRol" style="-fx-cursor: hand;" text="Asignar Rol" />
-      <JFXTextField fx:id="txtfolio" disable="true" labelFloat="true" layoutX="745.0" layoutY="140.0" prefHeight="29.0" prefWidth="250.0" promptText="Folio" />
-      <JFXTextField fx:id="txtNombre" disable="true" labelFloat="true" layoutX="745.0" layoutY="199.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre Completo" />
-      <JFXTextField fx:id="txtPuesto" disable="true" labelFloat="true" layoutX="745.0" layoutY="258.0" prefHeight="29.0" prefWidth="250.0" promptText="Puesto" />
-      <JFXTextField fx:id="txtRol" disable="true" labelFloat="true" layoutX="464.0" layoutY="485.0" prefHeight="29.0" prefWidth="250.0" promptText="Rol" />
+      <Label fx:id="Titulo" layoutX="286.0" layoutY="40.0" text="Asignaciones de roles" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="297.0" />
+      <VBox layoutX="77.0" layoutY="140.0" spacing="20.0" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="77.0" AnchorPane.topAnchor="140.0">
+         <children>
+            <TableView fx:id="tablePuestos" onMouseReleased="#DatosEmpleado" prefHeight="210.0" prefWidth="447.0">
+               <columns>
+                  <TableColumn fx:id="COL_FOLIO_EMP" prefWidth="44.0" text="Folio" />
+                  <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="270.0" text="Nombre Completo" />
+                  <TableColumn fx:id="COL_PUESTO_EMP" minWidth="0.0" prefWidth="132.0" text="Puesto" />
+               </columns>
+            </TableView>
+            <HBox prefHeight="222.0" prefWidth="447.0" spacing="50.0">
+               <children>
+                  <TableView fx:id="TV_ROLES_NO_ROTATIVOS" onMouseReleased="#roles_no_rotativos" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="COL_ROL_NO_ROTATIVO" prefWidth="199.0" text="Roles no rotativos" />
+                    </columns>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </TableView>
+                  <TableView fx:id="TV_ROLES_ROTATIVOS" onMouseReleased="#roles_rotativos" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="COL_ROL_ROTATIVO" prefWidth="146.0" text="Roles rotativos" />
+                        <TableColumn fx:id="COL_ORDEN_ROL" prefWidth="53.0" text="Orden" />
+                    </columns>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </TableView>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox layoutX="675.0" layoutY="144.0" prefHeight="525.0" prefWidth="317.0" spacing="20.0" stylesheets="@newCascadeStyleSheet.css" AnchorPane.bottomAnchor="131.0" AnchorPane.leftAnchor="675.0" AnchorPane.topAnchor="144.0">
+         <children>
+            <JFXTextField fx:id="txtfolio" disable="true" labelFloat="true" prefHeight="29.0" prefWidth="250.0" promptText="Folio" />
+            <JFXTextField fx:id="txtNombre" disable="true" labelFloat="true" prefHeight="29.0" prefWidth="250.0" promptText="Nombre Completo" />
+            <JFXTextField fx:id="txtPuesto" disable="true" labelFloat="true" prefHeight="29.0" prefWidth="250.0" promptText="Puesto" />
+            <Label text="Asignar roles">
+               <VBox.margin>
+                  <Insets left="132.0" />
+               </VBox.margin>
+            </Label>
+            <TableView fx:id="TV_ASIGNAR_ROLES" onMouseReleased="#DatosRol" prefHeight="340.0" prefWidth="271.0">
+              <columns>
+                <TableColumn fx:id="COL_ASIGNAR_ROLES" prefWidth="211.0" text="Roles" />
+                <TableColumn fx:id="COL_ASIGNAR_ROTATIVO" prefWidth="105.0" resizable="false" text="Rotativo" />
+              </columns>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+      <HBox layoutX="652.0" layoutY="661.0" prefHeight="100.0" prefWidth="370.0" spacing="20.0" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="652.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="661.0">
+         <children>
+            <JFXButton onAction="#limpiarValores" text="Limpiar Valores" />
+            <JFXButton onAction="#rotarRoles" text="Rotar Roles " />
+            <JFXButton fx:id="btnAsignarRol" onAction="#AsignarRol" style="-fx-cursor: hand;" text="Asignar Roles" />
+         </children>
+         <padding>
+            <Insets left="30.0" top="30.0" />
+         </padding>
+      </HBox>
    </children>
 </AnchorPane>

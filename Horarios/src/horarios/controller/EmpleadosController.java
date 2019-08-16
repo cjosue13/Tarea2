@@ -7,6 +7,7 @@ package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import horarios.Horarios;
 import horarios.model.EmpleadoDto;
 import horarios.model.PuestoDto;
 import horarios.service.EmpleadoService;
@@ -73,6 +74,7 @@ public class EmpleadosController extends Controller {
     }
 
     public void inicio() {
+        typeKeys();
         empService = new EmpleadoService();
         ms = new Mensaje();
         resp = empService.getEmpleados();
@@ -205,5 +207,8 @@ public class EmpleadosController extends Controller {
     private void limpiarRegistro(ActionEvent event) {
         limpiarValores();
     }
-
+    private void typeKeys() {
+        txtNombre.setOnKeyTyped(Horarios.aceptaCaracteres);
+        txtApellidos.setOnKeyTyped(Horarios.aceptaCaracteres);
+    }
 }

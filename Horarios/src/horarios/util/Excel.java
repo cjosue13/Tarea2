@@ -79,8 +79,8 @@ public class Excel {
             conf.setEncoding("ISO-8859-1");
 
             // Aqui se crea el archivo
-            WritableWorkbook workbook = Workbook.createWorkbook(new File(directorio.getAbsolutePath()+nombreX+".xls"), conf);
-            
+            WritableWorkbook workbook = Workbook.createWorkbook(new File("C:\\Reportes"+nombreX+".xls"), conf);
+            System.out.println(directorio.getAbsolutePath() + "dire");
             // Aqui podemos crear las hojas del archivo y darles formato y todo lo demás
             WritableSheet sheet = workbook.createSheet("Reporte de Horarios", 0); // Nombre de la hoja y número de hoja
             
@@ -124,7 +124,7 @@ public class Excel {
             workbook.write(); // escribimos en el archivo
             workbook.close(); // lo cerramos 
             // Con esto se abre automáticamente el archivo
-            Runtime.getRuntime().exec("cmd /c start " + directorio.getAbsolutePath()+nombreX+".xls");
+            Runtime.getRuntime().exec("cmd /c start " + /*directorio.getAbsolutePath()*/ "C:\\Reportes"+nombreX+".xls");
 
         } catch (IOException ex) {
         }

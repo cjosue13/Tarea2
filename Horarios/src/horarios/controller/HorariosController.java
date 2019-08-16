@@ -179,7 +179,7 @@ public class HorariosController extends Controller {
                 puestoDto = (PuestoDto) resp.getResultado("roles");
                 itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
                 CantidadRoles.setText(String.valueOf(puestoDto.getRoles().size()));
-                nombreX = puestoDto.getEmpleado().getNombre() +" "+ puestoDto.getEmpleado().getApellido();
+                nombreX = puestoDto.getEmpleado().getNombre();
                 tableRol.setItems(itemsRoles);
             }
         }
@@ -248,10 +248,9 @@ public class HorariosController extends Controller {
                             break;
                     }
                 });
-
+                RolSeleccion = true;
             }
         }
-        RolSeleccion = true;
     }
 
     public void limpiarHorario() {
@@ -322,8 +321,7 @@ public class HorariosController extends Controller {
         if(RolSeleccion){
             Excel excel = new Excel();
             excel.GenerarReporte();
-            nombreX = "     -";
-        }        
+        }   
     }
     public void limpiarDias(){
         InicioLunes = "     -";

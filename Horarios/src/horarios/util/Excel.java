@@ -73,7 +73,7 @@ public class Excel {
             conf.setEncoding("ISO-8859-1");
 
             // Aqui se crea el archivo
-            WritableWorkbook workbook = Workbook.createWorkbook(new File(directorio.getAbsolutePath()+"\\archivo.xls"), conf);
+            WritableWorkbook workbook = Workbook.createWorkbook(new File(directorio.getAbsolutePath()+nombreX+".xls"), conf);
             
             // Aqui podemos crear las hojas del archivo y darles formato y todo lo demás
             WritableSheet sheet = workbook.createSheet("Reporte de Horarios", 0); // Nombre de la hoja y número de hoja
@@ -118,7 +118,7 @@ public class Excel {
             workbook.write(); // escribimos en el archivo
             workbook.close(); // lo cerramos 
             // Con esto se abre automáticamente el archivo
-            Runtime.getRuntime().exec("cmd /c start " + directorio.getAbsolutePath()+"\\archivo.xls");
+            Runtime.getRuntime().exec("cmd /c start " + directorio.getAbsolutePath()+nombreX+".xls");
 
         } catch (IOException ex) {
         }
@@ -135,8 +135,8 @@ public class Excel {
        
         Session session = Session.getDefaultInstance(prop, null); // se inicia sesión con las propiedades
         BodyPart adjunto = new MimeBodyPart(); // Aqui se declara lo que será nuestro archivo adjunto
-        adjunto.setDataHandler(new DataHandler(new FileDataSource(directorio.getAbsolutePath()+"\\archivo.xls")));// con esto se le da el archivo que enviaremos
-        adjunto.setFileName("archivo.xls"); // Nombre del archivo
+        adjunto.setDataHandler(new DataHandler(new FileDataSource(directorio.getAbsolutePath()+nombreX+".xls")));// con esto se le da el archivo que enviaremos
+        adjunto.setFileName(nombreX+".xls"); // Nombre del archivo
         // Aqui es como guardar al archivo para despues añadirlo al mensaje que enviaremos
         MimeMultipart m = new MimeMultipart();
         m.addBodyPart(adjunto);

@@ -6,6 +6,7 @@
 package horarios.util;
 
 import horarios.controller.HorariosController;
+import static horarios.controller.HorariosController.CantRol;
 import static horarios.controller.HorariosController.FinalDomingo;
 import static horarios.controller.HorariosController.FinalJueves;
 import static horarios.controller.HorariosController.FinalLunes;
@@ -21,7 +22,10 @@ import static horarios.controller.HorariosController.InicioMiercoles;
 import static horarios.controller.HorariosController.InicioSabado;
 import static horarios.controller.HorariosController.InicioViernes;
 import static horarios.controller.HorariosController.nombreX;
+//import static horarios.controller.HorariosController.tableRol;
+import horarios.model.DiaDto;
 import horarios.model.HorarioDto;
+import horarios.model.RolDto;
 import horarios.service.HorarioService;
 import java.io.File;
 import java.io.IOException;
@@ -58,17 +62,17 @@ public class Excel {
     private HorarioService horarioService = new HorarioService();
     private Mensaje ms = new Mensaje();
     private Respuesta resp = horarioService.getHorarios();
-    //private File directorio=new File("C:\\Reporte"); 
+    private File directorio = new File("C:\\Reporte"); 
            
     
     Mensaje message = new Mensaje();
     
-    String nombreXX = nombreX.replace(" ","");
+    String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
     
     public void GenerarReporte() throws WriteException {
         horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
         HorariosController horariosController = new HorariosController();
-        
+        directorio.mkdir();//se crea la carpeta
         try {
             // esto es para obtener la dirección del proyecto
             File miDir = new File(".");
@@ -100,9 +104,9 @@ public class Excel {
             sheet.addCell(new jxl.write.Label(7, 2, "Domingo", hformat));
             sheet.addCell(new jxl.write.Label(0, 2, "Dia", hformat1));
             sheet.addCell(new jxl.write.Label(0, 3, "Inicio:", hformat1));
-            //sheet.addCell(new jxl.write.Label(0, 3, "Horas Libres:", hformat));
-            
             sheet.addCell(new jxl.write.Label(0, 4, "Salida:", hformat1));
+            sheet.addCell(new jxl.write.Label(0, 5, "Cant Roles:", hformat1));
+            
             sheet.addCell(new jxl.write.Label(5, 0, nombreX, hformat1));
             sheet.addCell(new jxl.write.Label(1, 3, InicioLunes, hformat));
             sheet.addCell(new jxl.write.Label(1, 4, FinalLunes, hformat));
@@ -118,6 +122,7 @@ public class Excel {
             sheet.addCell(new jxl.write.Label(6, 4, FinalSabado, hformat));
             sheet.addCell(new jxl.write.Label(7, 3, InicioDomingo, hformat));
             sheet.addCell(new jxl.write.Label(7, 4, FinalDomingo, hformat));
+            sheet.addCell(new jxl.write.Label(1, 5, String.valueOf(CantRol), hformat1));
             workbook.write(); // escribimos en el archivo
             workbook.close(); // lo cerramos 
 
@@ -127,6 +132,12 @@ public class Excel {
 
         } catch (IOException ex) {
         }
+    }
+    
+    public void GenerarReporteTodos() throws WriteException {
+        
+        
+        
     }
 
     public void SendMail(String Destinatario) throws MessagingException, IOException {

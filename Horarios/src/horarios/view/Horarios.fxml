@@ -100,5 +100,6 @@
       <JFXButton fx:id="btnCorreo" layoutX="732.0" layoutY="664.0" onAction="#EnviarCorreo" style="-fx-cursor: hand;" text="Enviar Correo" />
       <JFXProgressBar fx:id="progressBar" layoutX="732.0" layoutY="616.0" prefHeight="8.0" prefWidth="250.0" />
       <Label fx:id="lblPorcentaje" layoutX="840.0" layoutY="590.0" prefHeight="17.0" prefWidth="35.0" />
+      <JFXButton layoutX="880.0" layoutY="709.0" onAction="#ExportarTodos" prefHeight="31.0" prefWidth="124.0" text="Exportar todo" />
    </children>
 </AnchorPane>

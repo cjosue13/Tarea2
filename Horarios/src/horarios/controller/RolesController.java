@@ -7,6 +7,7 @@ package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import horarios.Horarios;
 import horarios.model.DiaDto;
 import horarios.model.HorarioDto;
 import horarios.model.RolDto;
@@ -84,6 +85,7 @@ public class RolesController extends Controller {
     }
 
     public void inicio() {
+        typeKeys();
         rolservice = new RolService();
         horarioService = new HorarioService();
         ms = new Mensaje();
@@ -119,6 +121,7 @@ public class RolesController extends Controller {
                     Integer id = rol.getId();
                     Integer version = rol.getVersion() + 1;
                     horarioDto.setVersion(horarioDto.getVersion() + 1);
+                 
                     rol = new RolDto(nombre, rotar, version, id, null);
                     try {
                         resp = rolservice.guardarRol(rol);
@@ -131,7 +134,7 @@ public class RolesController extends Controller {
                         resp = horarioService.guardarHorario(horarioDto);
 
                         DiaService diaService = new DiaService();
-
+                        
                         Respuesta respuesta = horarioService.getDias(horarioDto.getId());
                         ArrayList<DiaDto> dias = (ArrayList) respuesta.getResultado("getDias");
                         
@@ -215,10 +218,10 @@ public class RolesController extends Controller {
                     //Guardo el horario en base de datos
                     HorarioDto horario = (HorarioDto) AppContext.getInstance().get("horario");/*para poder usar los datos desde otra ventana*/
                     horario.setRol((RolDto) resp.getResultado("Rol"));
-
+                    horario.setOrdenRotacion(0);
                     HorarioService horService = new HorarioService();
                     Respuesta respHorario = horService.guardarHorario(horario);
-
+ 
                     DiaService diaService = new DiaService();
                     horario.getDias().stream().forEach(dia -> {
                         dia.setHorario((HorarioDto) respHorario.getResultado("Horario"));
@@ -289,5 +292,8 @@ public class RolesController extends Controller {
     private void limpiarResgistro(ActionEvent event) {
         limpiarValores();
     }
+    private void typeKeys() {
+        txtNombre.setOnKeyTyped(Horarios.aceptaCaracteres);
 
+    }
 }

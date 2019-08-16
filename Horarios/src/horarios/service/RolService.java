@@ -97,6 +97,8 @@ public class RolService {
                         Puesto puesto = em.find(Puesto.class, pues.getId());
                         puesto.getRolList().add(rol);
                         rol.getPuestoList().add(puesto);
+                        //Revisar lo del orden de rotacion
+                        
                     }
                 }
                 
@@ -111,7 +113,6 @@ public class RolService {
                         rol.getPuestoList().add(puesto);
                     }
                 }
-                
                 em.persist(rol);
             }
             et.commit();

@@ -10,26 +10,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.PuestosController">
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.PuestosController">
    <children>
       <TableView fx:id="tablePuesto" layoutX="77.0" layoutY="140.0" onMouseReleased="#DatosPuestos" prefHeight="280.0" prefWidth="870.0">
          <columns>
-            <TableColumn fx:id="COL_NOMBRE_PUES" prefWidth="217.5" text="Nombre" />
-            <TableColumn fx:id="COL_DESCRIPCION_PUES" prefWidth="217.5" text="Descripción" />
-            <TableColumn fx:id="COL_CODIGO_PUES" prefWidth="217.5" text="Codigo" />
-            <TableColumn fx:id="COL_EMPLEADO_PUE" prefWidth="217.5" text="Empleado" />
+            <TableColumn fx:id="COL_CODIGO_PUES" prefWidth="124.0" resizable="false" text="Codigo de Puesto" />
+            <TableColumn fx:id="COL_NOMBRE_PUES" prefWidth="178.0" text="Puesto" />
+            <TableColumn fx:id="COL_DESCRIPCION_PUES" prefWidth="288.0" text="Descripción" />
+            <TableColumn fx:id="COL_EMPLEADO_PUE" prefWidth="282.0" text="Empleado" />
          </columns>
       </TableView>
       <Label fx:id="Titulo" layoutX="443.0" layoutY="40.0" text="Puestos" />
-      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="77.0" layoutY="469.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre" />
-      <TableView fx:id="tableEmpleado" layoutX="386.0" layoutY="436.0" onMouseReleased="#agregarPersona" prefHeight="159.0" prefWidth="561.0">
+      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="77.0" layoutY="469.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre del Puesto" />
+      <TableView fx:id="tableEmpleado" layoutX="386.0" layoutY="436.0" onMouseReleased="#agregarPersona" prefHeight="159.0" prefWidth="526.0">
         <columns>
-          <TableColumn fx:id="COL_ID_EMP" prefWidth="187.0" text="ID " />
-          <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="187.0" text="Nombre" />
-            <TableColumn fx:id="COL_APELLIDO_EMP" prefWidth="187.0" text="Apellidos " />
+            <TableColumn prefWidth="560.0" text="Empleados">
+               <columns>
+                <TableColumn fx:id="COL_ID_EMP" prefWidth="48.0" text="Folio" />
+                <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="478.0" text="Nombre completo" />
+               </columns>
+            </TableColumn>
         </columns>
       </TableView>
-      <JFXTextField fx:id="txtEmpleado" disable="true" layoutX="387.0" layoutY="624.0" prefHeight="29.0" prefWidth="250.0" promptText="Empleado" />
+      <JFXTextField fx:id="txtEmpleado" disable="true" labelFloat="true" layoutX="387.0" layoutY="624.0" prefHeight="29.0" prefWidth="250.0" promptText="Empleado" />
       <JFXTextArea fx:id="txtDescripcion" labelFloat="true" layoutX="77.0" layoutY="557.0" prefHeight="90.0" prefWidth="250.0" promptText="Descripcion" styleClass="text-field" />
       <HBox layoutX="533.0" layoutY="671.0" prefHeight="100.0" prefWidth="477.0" spacing="20.0">
          <padding>

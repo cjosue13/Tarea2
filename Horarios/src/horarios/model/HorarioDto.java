@@ -52,6 +52,7 @@ public class HorarioDto {
         this.ordenRotacion = horario.getHorOrdenrotacion();
         this.rol = new RolDto(horario.getHorRol());
         this.version = horario.getHorVersion();
+        
     }
 
     public HorarioDto() {

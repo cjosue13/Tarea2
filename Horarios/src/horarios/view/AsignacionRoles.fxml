@@ -34,8 +34,8 @@
                   </TableView>
                   <TableView fx:id="TV_ROLES_ROTATIVOS" onMouseReleased="#roles_rotativos" prefHeight="200.0" prefWidth="200.0">
                     <columns>
-                      <TableColumn fx:id="COL_ROL_ROTATIVO" prefWidth="146.0" text="Roles rotativos" />
-                        <TableColumn fx:id="COL_ORDEN_ROL" prefWidth="53.0" text="Orden" />
+                      <TableColumn fx:id="COL_ROL_ROTATIVO" prefWidth="139.0" text="Roles rotativos" />
+                        <TableColumn fx:id="COL_ORDEN_ROL" prefWidth="60.0" text="Orden" />
                     </columns>
                      <padding>
                         <Insets right="10.0" />

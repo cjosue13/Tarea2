@@ -32,7 +32,6 @@ public class RolDto {
         this.NombreRol = rol.getRolNombre();
         this.id = rol.getRolId();
         this.version = rol.getRolVersion();
-        //this.horario = new HorarioDto(rol.getHorario());
     }
 
     public String getNombreRol() {
@@ -66,7 +65,7 @@ public class RolDto {
     public void setHorario(HorarioDto horario) {
         this.horario = horario;
     }
-    
+
     public Integer getId() {
         return id;
     }

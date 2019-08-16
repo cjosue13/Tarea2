@@ -116,7 +116,10 @@ public class PuestoService {
             qryPues.getResultList().stream().forEach((pues) -> {
                 ArrayList <RolDto> roles = new ArrayList<>();
                 for (Rol rol : ((Puesto) pues).getRolList()) {
-                    roles.add(new RolDto(rol));
+                    RolDto rolDto = new RolDto(rol);
+                    rolDto.setHorario(new HorarioDto(rol.getHorario()));
+                    
+                    roles.add(rolDto);
                 }
                 
                 PuestoDto puesto = new PuestoDto((Puesto) pues);

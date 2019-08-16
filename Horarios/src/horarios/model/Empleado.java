@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.QueryHint;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -29,14 +30,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "HOR_EMPLEADOS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e")
-    , @NamedQuery(name = "Empleado.findByEmpFolio", query = "SELECT e FROM Empleado e WHERE e.empFolio = :empFolio")
-    , @NamedQuery(name = "Empleado.findByEmpNombre", query = "SELECT e FROM Empleado e WHERE e.empNombre = :empNombre")
-    , @NamedQuery(name = "Empleado.findByEmpApellidos", query = "SELECT e FROM Empleado e WHERE e.empApellidos = :empApellidos")
-    , @NamedQuery(name = "Empleado.findByEmpCedula", query = "SELECT e FROM Empleado e WHERE e.empCedula = :empCedula")
-    , @NamedQuery(name = "Empleado.findByEmpCorreo", query = "SELECT e FROM Empleado e WHERE e.empCorreo = :empCorreo")
-    , @NamedQuery(name = "Empleado.findByEmpCantidadhorastrabajadas", query = "SELECT e FROM Empleado e WHERE e.empCantidadhorastrabajadas = :empCantidadhorastrabajadas")
-    , @NamedQuery(name = "Empleado.findByEmpVersion", query = "SELECT e FROM Empleado e WHERE e.empVersion = :empVersion")})
+    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e",hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Empleado.findByEmpFolio", query = "SELECT e FROM Empleado e WHERE e.empFolio = :empFolio",hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Empleado.findByEmpNombre", query = "SELECT e FROM Empleado e WHERE e.empNombre = :empNombre",hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Empleado.findByEmpApellidos", query = "SELECT e FROM Empleado e WHERE e.empApellidos = :empApellidos",hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Empleado.findByEmpCedula", query = "SELECT e FROM Empleado e WHERE e.empCedula = :empCedula",hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Empleado.findByEmpCorreo", query = "SELECT e FROM Empleado e WHERE e.empCorreo = :empCorreo",hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Empleado.findByEmpCantidadhorastrabajadas", query = "SELECT e FROM Empleado e WHERE e.empCantidadhorastrabajadas = :empCantidadhorastrabajadas" ,hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "Empleado.findByEmpVersion", query = "SELECT e FROM Empleado e WHERE e.empVersion = :empVersion" ,hints = @QueryHint(name = "eclipselink.refresh", value = "true"))})
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;

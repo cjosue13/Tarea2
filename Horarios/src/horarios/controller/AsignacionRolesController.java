@@ -104,7 +104,7 @@ public class AsignacionRolesController extends Controller {
         respRol = rolservice.getRoles();
         roles = ((ArrayList) respRol.getResultado("Roles"));
         COL_ASIGNAR_ROLES.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
-        COL_ASIGNAR_ROTATIVO.setCellValueFactory(value -> new SimpleStringProperty((value.getValue().getHorarioRotativo().equals("S")) ? "Si" : "No"));
+        COL_ASIGNAR_ROTATIVO.setCellValueFactory(value -> new SimpleStringProperty((value.getValue().getHorarioRotativo().equals("Y")) ? "Si" : "No"));
         itemsRoles = FXCollections.observableArrayList(roles);
         TV_ASIGNAR_ROLES.setItems(itemsRoles);
         
@@ -132,6 +132,9 @@ public class AsignacionRolesController extends Controller {
     private void AsignarRol(ActionEvent event) {
         if (ValidarAsignacion()) { // si devuelve true entonces seleccionó bien
             if (puesto.getEmpleado() != null) {
+                
+                //Revisar luego 
+                rol.getPuestos().clear();
                 rol.getPuestos().add(puesto);
                 try {
                     
@@ -164,7 +167,7 @@ public class AsignacionRolesController extends Controller {
                 puesto = tablePuestos.getSelectionModel().getSelectedItem();
                 //Muestra los roles rotativos y no rotativos del empleado o puesto 
                 rolesEmpleado(puesto);
-                //System.out.println(tablePuestos.getSelectionModel().getSelectedItem().getRoles().size());
+                
                 txtfolio.setText(String.valueOf((puesto.getEmpleado() != null) ? puesto.getEmpleado().getId() : 0));
                 txtNombre.setText((puesto.getEmpleado() != null) ? puesto.getEmpleado().getNombre() + " "
                         + puesto.getEmpleado().getApellido() : " ");
@@ -196,6 +199,13 @@ public class AsignacionRolesController extends Controller {
         TV_ASIGNAR_ROLES.getSelectionModel().clearSelection();
         TV_ROLES_NO_ROTATIVOS.getItems().clear();
         TV_ROLES_ROTATIVOS.getItems().clear();
+        rol = null;
+        puesto = null;
+        respPues = puesService.getPuestos();
+        
+        puestos = ((ArrayList) respPues.getResultado("Puestos"));
+        itemsPuestos = FXCollections.observableArrayList(puestos);
+        tablePuestos.setItems(itemsPuestos);
     }
 
     

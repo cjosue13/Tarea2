@@ -58,22 +58,25 @@ public class Excel {
     private HorarioService horarioService = new HorarioService();
     private Mensaje ms = new Mensaje();
     private Respuesta resp = horarioService.getHorarios();
-    private File directorio=new File("C:\\Reporte"); 
+    //private File directorio=new File("C:\\Reporte"); 
            
     
     Mensaje message = new Mensaje();
+    
+    String nombreXX = nombreX.replace(" ","");
+    
     public void GenerarReporte() throws WriteException {
         horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
         HorariosController horariosController = new HorariosController();
+        
         try {
-            
-             directorio.mkdir(); 
-            // Configuración necesaria
+            // esto es para obtener la dirección del proyecto
+            File miDir = new File(".");
             WorkbookSettings conf = new WorkbookSettings();
             conf.setEncoding("ISO-8859-1");
 
             // Aqui se crea el archivo
-            WritableWorkbook workbook = Workbook.createWorkbook(new File(directorio.getAbsolutePath()+nombreX+".xls"), conf);
+            WritableWorkbook workbook = Workbook.createWorkbook(new File("C:\\Reporte\\"+nombreXX+".xls"), conf);
             
             // Aqui podemos crear las hojas del archivo y darles formato y todo lo demás
             WritableSheet sheet = workbook.createSheet("Reporte de Horarios", 0); // Nombre de la hoja y número de hoja
@@ -117,8 +120,10 @@ public class Excel {
             sheet.addCell(new jxl.write.Label(7, 4, FinalDomingo, hformat));
             workbook.write(); // escribimos en el archivo
             workbook.close(); // lo cerramos 
+
             // Con esto se abre automáticamente el archivo
-            Runtime.getRuntime().exec("cmd /c start " + directorio.getAbsolutePath()+nombreX+".xls");
+            Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\"+nombreXX+".xls");
+            Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\"+nombreXX+".xls");
 
         } catch (IOException ex) {
         }
@@ -135,7 +140,7 @@ public class Excel {
        
         Session session = Session.getDefaultInstance(prop, null); // se inicia sesión con las propiedades
         BodyPart adjunto = new MimeBodyPart(); // Aqui se declara lo que será nuestro archivo adjunto
-        adjunto.setDataHandler(new DataHandler(new FileDataSource(directorio.getAbsolutePath()+nombreX+".xls")));// con esto se le da el archivo que enviaremos
+        adjunto.setDataHandler(new DataHandler(new FileDataSource( "C:\\Reportes\\"+nombreXX+".xls")));// con esto se le da el archivo que enviaremos
         adjunto.setFileName(nombreX+".xls"); // Nombre del archivo
         // Aqui es como guardar al archivo para despues añadirlo al mensaje que enviaremos
         MimeMultipart m = new MimeMultipart();

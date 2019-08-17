@@ -98,7 +98,6 @@ public class RolService {
                         puesto.getRolList().add(rol);
                         rol.getPuestoList().add(puesto);
                         //Revisar lo del orden de rotacion
-                        
                     }
                 }
                 

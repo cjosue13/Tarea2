@@ -122,6 +122,7 @@ public class HorariosController extends Controller {
     private Label lblHoraFinalDomingo;
     static public String FinalDomingo = "";
     static public String nombreX = "";
+    static public Integer CantRol = 0;
     @FXML
     private FlowPane flowPane;
     private PuestoService puesService;
@@ -147,6 +148,8 @@ public class HorariosController extends Controller {
     @FXML
     private JFXButton Exportar;
     static public boolean RolSeleccion = false;
+    private Integer HorasTotales = 0;
+    private Integer MinutosTotales = 0;
     @Override
     public void initialize() {
         inicio();
@@ -179,6 +182,7 @@ public class HorariosController extends Controller {
                 puestoDto = (PuestoDto) resp.getResultado("roles");
                 itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
                 CantidadRoles.setText(String.valueOf(puestoDto.getRoles().size()));
+                CantRol = puestoDto.getRoles().size();
                 nombreX = puestoDto.getEmpleado().getNombre();
                 tableRol.setItems(itemsRoles);
             }
@@ -188,11 +192,14 @@ public class HorariosController extends Controller {
     @FXML
     private void SeleccionaRol(MouseEvent event) {
         limpiarDias();
+        HorasTotales = 0;  
+        MinutosTotales = 0;
         if (tableRol.getSelectionModel() != null) {
             if (tableRol.getSelectionModel().getSelectedItem() != null) {
                 limpiarHorario();
                 RolDto roldto = tableRol.getSelectionModel().getSelectedItem();
                 ArrayList<DiaDto> diadto = roldto.getHorario().getDias();
+                
                 diadto.stream().forEach(dia -> {
                     switch (dia.getNombre()) {
                         case "Lunes":
@@ -201,6 +208,10 @@ public class HorariosController extends Controller {
                             InicioLunes = lblHoraInicioLunes.getText();
                             lblHoraFinalLunes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalLunes = lblHoraFinalLunes.getText();
+                            HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            HorasTotales -= (dia.getCantHorasLibre());
+                            MinutosaHoras();
                             break;
                         case "Martes":
                             Martes.setId("buttonSelec");
@@ -208,6 +219,10 @@ public class HorariosController extends Controller {
                             InicioMartes = lblHoraInicioMartes.getText();
                             lblHoraFinalMartes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalMartes = lblHoraFinalMartes.getText();
+                            HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            HorasTotales -= (dia.getCantHorasLibre()); 
+                            MinutosaHoras();
                             break;
                         case "Miercoles":
                             Miercoles.setId("buttonSelec");
@@ -215,6 +230,10 @@ public class HorariosController extends Controller {
                             InicioMiercoles = lblHoraInicioMiercoles.getText();
                             lblHoraFinalMiercoles.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalMiercoles = lblHoraFinalMiercoles.getText();
+                            HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            HorasTotales -= (dia.getCantHorasLibre());
+                            MinutosaHoras();
                             break;
                         case "Jueves":
                             Jueves.setId("buttonSelec");
@@ -222,6 +241,10 @@ public class HorariosController extends Controller {
                             InicioJueves = lblHoraInicioJueves.getText();
                             lblHoraFinalJueves.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalJueves = lblHoraInicioJueves.getText();
+                            HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            HorasTotales -= (dia.getCantHorasLibre());
+                            MinutosaHoras();
                             break;
                         case "Viernes":
                             Viernes.setId("buttonSelec");
@@ -229,6 +252,10 @@ public class HorariosController extends Controller {
                             InicioViernes = lblHoraInicioViernes.getText();
                             lblHoraFinalViernes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalViernes = lblHoraFinalViernes.getText();
+                            HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            HorasTotales -= (dia.getCantHorasLibre());
+                            MinutosaHoras();
                             break;
                         case "Sabado":
                             Sabado.setId("buttonSelec");
@@ -236,6 +263,10 @@ public class HorariosController extends Controller {
                             InicioSabado = lblHoraInicioSabado.getText();
                             lblHoraFinalSabado.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalSabado = lblHoraFinalSabado.getText();
+                            HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            HorasTotales -= (dia.getCantHorasLibre());
+                            MinutosaHoras();
                             break;
                         case "Domingo":
                             Domingo.setId("buttonSelec");
@@ -243,16 +274,40 @@ public class HorariosController extends Controller {
                             InicioDomingo = lblHoraInicioDomingo.getText();
                             lblHoraFinalDomingo.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalDomingo = lblHoraFinalDomingo.getText();
+                            HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            HorasTotales -= (dia.getCantHorasLibre());
+                            MinutosaHoras();
                             break;
                         default:
                             break;
                     }
                 });
+                if(MinutosTotales < 10){
+                    horasTrabajadas.setText(String.valueOf(HorasTotales) + ":0" + String.valueOf(MinutosTotales));
+                }
+                if(HorasTotales < 10){
+                    horasTrabajadas.setText("0"+String.valueOf(HorasTotales) + ":" + String.valueOf(MinutosTotales));
+                }
+                if(HorasTotales < 10 && MinutosTotales < 10){
+                    System.out.println("entrando");
+                    horasTrabajadas.setText("0"+String.valueOf(HorasTotales) + ":0" + String.valueOf(MinutosTotales));
+                }
+                if(HorasTotales >= 10 && MinutosTotales >= 10){
+                    horasTrabajadas.setText(String.valueOf(HorasTotales) + ":" + String.valueOf(MinutosTotales));
+                }
                 RolSeleccion = true;
             }
         }
     }
-
+    //En el caso de que los minutos exedan los 60 minutos, se debe de pasar a horas
+    public void MinutosaHoras(){
+        if(MinutosTotales >= 60){
+            MinutosTotales -= 60;
+            HorasTotales += 60;
+        }
+    }
+    
     public void limpiarHorario() {
         flowPane.getChildren().stream().forEach(node -> {
             ((AnchorPane) node).setId("button2");
@@ -338,5 +393,13 @@ public class HorariosController extends Controller {
         FinalSabado = "     -";
         InicioDomingo = "     -";
         FinalDomingo = "     -";
+    }
+
+    @FXML
+    private void ExportarTodos(ActionEvent event) throws WriteException {
+        if(RolSeleccion){
+            Excel excel = new Excel();
+            excel.GenerarReporteTodos();
+        }  
     }
 }

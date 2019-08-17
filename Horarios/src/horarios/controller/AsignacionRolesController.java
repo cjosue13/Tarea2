@@ -7,6 +7,7 @@ package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import horarios.model.HorarioDto;
 import horarios.model.PuestoDto;
 import horarios.model.RolDto;
 import horarios.service.PuestoService;
@@ -79,6 +80,8 @@ public class AsignacionRolesController extends Controller {
     private Respuesta respRol;
     private ArrayList<RolDto> roles;
     private ObservableList itemsRoles;
+    private ArrayList<RolDto> rolesR;
+    private ArrayList<RolDto> rolesNR;
 
     @Override
     public void initialize() {
@@ -107,16 +110,14 @@ public class AsignacionRolesController extends Controller {
         COL_ASIGNAR_ROTATIVO.setCellValueFactory(value -> new SimpleStringProperty((value.getValue().getHorarioRotativo().equals("Y")) ? "Si" : "No"));
         itemsRoles = FXCollections.observableArrayList(roles);
         TV_ASIGNAR_ROLES.setItems(itemsRoles);
-        
-        
+        roles.clear();
         /*
             Para cuando se seleccione el empleado
-        */
-        
-        COL_ROL_NO_ROTATIVO.setCellValueFactory(value-> new SimpleStringProperty(value.getValue().getNombreRol()));
-        
-        COL_ORDEN_ROL.setCellValueFactory(value-> new SimpleIntegerProperty(value.getValue().getHorario().getOrdenRotacion()));
-        COL_ROL_ROTATIVO.setCellValueFactory(value-> new SimpleStringProperty(value.getValue().getNombreRol()));
+         */
+        COL_ROL_NO_ROTATIVO.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
+
+        COL_ORDEN_ROL.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getHorario().getOrdenRotacion()));
+        COL_ROL_ROTATIVO.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
     }
 
     private boolean ValidarAsignacion() {
@@ -132,20 +133,17 @@ public class AsignacionRolesController extends Controller {
     private void AsignarRol(ActionEvent event) {
         if (ValidarAsignacion()) { // si devuelve true entonces seleccionó bien
             if (puesto.getEmpleado() != null) {
-                
-                //Revisar luego 
-                rol.getPuestos().clear();
-                rol.getPuestos().add(puesto);
+                puesto.setRoles(roles);
                 try {
-                    
+
                     /*
                      Si el puesto ya tiene un empleado asignado, debe enviar un correo con el horario asignado al rol
-                    */
-                    if(puesto.getEmpleado()!=null){
-                        
+                     */
+                    if (puesto.getEmpleado() != null) {
+
                     }
-                    
-                    respPues = rolservice.guardarRol(rol);
+                    respPues = puesService.guardarPuesto(puesto);
+                    // respPues = rolservice.guardarRol(rol);
                     ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), respPues.getMensaje());
                     limpiarValores();
 
@@ -167,7 +165,7 @@ public class AsignacionRolesController extends Controller {
                 puesto = tablePuestos.getSelectionModel().getSelectedItem();
                 //Muestra los roles rotativos y no rotativos del empleado o puesto 
                 rolesEmpleado(puesto);
-                
+
                 txtfolio.setText(String.valueOf((puesto.getEmpleado() != null) ? puesto.getEmpleado().getId() : 0));
                 txtNombre.setText((puesto.getEmpleado() != null) ? puesto.getEmpleado().getNombre() + " "
                         + puesto.getEmpleado().getApellido() : " ");
@@ -180,12 +178,64 @@ public class AsignacionRolesController extends Controller {
     private void DatosRol(MouseEvent event) {
         if (TV_ASIGNAR_ROLES.getSelectionModel() != null) {
             if (TV_ASIGNAR_ROLES.getSelectionModel() != null) {
-                if (TV_ASIGNAR_ROLES.getSelectionModel().getSelectedItem() != null) {
+                if (tablePuestos.getSelectionModel() != null && tablePuestos.getSelectionModel().getSelectedItem() != null) {
+                    //Tomo los rolesRotativos del empleado
+                    rolesR = new ArrayList(TV_ROLES_ROTATIVOS.getItems());
+                    //tomo los rolesNORotativos del empleado
+                    rolesNR = new ArrayList(TV_ROLES_NO_ROTATIVOS.getItems());
                     rol = TV_ASIGNAR_ROLES.getSelectionModel().getSelectedItem();
-                    
+                    //Verifico que el rol que se vaya a asignar no este ya incluido en el empleado 
+                    PuestoDto puestoDto = tablePuestos.getSelectionModel().getSelectedItem();
+                    //Obtengo el horario de ese rol
+                    respRol = rolservice.getHorario(rol);
+                    rol.setHorario((HorarioDto) respRol.getResultado("Horario"));
+                    //Si el horario es rotativo
+                    if (rol.getHorarioRotativo().equals("Y")) {
+                        if (!rolesR.isEmpty() && rolesR.stream().allMatch(x -> !x.getId().equals(rol.getId()))) {
+                            //Si la lista esta vacia el orden inicia en 1
+                            rol.getHorario().setOrdenRotacion(rolesR.size() + 1);
+                            rolesR.add(rol);
+                            itemsRoles = FXCollections.observableArrayList(rolesR);
+                            TV_ROLES_ROTATIVOS.setItems(itemsRoles);
+                            //Lleno la lista para que se almacene en el empleado
+                            roles.add(rol);
+                        } else {
+                            //Si la lista esta vacia la seteamos al tableView
+                            if (rolesR.isEmpty()) {
+                                rol.getHorario().setOrdenRotacion(1);
+                                rolesR.add(rol);
+                                itemsRoles = FXCollections.observableArrayList(rolesR);
+                                TV_ROLES_ROTATIVOS.setItems(itemsRoles);
+                                //Lleno la lista para que se almacene en el empleado
+                                roles.add(rol);
+                            } else {
+                                System.out.println("Ya has agregado este rol rotativo al empleado");
+                            }
+                        }
+                    } else {
+                        if (!rolesNR.isEmpty() && rolesNR.stream().allMatch(x -> !x.getId().equals(rol.getId()))) {
+                            rolesNR.add(rol);
+                            itemsRoles = FXCollections.observableArrayList(rolesNR);
+                            TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);
+                            //Lleno la lista para que se almacene en el empleado
+                            roles.add(rol);
+                        } else {
+                            //Si la lista esta vacia la seteamos al tableView
+                            if (rolesNR.isEmpty()) {
+                                rolesNR.add(rol);
+                                itemsRoles = FXCollections.observableArrayList(rolesNR);
+                                TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);
+                                //Lleno la lista para que se almacene en el empleado
+                                roles.add(rol);
+                            } else {
+                                System.out.println("Ya has agregado este rol al empleado");
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("No has seleccionado un empleado para asignar roles");
                 }
             }
-
         }
     }
 
@@ -202,47 +252,44 @@ public class AsignacionRolesController extends Controller {
         rol = null;
         puesto = null;
         respPues = puesService.getPuestos();
-        
+        roles.clear();
         puestos = ((ArrayList) respPues.getResultado("Puestos"));
         itemsPuestos = FXCollections.observableArrayList(puestos);
         tablePuestos.setItems(itemsPuestos);
     }
 
-    
-    
     @FXML
     private void rotarRoles(ActionEvent event) {
     }
 
     @FXML
     private void roles_no_rotativos(MouseEvent event) {
-
+        System.out.println("ROLES NO ROTATIVOS");
     }
 
     @FXML
     private void roles_rotativos(MouseEvent event) {
-
+        System.out.println("ROLES ROTATIVOS");
     }
 
     /*
         Muestra los roles rotativos y no rotativos del empleado
      */
     private void rolesEmpleado(PuestoDto puesto) {
-        ArrayList<RolDto> rolesR = new ArrayList<>();
-        ArrayList<RolDto> rolesNR = new ArrayList<>();
-        
-        puesto.getRoles().stream().forEach((rolDto)->{
-            if(rolDto.getHorarioRotativo().equals("N")){
+        rolesR = new ArrayList<>();
+        rolesNR = new ArrayList<>();
+
+        puesto.getRoles().stream().forEach((rolDto) -> {
+            if (rolDto.getHorarioRotativo().equals("N")) {
                 rolesNR.add(rolDto);
-            }
-            else{
+            } else {
                 rolesR.add(rolDto);
             }
         });
-        
+
         itemsRoles = FXCollections.observableArrayList(rolesR);
         TV_ROLES_ROTATIVOS.setItems(itemsRoles);
-        itemsRoles  = FXCollections.observableArrayList(rolesNR);
+        itemsRoles = FXCollections.observableArrayList(rolesNR);
         TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);
     }
 }

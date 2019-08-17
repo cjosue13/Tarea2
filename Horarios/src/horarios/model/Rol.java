@@ -123,7 +123,6 @@ public class Rol implements Serializable {
         this.rolVersion = rolVersion;
     }
 
-    @XmlTransient
     public List<Puesto> getPuestoList() {
         return puestoList;
     }

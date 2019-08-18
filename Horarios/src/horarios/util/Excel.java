@@ -70,8 +70,6 @@ public class Excel {
     String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
     
     public void GenerarReporte() throws WriteException {
-        horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
-        HorariosController horariosController = new HorariosController();
         directorio.mkdir();//se crea la carpeta
         try {
             // esto es para obtener la dirección del proyecto

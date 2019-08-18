@@ -67,13 +67,15 @@ public class Excel {
     
     Mensaje message = new Mensaje();
     
-    String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
+ 
     
     public void GenerarReporte() throws WriteException {
+        String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
+        horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
+        HorariosController horariosController = new HorariosController();
         directorio.mkdir();//se crea la carpeta
         try {
             // esto es para obtener la dirección del proyecto
-            File miDir = new File(".");
             WorkbookSettings conf = new WorkbookSettings();
             conf.setEncoding("ISO-8859-1");
 
@@ -126,8 +128,6 @@ public class Excel {
 
             // Con esto se abre automáticamente el archivo
             Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\"+nombreXX+".xls");
-            Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\"+nombreXX+".xls");
-
         } catch (IOException ex) {
         }
     }
@@ -140,6 +140,7 @@ public class Excel {
 
     public void SendMail(String Destinatario) throws MessagingException, IOException {
         // Propiedades necesarias
+        String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
         Properties prop = new Properties();
         prop.setProperty("mail.smtp.auth", "true");
         prop.setProperty("mail.smtp.starttls.enable", "true");
@@ -149,8 +150,8 @@ public class Excel {
        
         Session session = Session.getDefaultInstance(prop, null); // se inicia sesión con las propiedades
         BodyPart adjunto = new MimeBodyPart(); // Aqui se declara lo que será nuestro archivo adjunto
-        adjunto.setDataHandler(new DataHandler(new FileDataSource( "C:\\Reportes\\"+nombreXX+".xls")));// con esto se le da el archivo que enviaremos
-        adjunto.setFileName(nombreX+".xls"); // Nombre del archivo
+        adjunto.setDataHandler(new DataHandler(new FileDataSource( "C:\\Reporte\\"+nombreXX+".xls")));// con esto se le da el archivo que enviaremos
+        adjunto.setFileName(nombreXX+".xls"); // Nombre del archivo
         // Aqui es como guardar al archivo para despues añadirlo al mensaje que enviaremos
         MimeMultipart m = new MimeMultipart();
         m.addBodyPart(adjunto);

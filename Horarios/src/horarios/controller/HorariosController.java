@@ -366,6 +366,7 @@ public class HorariosController extends Controller {
             try {
                 correo.SendMail(listaEmpleados.getSelectionModel().getSelectedItem().getEmpleado().getCorreo());
             } catch (MessagingException | IOException ex) {
+                System.out.println("Exception "+ ex.getMessage());
                 m.show(Alert.AlertType.ERROR, "Envio de Correo" ,"Ha ocurrido un error inesperado al enviar su correo");
             }
         }

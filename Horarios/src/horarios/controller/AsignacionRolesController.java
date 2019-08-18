@@ -184,8 +184,6 @@ public class AsignacionRolesController extends Controller {
                     //tomo los rolesNORotativos del empleado
                     rolesNR = new ArrayList(TV_ROLES_NO_ROTATIVOS.getItems());
                     rol = TV_ASIGNAR_ROLES.getSelectionModel().getSelectedItem();
-                    //Verifico que el rol que se vaya a asignar no este ya incluido en el empleado 
-                    PuestoDto puestoDto = tablePuestos.getSelectionModel().getSelectedItem();
                     //Obtengo el horario de ese rol
                     respRol = rolservice.getHorario(rol);
                     rol.setHorario((HorarioDto) respRol.getResultado("Horario"));
@@ -209,7 +207,7 @@ public class AsignacionRolesController extends Controller {
                                 //Lleno la lista para que se almacene en el empleado
                                 roles.add(rol);
                             } else {
-                                System.out.println("Ya has agregado este rol rotativo al empleado");
+                                ms.showModal(Alert.AlertType.WARNING, "Informacion de registro", this.getStage(), "Ya has agregado este rol al empleado");
                             }
                         }
                     } else {
@@ -228,12 +226,12 @@ public class AsignacionRolesController extends Controller {
                                 //Lleno la lista para que se almacene en el empleado
                                 roles.add(rol);
                             } else {
-                                System.out.println("Ya has agregado este rol al empleado");
+                                ms.showModal(Alert.AlertType.WARNING, "Informacion de registro", this.getStage(), "Ya has agregado este rol al empleado");
                             }
                         }
                     }
                 } else {
-                    System.out.println("No has seleccionado un empleado para asignar roles");
+                    ms.showModal(Alert.AlertType.WARNING, "Informacion de registro", this.getStage(), "No has seleccionado un empleado para asignar roles");
                 }
             }
         }
@@ -241,7 +239,6 @@ public class AsignacionRolesController extends Controller {
 
     @FXML
     private void limpiarValores() {
-        //txtRol.clear();
         txtfolio.clear();
         txtNombre.clear();
         txtPuesto.clear();
@@ -288,6 +285,16 @@ public class AsignacionRolesController extends Controller {
         });
 
         itemsRoles = FXCollections.observableArrayList(rolesR);
+        /*
+        Ordena la lista de roles con respecto a la ordenacion
+        */
+        itemsRoles.sort((t, t1) -> {
+            if (((RolDto) t).getHorario().getOrdenRotacion() > ((RolDto) t1).getHorario().getOrdenRotacion()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
         TV_ROLES_ROTATIVOS.setItems(itemsRoles);
         itemsRoles = FXCollections.observableArrayList(rolesNR);
         TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);

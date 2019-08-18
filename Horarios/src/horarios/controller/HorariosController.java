@@ -199,7 +199,6 @@ public class HorariosController extends Controller {
                 limpiarHorario();
                 RolDto roldto = tableRol.getSelectionModel().getSelectedItem();
                 ArrayList<DiaDto> diadto = roldto.getHorario().getDias();
-                
                 diadto.stream().forEach(dia -> {
                     switch (dia.getNombre()) {
                         case "Lunes":

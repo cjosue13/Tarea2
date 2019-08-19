@@ -6,6 +6,7 @@
 package horarios.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -18,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.QueryHint;
 import javax.persistence.SequenceGenerator;
@@ -43,6 +45,8 @@ public class Rol implements Serializable {
     @Basic(optional = false)
     @Column(name = "ROL_VERSION")
     private Integer rolVersion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolId", fetch = FetchType.LAZY)
+    private List<PueRol> pueRolList;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -159,6 +163,15 @@ public class Rol implements Serializable {
     @Override
     public String toString() {
         return "horarios.model.Rol[ rolId=" + rolId + " ]";
+    }
+
+  
+    public List<PueRol> getPueRolList() {
+        return pueRolList;
+    }
+
+    public void setPueRolList(List<PueRol> pueRolList) {
+        this.pueRolList = pueRolList;
     }
 
     

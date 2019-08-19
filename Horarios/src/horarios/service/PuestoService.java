@@ -97,16 +97,16 @@ public class PuestoService {
                 /*
                 Revisar metodo 
                 */
-                if (PuestoDto.getRoles() != null && !PuestoDto.getRoles().isEmpty()) {
+               /* if (PuestoDto.getRoles() != null && !PuestoDto.getRoles().isEmpty()) {
                     for (RolDto rolDto : PuestoDto.getRoles()) {
                         Rol rol  = em.find(Rol.class, rolDto.getId());
                         Horario horario = rol.getHorario();
-                        horario.setHorOrdenrotacion(rolDto.getHorario().getOrdenRotacion());
+                        //horario.setHorOrdenrotacion(rolDto.getHorario().getOrdenRotacion());
                         em.merge(horario);
                         rol.getPuestoList().add(Puesto);
                         Puesto.getRolList().add(rol);
                     }
-                } 
+                } */
                 Puesto = em.merge(Puesto);
             } else {
                 Puesto = new Puesto(PuestoDto);
@@ -120,7 +120,9 @@ public class PuestoService {
             return new Respuesta(false, "Ocurrio un error al guardar el Puesto.", "guardarPuesto " + ex.getMessage());
         }
     }
-
+/*
+    Revisar metodo
+    */
     public Respuesta getPuestos() {
         try {
             Query qryPues = em.createNamedQuery("Puesto.findAll", Puesto.class);
@@ -130,7 +132,14 @@ public class PuestoService {
                 ArrayList<RolDto> roles = new ArrayList<>();
                 for (Rol rol : ((Puesto) pues).getRolList()) {
                     RolDto rolDto = new RolDto(rol);
-                    rolDto.setHorario(new HorarioDto(rol.getHorario()));
+                    HorarioDto horarioDto = new HorarioDto(rol.getHorario());
+                    ArrayList <DiaDto> dias = new ArrayList();
+                    
+                    for(Dia dia: rol.getHorario().getHorDiaList()){
+                        dias.add(new DiaDto(dia));
+                    }
+                    horarioDto.setDias(dias);
+                    rolDto.setHorario(horarioDto);
                     roles.add(rolDto);
                 }
 

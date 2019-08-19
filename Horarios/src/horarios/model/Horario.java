@@ -6,6 +6,7 @@
 package horarios.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +48,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 })
 public class Horario implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "HOR_HORASLIBRESSEMANALES")
+    private Integer horHoraslibressemanales;
+    @Basic(optional = false)
+    @Column(name = "HOR_VERSION")
+    private Integer horVersion;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -59,15 +67,6 @@ public class Horario implements Serializable {
     @Column(name = "HOR_FECHAINICIO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date horFechainicio;
-    @Basic(optional = false)
-    @Column(name = "HOR_VERSION")
-    private Integer horVersion;
-    @Basic(optional = false)
-    @Column(name = "HOR_HORASLIBRESSEMANALES")
-    private Integer horHoraslibressemanales;
-    @Basic(optional = false)
-    @Column(name = "HOR_ORDENROTACION")
-    private Integer horOrdenrotacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horHorario", fetch = FetchType.LAZY)
     private List<Dia> horDiaList;
     @JoinColumn(name = "HOR_ROL", referencedColumnName = "ROL_ID")
@@ -82,7 +81,6 @@ public class Horario implements Serializable {
         this.horFechainicio = horFechainicio;
         this.horVersion = horVersion;
         this.horHoraslibressemanales = horHoraslibressemanales;
-        this.horOrdenrotacion = horOrdenrotacion;
         this.horRol = horRol;
     }
 
@@ -96,7 +94,6 @@ public class Horario implements Serializable {
         this.horFechainicio = Date.from(horario.getFechaInicio().atStartOfDay(ZoneId.systemDefault()).toInstant());
         this.horHoraslibressemanales = horario.getHorasLibras();
         this.horVersion = horario.getVersion();
-        this.horOrdenrotacion = horario.getOrdenRotacion();
         this.horRol = new Rol(horario.getRol());
         this.horDiaList = new ArrayList<>();
 
@@ -166,18 +163,8 @@ public class Horario implements Serializable {
     public void setHorHoraslibressemanales(Integer horHoraslibressemanales) {
         this.horHoraslibressemanales = horHoraslibressemanales;
     }
-
-    public Integer getHorOrdenrotacion() {
-        return horOrdenrotacion;
-    }
-
-    public void setHorOrdenrotacion(Integer horOrdenrotacion) {
-        this.horOrdenrotacion = horOrdenrotacion;
-    }
-
     @Override
     public String toString() {
         return "horarios.model.Horario[ horId=" + horId + " ]";
     }
-
 }

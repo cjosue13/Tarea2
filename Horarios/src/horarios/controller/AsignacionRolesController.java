@@ -8,8 +8,10 @@ package horarios.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import horarios.model.HorarioDto;
+import horarios.model.PueRolDto;
 import horarios.model.PuestoDto;
 import horarios.model.RolDto;
+import horarios.service.PueRolService;
 import horarios.service.PuestoService;
 import horarios.service.RolService;
 import horarios.util.Mensaje;
@@ -82,13 +84,14 @@ public class AsignacionRolesController extends Controller {
     private ObservableList itemsRoles;
     private ArrayList<RolDto> rolesR;
     private ArrayList<RolDto> rolesNR;
-
+    private ArrayList<PueRolDto> pueRoles;
     @Override
     public void initialize() {
         inicio();
     }
 
     private void inicio() {
+        pueRoles = new ArrayList();
         btnAsignarRol.setCursor(Cursor.HAND);
         puesService = new PuestoService();
         ms = new Mensaje();
@@ -116,7 +119,7 @@ public class AsignacionRolesController extends Controller {
          */
         COL_ROL_NO_ROTATIVO.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
 
-        COL_ORDEN_ROL.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getHorario().getOrdenRotacion()));
+       // COL_ORDEN_ROL.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getHorario().getOrdenRotacion()));
         COL_ROL_ROTATIVO.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
     }
 
@@ -142,9 +145,16 @@ public class AsignacionRolesController extends Controller {
                     if (puesto.getEmpleado() != null) {
 
                     }
-                    respPues = puesService.guardarPuesto(puesto);
-                    // respPues = rolservice.guardarRol(rol);
-                    ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), respPues.getMensaje());
+                    
+                    PueRolService prs = new PueRolService();
+                    pueRoles.stream().forEach((pueRol)->{ 
+                        prs.guardarTablaRelacional(pueRol);
+                    });
+                    
+                    
+                    //respPues = puesService.guardarPuesto(puesto);
+                    
+                    ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(),"Elementos guardados");
                     limpiarValores();
 
                 } catch (Exception e) {
@@ -184,6 +194,7 @@ public class AsignacionRolesController extends Controller {
                     //tomo los rolesNORotativos del empleado
                     rolesNR = new ArrayList(TV_ROLES_NO_ROTATIVOS.getItems());
                     rol = TV_ASIGNAR_ROLES.getSelectionModel().getSelectedItem();
+                    
                     //Obtengo el horario de ese rol
                     respRol = rolservice.getHorario(rol);
                     rol.setHorario((HorarioDto) respRol.getResultado("Horario"));
@@ -191,16 +202,17 @@ public class AsignacionRolesController extends Controller {
                     if (rol.getHorarioRotativo().equals("Y")) {
                         if (!rolesR.isEmpty() && rolesR.stream().allMatch(x -> !x.getId().equals(rol.getId()))) {
                             //Si la lista esta vacia el orden inicia en 1
-                            rol.getHorario().setOrdenRotacion(rolesR.size() + 1);
+                            //rol.getHorario().setOrdenRotacion(rolesR.size() + 1);
                             rolesR.add(rol);
                             itemsRoles = FXCollections.observableArrayList(rolesR);
                             TV_ROLES_ROTATIVOS.setItems(itemsRoles);
                             //Lleno la lista para que se almacene en el empleado
+                            pueRoles.add(new PueRolDto(null, rolesR.size(), puesto, rol));
                             roles.add(rol);
                         } else {
                             //Si la lista esta vacia la seteamos al tableView
                             if (rolesR.isEmpty()) {
-                                rol.getHorario().setOrdenRotacion(1);
+                                pueRoles.add(new PueRolDto(null,1, puesto, rol));
                                 rolesR.add(rol);
                                 itemsRoles = FXCollections.observableArrayList(rolesR);
                                 TV_ROLES_ROTATIVOS.setItems(itemsRoles);
@@ -213,6 +225,7 @@ public class AsignacionRolesController extends Controller {
                     } else {
                         if (!rolesNR.isEmpty() && rolesNR.stream().allMatch(x -> !x.getId().equals(rol.getId()))) {
                             rolesNR.add(rol);
+                            pueRoles.add(new PueRolDto(null,0, puesto, rol));
                             itemsRoles = FXCollections.observableArrayList(rolesNR);
                             TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);
                             //Lleno la lista para que se almacene en el empleado
@@ -221,6 +234,7 @@ public class AsignacionRolesController extends Controller {
                             //Si la lista esta vacia la seteamos al tableView
                             if (rolesNR.isEmpty()) {
                                 rolesNR.add(rol);
+                                pueRoles.add(new PueRolDto(null,0, puesto, rol));
                                 itemsRoles = FXCollections.observableArrayList(rolesNR);
                                 TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);
                                 //Lleno la lista para que se almacene en el empleado
@@ -230,6 +244,7 @@ public class AsignacionRolesController extends Controller {
                             }
                         }
                     }
+                    System.out.println("PUE_ROL SIZE "+pueRoles.size());
                 } else {
                     ms.showModal(Alert.AlertType.WARNING, "Informacion de registro", this.getStage(), "No has seleccionado un empleado para asignar roles");
                 }
@@ -253,6 +268,7 @@ public class AsignacionRolesController extends Controller {
         puestos = ((ArrayList) respPues.getResultado("Puestos"));
         itemsPuestos = FXCollections.observableArrayList(puestos);
         tablePuestos.setItems(itemsPuestos);
+        pueRoles.clear();
     }
 
     @FXML
@@ -288,13 +304,13 @@ public class AsignacionRolesController extends Controller {
         /*
         Ordena la lista de roles con respecto a la ordenacion
         */
-        itemsRoles.sort((t, t1) -> {
+        /*itemsRoles.sort((t, t1) -> {
             if (((RolDto) t).getHorario().getOrdenRotacion() > ((RolDto) t1).getHorario().getOrdenRotacion()) {
                 return 1;
             } else {
                 return 0;
             }
-        });
+        });-*/
         TV_ROLES_ROTATIVOS.setItems(itemsRoles);
         itemsRoles = FXCollections.observableArrayList(rolesNR);
         TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);

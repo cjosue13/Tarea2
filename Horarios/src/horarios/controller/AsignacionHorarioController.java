@@ -244,7 +244,7 @@ public class AsignacionHorarioController extends Controller {
             horario.setFechaInicio(dateFechaIni.getValue());
             horario.setVersion(1);
             horario.calcularHorasLibres();
-            horario.setOrdenRotacion(0);
+            //horario.setOrdenRotacion(0);
             //Almaceno el horario para aasignarlo en la ventana anterior
             AppContext.getInstance().set("horario", horario);
             //Cierra la ventana

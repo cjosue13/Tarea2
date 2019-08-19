@@ -6,6 +6,7 @@
 package horarios.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -42,6 +43,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Dia.findByDiaVersion", query = "SELECT d FROM Dia d WHERE d.diaVersion = :diaVersion", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))})
 public class Dia implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "DIA_CANTIDADHORASLIBRES")
+    private Integer diaCantidadhoraslibres;
+    @Basic(optional = false)
+    @Column(name = "DIA_VERSION")
+    private Integer diaVersion;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)/0/if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -61,12 +69,6 @@ public class Dia implements Serializable {
     @Column(name = "DIA_HORASALIDA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date diaHorasalida;
-    @Basic(optional = false)
-    @Column(name = "DIA_CANTIDADHORASLIBRES")
-    private Integer diaCantidadhoraslibres;
-    @Basic(optional = false)
-    @Column(name = "DIA_VERSION")
-    private Integer diaVersion;
     @JoinColumn(name = "HOR_HORARIO", referencedColumnName = "HOR_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Horario horHorario;
@@ -182,5 +184,4 @@ public class Dia implements Serializable {
     public void setDiaCantidadhoraslibres(Integer diaCantidadhoraslibres) {
         this.diaCantidadhoraslibres = diaCantidadhoraslibres;
     }
-
 }

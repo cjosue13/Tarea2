@@ -21,25 +21,22 @@ public class HorarioDto {
     private Integer version;
     private Integer Id;
     private RolDto rol;
-    private Integer ordenRotacion;
     private ArrayList<DiaDto> dias;
 
-    public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol, Integer ordenRotacion) {
+    public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol) {
         this.FechaInicio = FechaInicio;
         this.HorasLibras = HorasLibras;
         this.version = version;
         this.Id = Id;
         this.rol = rol;
-        this.ordenRotacion = ordenRotacion;
     }
 
-    public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol, Integer ordenRotacion, ArrayList<DiaDto> dias) {
+    public HorarioDto(LocalDate FechaInicio, Integer HorasLibras, Integer version, Integer Id, RolDto rol, ArrayList<DiaDto> dias) {
         this.FechaInicio = FechaInicio;
         this.HorasLibras = HorasLibras;
         this.version = version;
         this.Id = Id;
         this.rol = rol;
-        this.ordenRotacion = ordenRotacion;
         this.dias = dias;
     }
 
@@ -49,7 +46,6 @@ public class HorarioDto {
         this.FechaInicio = Instant.ofEpochMilli(horario.getHorFechainicio().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
         this.HorasLibras = horario.getHorHoraslibressemanales();
         this.Id = horario.getHorId();
-        this.ordenRotacion = horario.getHorOrdenrotacion();
         this.rol = new RolDto(horario.getHorRol());
         this.version = horario.getHorVersion();
         
@@ -117,13 +113,6 @@ public class HorarioDto {
         }
     }
 
-    public Integer getOrdenRotacion() {
-        return ordenRotacion;
-    }
-
-    public void setOrdenRotacion(Integer ordenRotacion) {
-        this.ordenRotacion = ordenRotacion;
-    }
     
     @Override
     public String toString() {

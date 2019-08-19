@@ -43,8 +43,6 @@ public class EmpleadosController extends Controller {
     @FXML
     private TableColumn<EmpleadoDto, String> COL_NOMBRE_EMP;
     @FXML
-    private TableColumn<EmpleadoDto, String> COL_APELLIDO_EMP;
-    @FXML
     private TableColumn<EmpleadoDto, String> COL_CEDULA_EMP;
     @FXML
     private TableColumn<EmpleadoDto, String> COL_CORREO_EMP;
@@ -93,8 +91,7 @@ public class EmpleadosController extends Controller {
         resp = empService.getEmpleados();
         empleados = ((ArrayList<EmpleadoDto>) resp.getResultado("Empleados"));
         COL_FOLIO.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
-        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre()));
-        COL_APELLIDO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getApellido()));
+        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre()+" "+value.getValue().getApellido()));
         COL_CEDULA_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCedula()));
         COL_CORREO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCorreo()));
         items = FXCollections.observableArrayList(empleados);
@@ -170,6 +167,7 @@ public class EmpleadosController extends Controller {
             String cedula = txtCedula.getText();
 
             empleado = new EmpleadoDto(nombre, apellido, cedula, correo, 0, 1, null);
+            System.out.println(empleado.toString());
             try {
                 resp = empService.guardarEmpleado(empleado);
                 ms.showModal(AlertType.INFORMATION, "Informacion de guardado", this.getStage(), resp.getMensaje());

@@ -11,16 +11,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.EmpleadosController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.EmpleadosController">
    <children>
       <ImageView fx:id="fondoEmp" fitHeight="800.0" fitWidth="1030.0" pickOnBounds="true" preserveRatio="true" />
       <TableView fx:id="table" layoutX="38.0" layoutY="138.0" onMouseReleased="#DatosEmpleado" prefHeight="280.0" prefWidth="949.0">
          <columns>
             <TableColumn fx:id="COL_FOLIO" prefWidth="75.0" text="Folio" />
-            <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="222.0" text="Nombre" />
-            <TableColumn fx:id="COL_APELLIDO_EMP" prefWidth="214.0" text="Apellidos" />
-            <TableColumn fx:id="COL_CEDULA_EMP" prefWidth="217.5" text="Cedula" />
-            <TableColumn fx:id="COL_CORREO_EMP" prefWidth="217.5" text="Correo" />
+            <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="379.0" text="Nombre Completo" />
+            <TableColumn fx:id="COL_CEDULA_EMP" prefWidth="178.0" text="Cedula" />
+            <TableColumn fx:id="COL_CORREO_EMP" prefWidth="315.0" text="Correo" />
          </columns>
       </TableView>
       <Label fx:id="Titulo" layoutX="399.0" layoutY="40.0" text="Empleados" />

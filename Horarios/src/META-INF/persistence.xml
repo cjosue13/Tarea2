@@ -7,6 +7,9 @@
     <class>horarios.model.Puesto</class>
     <class>horarios.model.Empleado</class>
     <class>horarios.model.Dia</class>
+    <class>horarios.model.Puesto_Rol</class>
+    <class>horarios.model.HOR_PUE</class>
+    <class>horarios.model.PueRol</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
       <property name="javax.persistence.jdbc.user" value="una"/>

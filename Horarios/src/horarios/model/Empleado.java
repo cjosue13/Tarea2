@@ -6,6 +6,7 @@
 package horarios.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,6 +41,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Empleado.findByEmpVersion", query = "SELECT e FROM Empleado e WHERE e.empVersion = :empVersion" ,hints = @QueryHint(name = "eclipselink.refresh", value = "true"))})
 public class Empleado implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "EMP_CANTIDADHORASTRABAJADAS")
+    private Integer empCantidadhorastrabajadas;
+    @Basic(optional = false)
+    @Column(name = "EMP_VERSION")
+    private Integer empVersion;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -60,12 +68,6 @@ public class Empleado implements Serializable {
     @Basic(optional = false)
     @Column(name = "EMP_CORREO")
     private String empCorreo;
-    @Basic(optional = false)
-    @Column(name = "EMP_CANTIDADHORASTRABAJADAS")
-    private Integer empCantidadhorastrabajadas;
-    @Basic(optional = false)
-    @Column(name = "EMP_VERSION")
-    private Integer empVersion;
     @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "pueEmpleado", fetch = FetchType.LAZY)
     private Puesto puesto;
 
@@ -187,5 +189,7 @@ public class Empleado implements Serializable {
     public String toString() {
         return "horarios.model.Empleado[ empFolio=" + empFolio + " ]";
     }
+
+
 
 }

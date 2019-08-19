@@ -329,7 +329,10 @@ public class HorariosController extends Controller {
     public void MinutosaHoras() {
         if (MinutosTotales >= 60) {
             MinutosTotales -= 60;
-            HorasTotales += 60;
+            HorasTotales += 1;
+        }
+        if(MinutosTotales >= 60){
+            MinutosaHoras();//recursividad
         }
     }
 

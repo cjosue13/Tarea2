@@ -175,11 +175,9 @@ public class Excel {
         hformat.setBackground(Colour.GRAY_25);
         hformat1.setBackground(Colour.AQUA);
         puestos.stream().forEach(x -> {
-            
            for(int i = 0; i < x.getRoles().get(0).getHorario().getDias().size(); i++){
                tamano = i;
            } 
-            
             try {
                 sheet.addCell(new jxl.write.Label(4, o, "de Empleado: ", hformat1));
                 sheet.addCell(new jxl.write.Label(2, o, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]

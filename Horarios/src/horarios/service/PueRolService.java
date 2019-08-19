@@ -11,10 +11,13 @@ import horarios.model.Puesto;
 import horarios.model.PuestoDto;
 import horarios.util.EntityManagerHelper;
 import horarios.util.Respuesta;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -44,9 +47,30 @@ public class PueRolService {
             et.commit();
             return new Respuesta(true, "Guardado exitosamente", "", "pueRol", new PueRolDto(pueRol));
         } catch (Exception ex) {
-            et.rollback();
+            et.rollback();//devuelve el estado inicial
             Logger.getLogger(PuestoService.class.getName()).log(Level.SEVERE, "Ocurrio un error al guardar el Puesto.", ex);
             return new Respuesta(false, "Ocurrio un error al guardar el Puesto.", "guardarPuesto " + ex.getMessage());
+        }
+    }
+    public Respuesta getRelaciones(){
+        try{
+            Query qryRelacion = em.createNamedQuery("PueRol.findAll", PueRol.class);
+       
+            ArrayList<PueRolDto> lista = new ArrayList();
+            
+            qryRelacion.getResultList().stream().forEach((pues) -> {
+            
+            lista.add(new PueRolDto((PueRol)pues));
+            
+            });
+                    
+            return new Respuesta(true, "Ocurrio un erro al Obtener el orden","","getRelaciones",lista);
+        }catch(NoResultException ex){
+            return new Respuesta(false, "No hay resultados", "getRelaciones " + ex.getMessage());
+        }
+        catch(Exception e){
+            Logger.getLogger(PueRolService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar la relacional", e);
+            return new Respuesta(false, "Ocurrio un error al consultar la relacion", "getRelaciones " + e.getMessage());
         }
     }
 }

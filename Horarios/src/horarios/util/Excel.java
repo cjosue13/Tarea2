@@ -58,25 +58,26 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
-import  jxl.format.Colour;
+import jxl.format.Colour;
+
 /**
  *
  * @author JORDI RODRIGUEZ
  */
 public class Excel {
-    
+
     private HorarioDto horario;
     private ArrayList<HorarioDto> horarios;
     private HorarioService horarioService = new HorarioService();
     private Mensaje ms = new Mensaje();
     private Respuesta resp = horarioService.getHorarios();
-    private File directorio = new File("C:\\Reporte"); 
-    private ArrayList<EmpleadoDto> empleados;  
+    private File directorio = new File("C:\\Reporte");
+    private ArrayList<EmpleadoDto> empleados;
     private ArrayList<PuestoDto> puestos;
     private PuestoService puesService;
     private PuestoDto puesto;
     Mensaje message = new Mensaje();
-    String nombreXX = nombreX.replace(" ","");
+    String nombreXX = nombreX.replace(" ", "");
     private int o = 0;
     private int t = 2, r = 3, g = 4, w = 5, f = 6;
     private int cant = 0;
@@ -85,9 +86,9 @@ public class Excel {
     private RolDto rol;
     private RolService rolservice;
     private int tamano = 0;
-    
+
     public void GenerarReporte() throws WriteException {
-        String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
+        String nombreXX = nombreX.replace(" ", "");//para que se eliminen los espacios del nombre
         //para que se eliminen los espacios del nombre
         horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
         HorariosController horariosController = new HorariosController();
@@ -99,17 +100,17 @@ public class Excel {
             conf.setEncoding("ISO-8859-1");
 
             // Aqui se crea el archivo
-            WritableWorkbook workbook = Workbook.createWorkbook(new File("C:\\Reporte\\"+nombreXX+".xls"), conf);
-            
+            WritableWorkbook workbook = Workbook.createWorkbook(new File("C:\\Reporte\\" + nombreXX + ".xls"), conf);
+
             // Aqui podemos crear las hojas del archivo y darles formato y todo lo demás
             WritableSheet sheet = workbook.createSheet("Reporte de Horarios", 0); // Nombre de la hoja y número de hoja
-            
+
             WritableFont h = new WritableFont(WritableFont.ARIAL, 12, WritableFont.NO_BOLD);// Fuente de texto normal
             WritableFont h1 = new WritableFont(WritableFont.ARIAL, 12, WritableFont.BOLD);// Fuente de titulo
-            
+
             WritableCellFormat hformat = new WritableCellFormat(h); // se agrega el formato a la celda
             WritableCellFormat hformat1 = new WritableCellFormat(h1);
-            
+
             hformat.setBackground(Colour.GRAY_25);
             hformat1.setBackground(Colour.AQUA);
             sheet.addCell(new jxl.write.Label(4, 0, "de Empleado: ", hformat1));
@@ -125,8 +126,7 @@ public class Excel {
             sheet.addCell(new jxl.write.Label(0, 3, "Inicio:", hformat1));
             sheet.addCell(new jxl.write.Label(0, 4, "Salida:", hformat1));
             sheet.addCell(new jxl.write.Label(0, 5, "Cant Roles:", hformat1));
-            sheet.addCell(new jxl.write.Label(0, 6, "Horas Libres:", hformat1));
-            
+
             sheet.addCell(new jxl.write.Label(5, 0, nombreX, hformat1));
             sheet.addCell(new jxl.write.Label(1, 3, InicioLunes, hformat));
             sheet.addCell(new jxl.write.Label(1, 4, FinalLunes, hformat));
@@ -147,23 +147,21 @@ public class Excel {
             workbook.close(); // lo cerramos 
 
             // Con esto se abre automáticamente el archivo
-            Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\"+nombreXX+".xls");
+            Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\" + nombreXX + ".xls");
         } catch (IOException ex) {
         }
     }
-    
-    public void GenerarReporteTodos() throws WriteException, IOException{
 
-        
+    public void GenerarReporteTodos() throws WriteException, IOException {
+
         puesService = new PuestoService();
         resp = puesService.getPuestos();
         puestos = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
-       
-        
+
         WorkbookSettings conf = new WorkbookSettings();
         conf.setEncoding("ISO-8859-1");
         // Aqui se crea el archivo
-        WritableWorkbook workbook = Workbook.createWorkbook(new File("C:\\Reporte\\"+"Empleados"+".xls"), conf);
+        WritableWorkbook workbook = Workbook.createWorkbook(new File("C:\\Reporte\\" + "Empleados" + ".xls"), conf);
         // Aqui podemos crear las hojas del archivo y darles formato y todo lo demás
         WritableSheet sheet = workbook.createSheet("Reporte de Horarios", 0); // Nombre de la hoja y número de hoja
         WritableFont h = new WritableFont(WritableFont.ARIAL, 12, WritableFont.NO_BOLD);// Fuente de texto normal
@@ -172,89 +170,96 @@ public class Excel {
         WritableCellFormat hformat1 = new WritableCellFormat(h1);
         hformat.setBackground(Colour.GRAY_25);
         hformat1.setBackground(Colour.AQUA);
-        puestos.stream().forEach(x -> {
-           for(int i = 0; i < x.getRoles().get(0).getHorario().getDias().size(); i++){
-               tamano = i;
-           } 
-            try {
-                sheet.addCell(new jxl.write.Label(4, o, "de Empleado: ", hformat1));
-                sheet.addCell(new jxl.write.Label(2, o, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
-                sheet.addCell(new jxl.write.Label(1, t, "Lunes", hformat));
-                sheet.addCell(new jxl.write.Label(2, t, "Martes", hformat));
-                sheet.addCell(new jxl.write.Label(3, t, "Miercoles", hformat));
-                sheet.addCell(new jxl.write.Label(4, t, "Jueves", hformat));
-                sheet.addCell(new jxl.write.Label(5, t, "Viernes", hformat));
-                sheet.addCell(new jxl.write.Label(6, t, "Sabado", hformat));
-                sheet.addCell(new jxl.write.Label(7, t, "Domingo", hformat));
-                sheet.addCell(new jxl.write.Label(0, t, "Dia", hformat1));
-                sheet.addCell(new jxl.write.Label(0, r, "Inicio:", hformat1));
-                sheet.addCell(new jxl.write.Label(0, g, "Salida:", hformat1));
-                //sheet.addCell(new jxl.write.Label(0, w, "Cant Roles:", hformat1));
-                sheet.addCell(new jxl.write.Label(0, f, "Horas Libres:", hformat1));
-                
-                sheet.addCell(new jxl.write.Label(4, o, x.getEmpleado().getNombre(), hformat1));
-                sheet.addCell(new jxl.write.Label(5, o, x.getNombrePuesto(),hformat1));
-                
-                for(int i = 0; i <= tamano; i++){
-                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Lunes")){
-                        sheet.addCell(new jxl.write.Label(1, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
-                        sheet.addCell(new jxl.write.Label(1, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
-                    }
-                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Martes")){
-                        sheet.addCell(new jxl.write.Label(2, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
-                        sheet.addCell(new jxl.write.Label(2, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
-                    }
-                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Miercoles")){
-                        sheet.addCell(new jxl.write.Label(3, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
-                        sheet.addCell(new jxl.write.Label(3, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
-                    }
-                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Jueves")){
-                        sheet.addCell(new jxl.write.Label(4, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
-                        sheet.addCell(new jxl.write.Label(4, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
-                    }
-                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Viernes")){
-                        sheet.addCell(new jxl.write.Label(5, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
-                        sheet.addCell(new jxl.write.Label(5, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
-                    }
-                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Sabado")){
-                        sheet.addCell(new jxl.write.Label(6, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
-                        sheet.addCell(new jxl.write.Label(6, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
-                    }
-                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Domingo")){
-                        sheet.addCell(new jxl.write.Label(7, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
-                        sheet.addCell(new jxl.write.Label(7, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
-                    }
+        puestos.stream().forEach(puesto -> {
+            puesto.getRoles().stream().forEach(rol -> {
+
+                try {
+                    sheet.addCell(new jxl.write.Label(2, o, "de Empleado: ", hformat1));
+                    sheet.addCell(new jxl.write.Label(0, o, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
+                    sheet.addCell(new jxl.write.Label(1, t, "Lunes", hformat));
+                    sheet.addCell(new jxl.write.Label(2, t, "Martes", hformat));
+                    sheet.addCell(new jxl.write.Label(3, t, "Miercoles", hformat));
+                    sheet.addCell(new jxl.write.Label(4, t, "Jueves", hformat));
+                    sheet.addCell(new jxl.write.Label(5, t, "Viernes", hformat));
+                    sheet.addCell(new jxl.write.Label(6, t, "Sabado", hformat));
+                    sheet.addCell(new jxl.write.Label(7, t, "Domingo", hformat));
+                    sheet.addCell(new jxl.write.Label(0, t, "Dia", hformat1));
+                    sheet.addCell(new jxl.write.Label(0, r, "Inicio:", hformat1));
+                    sheet.addCell(new jxl.write.Label(0, g, "Salida:", hformat1));
+                    sheet.addCell(new jxl.write.Label(2, o, (puesto.getEmpleado() != null)?puesto.getEmpleado().getNombre():"Sin asignar", hformat1));
+                    sheet.addCell(new jxl.write.Label(3, o, puesto.getNombrePuesto(), hformat1));
+                    sheet.addCell(new jxl.write.Label(5, o, rol.getNombreRol(), hformat1));
+                } catch (WriteException ex) {
+                    Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                rol.getHorario().getDias().stream().forEach(dia -> {
+                    try {
+                        if (dia.getNombre().equals("Lunes")) {
+                            sheet.addCell(new jxl.write.Label(1, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
+                            sheet.addCell(new jxl.write.Label(1, g, dia.getHora_Salida().toLocalTime().toString(), hformat));
+                        }
+                        if (dia.getNombre().equals("Martes")) {
+                            sheet.addCell(new jxl.write.Label(2, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
+                            sheet.addCell(new jxl.write.Label(2, g, dia.getHora_Salida().toLocalTime().toString(), hformat));
+                        }
+                        if (dia.getNombre().equals("Miercoles")) {
+                            sheet.addCell(new jxl.write.Label(3, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
+                            sheet.addCell(new jxl.write.Label(3, g, dia.getHora_Salida().toLocalTime().toString(), hformat));
+                        }
+                        if (dia.getNombre().equals("Jueves")) {
+                            sheet.addCell(new jxl.write.Label(4, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
+                            sheet.addCell(new jxl.write.Label(4, g, dia.getHora_Salida().toLocalTime().toString(), hformat));
+                        }
+                        if (dia.getNombre().equals("Viernes")) {
+                            sheet.addCell(new jxl.write.Label(5, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
+                            sheet.addCell(new jxl.write.Label(5, g, dia.getHora_Salida().toLocalTime().toString(), hformat));
+                        }
+                        if (dia.getNombre().equals("Sabado")) {
+                            sheet.addCell(new jxl.write.Label(6, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
+                            sheet.addCell(new jxl.write.Label(6, g, dia.getHora_Salida().toLocalTime().toString(), hformat));
+                        }
+                        if (dia.getNombre().equals("Domingo")) {
+                            sheet.addCell(new jxl.write.Label(7, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
+                            sheet.addCell(new jxl.write.Label(7, g, dia.getHora_Salida().toLocalTime().toString(), hformat));
+                        }
+
+                    } catch (WriteException ex) {
+                        Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                });
                 //para mover el horario de cada empleado 
-                o+= 6;
-                t+=6;
-                r+=6;
-                g+=6;
-                w+=6;
+                o += 6;
+                t += 6;
+                r += 6;
+                g += 6;
+                w += 6;
                 cant++;
-            } catch (WriteException ex) {
-                Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            });
+
         });
-        workbook.write(); // escribimos en el archivo
-        workbook.close();//cierra el archivo
-        Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\"+"Empleados"+".xls");//ejecuta el archivo
+        try {
+            workbook.write(); // escribimos en el archivo
+            workbook.close();//cierra el archivo
+            Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\" + "Empleados" + ".xls");//ejecuta el archivo
+        } catch (IOException ex) {
+            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void SendMail(String Destinatario) throws MessagingException, IOException {
         // Propiedades necesarias
-        String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
+        String nombreXX = nombreX.replace(" ", "");//para que se eliminen los espacios del nombre
         Properties prop = new Properties();
         prop.setProperty("mail.smtp.auth", "true");
         prop.setProperty("mail.smtp.starttls.enable", "true");
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.setProperty("mail.smtp.port", "587");
         prop.setProperty("mail.smtp.user", "horarios.mantenenimiento.una@gmail.com");
-       
+
         Session session = Session.getDefaultInstance(prop, null); // se inicia sesión con las propiedades
         BodyPart adjunto = new MimeBodyPart(); // Aqui se declara lo que será nuestro archivo adjunto
-        adjunto.setDataHandler(new DataHandler(new FileDataSource( "C:\\Reporte\\"+nombreXX+".xls")));// con esto se le da el archivo que enviaremos
-        adjunto.setFileName(nombreXX+".xls"); // Nombre del archivo
+        adjunto.setDataHandler(new DataHandler(new FileDataSource("C:\\Reporte\\" + nombreXX + ".xls")));// con esto se le da el archivo que enviaremos
+        adjunto.setFileName(nombreXX + ".xls"); // Nombre del archivo
         // Aqui es como guardar al archivo para despues añadirlo al mensaje que enviaremos
         MimeMultipart m = new MimeMultipart();
         m.addBodyPart(adjunto);
@@ -268,6 +273,6 @@ public class Excel {
         t.connect("horarios.mantenenimiento.una@gmail.com", "pzucxlddrffzikky");
         t.sendMessage(mensaje, mensaje.getAllRecipients());
         t.close();
-        message.show(Alert.AlertType.INFORMATION, "Envio de Correo", "Su correo ha sido enviado exitosamente a: "+Destinatario);
+        message.show(Alert.AlertType.INFORMATION, "Envio de Correo", "Su correo ha sido enviado exitosamente a: " + Destinatario);
     }
 }

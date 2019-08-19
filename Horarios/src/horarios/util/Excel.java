@@ -89,8 +89,6 @@ public class Excel {
     public void GenerarReporte() throws WriteException {
         String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
         //para que se eliminen los espacios del nombre
-        
-        
         horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
         HorariosController horariosController = new HorariosController();
         directorio.mkdir();//se crea la carpeta
@@ -191,7 +189,7 @@ public class Excel {
                 sheet.addCell(new jxl.write.Label(0, t, "Dia", hformat1));
                 sheet.addCell(new jxl.write.Label(0, r, "Inicio:", hformat1));
                 sheet.addCell(new jxl.write.Label(0, g, "Salida:", hformat1));
-                sheet.addCell(new jxl.write.Label(0, w, "Cant Roles:", hformat1));
+                //sheet.addCell(new jxl.write.Label(0, w, "Cant Roles:", hformat1));
                 sheet.addCell(new jxl.write.Label(0, f, "Horas Libres:", hformat1));
                 
                 sheet.addCell(new jxl.write.Label(4, o, x.getEmpleado().getNombre(), hformat1));

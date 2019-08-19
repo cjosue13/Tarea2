@@ -174,49 +174,6 @@ public class Excel {
         WritableCellFormat hformat1 = new WritableCellFormat(h1);
         hformat.setBackground(Colour.GRAY_25);
         hformat1.setBackground(Colour.AQUA);
-        //System.out.println(puestos.get(1).getRoles().get(1).getHorario().getDias().get(1).getHora_Inicio());
-        /*for(int i = 1; i < puestos.size(); i++){
-        try {
-                sheet.addCell(new jxl.write.Label(4, o, "de Empleado: ", hformat1));
-                sheet.addCell(new jxl.write.Label(3, o, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
-                sheet.addCell(new jxl.write.Label(1, t, "Lunes", hformat));
-                sheet.addCell(new jxl.write.Label(2, t, "Martes", hformat));
-                sheet.addCell(new jxl.write.Label(3, t, "Miercoles", hformat));
-                sheet.addCell(new jxl.write.Label(4, t, "Jueves", hformat));
-                sheet.addCell(new jxl.write.Label(5, t, "Viernes", hformat));
-                sheet.addCell(new jxl.write.Label(6, t, "Sabado", hformat));
-                sheet.addCell(new jxl.write.Label(7, t, "Domingo", hformat));
-                sheet.addCell(new jxl.write.Label(0, t, "Dia", hformat1));
-                sheet.addCell(new jxl.write.Label(0, r, "Inicio:", hformat1));
-                sheet.addCell(new jxl.write.Label(0, g, "Salida:", hformat1));
-                sheet.addCell(new jxl.write.Label(0, w, "Cant Roles:", hformat1));
-                sheet.addCell(new jxl.write.Label(0, f, "Horas Libres:", hformat1));
-
-                sheet.addCell(new jxl.write.Label(5, o, puestos.get(1).getEmpleado().getNombre(), hformat1));
-                sheet.addCell(new jxl.write.Label(1, r, puestos.get(1).getRoles().get(1).getHorario().getDias().get(1).getHora_Inicio().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(1, g, puestos.get(1).getRoles().get(1).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));
-                /*sheet.addCell(new jxl.write.Label(2, r, puestos.get(1).getRoles().get(2).getHorario().getDias().get(1).getHora_Inicio().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(2, g, puestos.get(1).getRoles().get(2).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(3, r, puestos.get(1).getRoles().get(3).getHorario().getDias().get(1).getHora_Inicio().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(3, g, puestos.get(1).getRoles().get(3).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(4, r, puestos.get(1).getRoles().get(4).getHorario().getDias().get(1).getHora_Inicio().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(4, g, puestos.get(1).getRoles().get(4).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(5, r, puestos.get(1).getRoles().get(5).getHorario().getDias().get(1).getHora_Inicio().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(5, g, puestos.get(1).getRoles().get(5).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(6, r, puestos.get(1).getRoles().get(6).getHorario().getDias().get(1).getHora_Inicio().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(6, g, puestos.get(1).getRoles().get(6).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(7, r, puestos.get(1).getRoles().get(6).getHorario().getDias().get(1).getHora_Inicio().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(7, g, puestos.get(1).getRoles().get(7).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));
-                o+= 6;
-                t+=6;
-                r+=6;
-                g+=6;
-                w+=6;
-                cant++;
-            } catch (WriteException ex) {
-                Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }*/
         puestos.stream().forEach(x -> {
             
            for(int i = 0; i < x.getRoles().get(0).getHorario().getDias().size(); i++){
@@ -241,6 +198,7 @@ public class Excel {
                 
                 sheet.addCell(new jxl.write.Label(4, o, x.getEmpleado().getNombre(), hformat1));
                 sheet.addCell(new jxl.write.Label(5, o, x.getNombrePuesto(),hformat1));
+                
                 for(int i = 0; i <= tamano; i++){
                     if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Lunes")){
                         sheet.addCell(new jxl.write.Label(1, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
@@ -271,27 +229,20 @@ public class Excel {
                         sheet.addCell(new jxl.write.Label(7, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
                     }
                 }
-                
-
+                //para mover el horario de cada empleado 
                 o+= 6;
                 t+=6;
                 r+=6;
                 g+=6;
                 w+=6;
                 cant++;
-                if(cant >= tamano){
-                    cant = 0;
-                }
             } catch (WriteException ex) {
                 Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
         });
         workbook.write(); // escribimos en el archivo
-        workbook.close();
-        System.out.println(cant);
-        
-        Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\"+"Empleados"+".xls");
+        workbook.close();//cierra el archivo
+        Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\"+"Empleados"+".xls");//ejecuta el archivo
     }
 
     public void SendMail(String Destinatario) throws MessagingException, IOException {

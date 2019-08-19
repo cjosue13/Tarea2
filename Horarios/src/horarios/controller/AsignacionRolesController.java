@@ -244,7 +244,6 @@ public class AsignacionRolesController extends Controller {
                             }
                         }
                     }
-                    System.out.println("PUE_ROL SIZE "+pueRoles.size());
                 } else {
                     ms.showModal(Alert.AlertType.WARNING, "Informacion de registro", this.getStage(), "No has seleccionado un empleado para asignar roles");
                 }

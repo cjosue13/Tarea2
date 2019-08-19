@@ -85,6 +85,7 @@ public class HorariosController extends Controller {
     @FXML
     private Label lblHoraFinalLunes;
     static public String FinalLunes = "";
+    static public Integer HorasLibras = 0;
     @FXML
     private Label lblHoraInicioMartes;
     static public String InicioMartes = "";
@@ -207,6 +208,7 @@ public class HorariosController extends Controller {
                             InicioLunes = lblHoraInicioLunes.getText();
                             lblHoraFinalLunes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalLunes = lblHoraFinalLunes.getText();
+                            HorasLibras = dia.getCantHorasLibre();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
                             MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
@@ -218,6 +220,7 @@ public class HorariosController extends Controller {
                             InicioMartes = lblHoraInicioMartes.getText();
                             lblHoraFinalMartes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalMartes = lblHoraFinalMartes.getText();
+                            HorasLibras = dia.getCantHorasLibre();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
                             MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre()); 
@@ -229,6 +232,7 @@ public class HorariosController extends Controller {
                             InicioMiercoles = lblHoraInicioMiercoles.getText();
                             lblHoraFinalMiercoles.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalMiercoles = lblHoraFinalMiercoles.getText();
+                            HorasLibras = dia.getCantHorasLibre();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
                             MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
@@ -240,6 +244,7 @@ public class HorariosController extends Controller {
                             InicioJueves = lblHoraInicioJueves.getText();
                             lblHoraFinalJueves.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalJueves = lblHoraInicioJueves.getText();
+                            HorasLibras = dia.getCantHorasLibre();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
                             MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
@@ -251,6 +256,7 @@ public class HorariosController extends Controller {
                             InicioViernes = lblHoraInicioViernes.getText();
                             lblHoraFinalViernes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalViernes = lblHoraFinalViernes.getText();
+                            HorasLibras = dia.getCantHorasLibre();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
                             MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
@@ -262,6 +268,7 @@ public class HorariosController extends Controller {
                             InicioSabado = lblHoraInicioSabado.getText();
                             lblHoraFinalSabado.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalSabado = lblHoraFinalSabado.getText();
+                            HorasLibras = dia.getCantHorasLibre();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
                             MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
@@ -273,6 +280,7 @@ public class HorariosController extends Controller {
                             InicioDomingo = lblHoraInicioDomingo.getText();
                             lblHoraFinalDomingo.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalDomingo = lblHoraFinalDomingo.getText();
+                            HorasLibras = dia.getCantHorasLibre();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
                             MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
@@ -395,10 +403,10 @@ public class HorariosController extends Controller {
     }
 
     @FXML
-    private void ExportarTodos(ActionEvent event) throws WriteException {
-        if(RolSeleccion){
+    private void ExportarTodos(ActionEvent event) throws WriteException, IOException  {
+        //if(RolSeleccion){
             Excel excel = new Excel();
             excel.GenerarReporteTodos();
-        }  
+        //}  
     }
 }

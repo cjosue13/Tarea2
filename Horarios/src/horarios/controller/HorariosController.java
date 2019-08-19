@@ -423,10 +423,8 @@ public class HorariosController extends Controller {
 
     @FXML
     private void ExportarTodos(ActionEvent event) throws WriteException, IOException {
-        if (RolSeleccion) {
-            Excel excel = new Excel();
-            excel.GenerarReporteTodos();
-        }
+        Excel excel = new Excel();
+        excel.GenerarReporteTodos();
     }
 
     @FXML

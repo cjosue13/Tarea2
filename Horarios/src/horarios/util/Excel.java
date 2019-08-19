@@ -79,6 +79,7 @@ public class Excel {
     private int cant = 0;
     
     public void GenerarReporte() throws WriteException {
+        String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
         //para que se eliminen los espacios del nombre
         horarios = ((ArrayList<HorarioDto>) resp.getResultado("Horarios"));
         HorariosController horariosController = new HorariosController();

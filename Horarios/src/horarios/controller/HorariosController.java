@@ -201,7 +201,10 @@ public class HorariosController extends Controller {
                 itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
                 CantidadRoles.setText(String.valueOf(puestoDto.getRoles().size()));
                 CantRol = puestoDto.getRoles().size();
-                nombreX = puestoDto.getEmpleado().getNombre();
+                if (puestoDto.getEmpleado() != null) {
+                    nombreX = puestoDto.getEmpleado().getNombre();
+                }
+
                 tableRol.setItems(itemsRoles);
             }
         }
@@ -488,6 +491,6 @@ public class HorariosController extends Controller {
         } catch (NumberFormatException e) {
             m.showModal(Alert.AlertType.WARNING, "Alerta", this.stage, "Digita únicamente números");
         }
-   
+
     }
 }

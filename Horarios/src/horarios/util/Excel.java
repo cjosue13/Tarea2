@@ -84,6 +84,7 @@ public class Excel {
     private Respuesta respRol;
     private RolDto rol;
     private RolService rolservice;
+    private int tamano = 0;
     
     public void GenerarReporte() throws WriteException {
         String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
@@ -155,6 +156,7 @@ public class Excel {
     
     public void GenerarReporteTodos() throws WriteException, IOException{
 
+        
         puesService = new PuestoService();
         resp = puesService.getPuestos();
         puestos = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
@@ -173,7 +175,7 @@ public class Excel {
         hformat.setBackground(Colour.GRAY_25);
         hformat1.setBackground(Colour.AQUA);
         //System.out.println(puestos.get(1).getRoles().get(1).getHorario().getDias().get(1).getHora_Inicio());
-        for(int i = 1; i < puestos.size(); i++){
+        /*for(int i = 1; i < puestos.size(); i++){
         try {
                 sheet.addCell(new jxl.write.Label(4, o, "de Empleado: ", hformat1));
                 sheet.addCell(new jxl.write.Label(3, o, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
@@ -204,7 +206,7 @@ public class Excel {
                 sheet.addCell(new jxl.write.Label(6, r, puestos.get(1).getRoles().get(6).getHorario().getDias().get(1).getHora_Inicio().toLocalTime().toString(), hformat));
                 sheet.addCell(new jxl.write.Label(6, g, puestos.get(1).getRoles().get(6).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));
                 sheet.addCell(new jxl.write.Label(7, r, puestos.get(1).getRoles().get(6).getHorario().getDias().get(1).getHora_Inicio().toLocalTime().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(7, g, puestos.get(1).getRoles().get(7).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));*/
+                sheet.addCell(new jxl.write.Label(7, g, puestos.get(1).getRoles().get(7).getHorario().getDias().get(1).getHora_Salida().toLocalTime().toString(), hformat));
                 o+= 6;
                 t+=6;
                 r+=6;
@@ -214,13 +216,16 @@ public class Excel {
             } catch (WriteException ex) {
                 Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
-        }
-        /*puestos.stream().forEach(x -> {
-            System.out.println(x.getId());
+        }*/
+        puestos.stream().forEach(x -> {
+            
+           for(int i = 0; i < x.getRoles().get(0).getHorario().getDias().size(); i++){
+               tamano = i;
+           } 
+            
             try {
                 sheet.addCell(new jxl.write.Label(4, o, "de Empleado: ", hformat1));
-                sheet.addCell(new jxl.write.Label(3, o, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
+                sheet.addCell(new jxl.write.Label(2, o, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
                 sheet.addCell(new jxl.write.Label(1, t, "Lunes", hformat));
                 sheet.addCell(new jxl.write.Label(2, t, "Martes", hformat));
                 sheet.addCell(new jxl.write.Label(3, t, "Miercoles", hformat));
@@ -234,32 +239,54 @@ public class Excel {
                 sheet.addCell(new jxl.write.Label(0, w, "Cant Roles:", hformat1));
                 sheet.addCell(new jxl.write.Label(0, f, "Horas Libres:", hformat1));
                 
-                sheet.addCell(new jxl.write.Label(5, o, x.getEmpleado().getNombre(), hformat1));
-                sheet.addCell(new jxl.write.Label(1, 3, x.getRoles().get(1).getHorario().getDias().get(1).getHora_Inicio().toString(), hformat));
-                sheet.addCell(new jxl.write.Label(1, 4, x.getRoles().get(1).getHorario().getDias().get(1).getHora_Salida().toString(), hformat));
-                /*sheet.addCell(new jxl.write.Label(2, 3, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(1).getHora_Inicio()), hformat));
-                sheet.addCell(new jxl.write.Label(2, 4, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(1).getHora_Salida()), hformat));
-                sheet.addCell(new jxl.write.Label(3, 3, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(2).getHora_Inicio()), hformat));
-                sheet.addCell(new jxl.write.Label(3, 4, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(2).getHora_Salida()), hformat));
-                sheet.addCell(new jxl.write.Label(4, 3, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(3).getHora_Inicio()), hformat));
-                sheet.addCell(new jxl.write.Label(4, 4, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(3).getHora_Salida()), hformat));
-                sheet.addCell(new jxl.write.Label(5, 3, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(4).getHora_Inicio()), hformat));
-                sheet.addCell(new jxl.write.Label(5, 4, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(4).getHora_Salida()), hformat));
-                sheet.addCell(new jxl.write.Label(6, 3, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(5).getHora_Inicio()), hformat));
-                sheet.addCell(new jxl.write.Label(6, 4, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(5).getHora_Salida()), hformat));
-                sheet.addCell(new jxl.write.Label(7, 3, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(6).getHora_Inicio()), hformat));
-                sheet.addCell(new jxl.write.Label(7, 4, String.valueOf(x.getRoles().get(cant).getHorario().getDias().get(6).getHora_Salida()), hformat));
+                sheet.addCell(new jxl.write.Label(4, o, x.getEmpleado().getNombre(), hformat1));
+                sheet.addCell(new jxl.write.Label(5, o, x.getNombrePuesto(),hformat1));
+                for(int i = 0; i <= tamano; i++){
+                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Lunes")){
+                        sheet.addCell(new jxl.write.Label(1, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
+                        sheet.addCell(new jxl.write.Label(1, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
+                    }
+                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Martes")){
+                        sheet.addCell(new jxl.write.Label(2, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
+                        sheet.addCell(new jxl.write.Label(2, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
+                    }
+                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Miercoles")){
+                        sheet.addCell(new jxl.write.Label(3, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
+                        sheet.addCell(new jxl.write.Label(3, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
+                    }
+                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Jueves")){
+                        sheet.addCell(new jxl.write.Label(4, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
+                        sheet.addCell(new jxl.write.Label(4, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
+                    }
+                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Viernes")){
+                        sheet.addCell(new jxl.write.Label(5, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
+                        sheet.addCell(new jxl.write.Label(5, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
+                    }
+                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Sabado")){
+                        sheet.addCell(new jxl.write.Label(6, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
+                        sheet.addCell(new jxl.write.Label(6, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
+                    }
+                    if(x.getRoles().get(0).getHorario().getDias().get(i).getNombre().equals("Domingo")){
+                        sheet.addCell(new jxl.write.Label(7, r, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Inicio().toLocalTime().toString(), hformat));
+                        sheet.addCell(new jxl.write.Label(7, g, x.getRoles().get(0).getHorario().getDias().get(i).getHora_Salida().toLocalTime().toString(), hformat));
+                    }
+                }
+                
+
                 o+= 6;
                 t+=6;
                 r+=6;
                 g+=6;
                 w+=6;
                 cant++;
+                if(cant >= tamano){
+                    cant = 0;
+                }
             } catch (WriteException ex) {
                 Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-        });*/
+        });
         workbook.write(); // escribimos en el archivo
         workbook.close();
         System.out.println(cant);

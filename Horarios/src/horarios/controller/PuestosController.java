@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
@@ -74,6 +70,10 @@ public class PuestosController extends Controller {
     private Mensaje ms;
     private PuestoDto puesto;
     private EmpleadoDto empleado;
+    @FXML
+    private JFXButton btnBuscar;
+    @FXML
+    private JFXTextField txtFiltroPuesto;
 
     @Override
     public void initialize() {
@@ -264,6 +264,34 @@ public class PuestosController extends Controller {
     @FXML
     private void limpiarRegistro(ActionEvent event) {
         limpiarValores();
+    }
+
+    @FXML
+    private void FiltrarEmpleado(ActionEvent event) {
+        try {
+            if (!txtFiltroPuesto.getText().isEmpty()) {
+                Integer codigo = Integer.valueOf(txtFiltroPuesto.getText());
+                resp = puesService.getPuesto(codigo);
+                ms.show(Alert.AlertType.INFORMATION, "Informacion sobre busqueda", resp.getMensaje());
+                if (resp.getResultado("PUE_CODIGO") != null) {
+                    PuestoDto emp = ((PuestoDto) resp.getResultado("PUE_CODIGO"));
+
+                    puestos.clear();
+                    puestos.add(emp);
+
+                    itemsPues = FXCollections.observableArrayList(puestos);
+                    tablePuesto.setItems(itemsPues);
+                }
+            }
+             else {
+                    resp = puesService.getPuestos();
+                    empleados = ((ArrayList) resp.getResultado("Puestos"));
+                    itemsPues = FXCollections.observableArrayList(empleados);
+                    tablePuesto.setItems(itemsPues);
+                }
+        } catch (NumberFormatException e) {
+            ms.showModal(Alert.AlertType.WARNING, "Alerta", this.stage, "Digita únicamente números");
+        }
     }
     
 }

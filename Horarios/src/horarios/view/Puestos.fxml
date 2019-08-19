@@ -5,15 +5,15 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.PuestosController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.PuestosController">
    <children>
-      <TableView fx:id="tablePuesto" layoutX="77.0" layoutY="140.0" onMouseReleased="#DatosPuestos" prefHeight="280.0" prefWidth="870.0">
+      <TableView fx:id="tablePuesto" layoutX="80.0" layoutY="100.0" onMouseReleased="#DatosPuestos" prefHeight="280.0" prefWidth="870.0">
          <columns>
             <TableColumn fx:id="COL_CODIGO_PUES" prefWidth="124.0" resizable="false" text="Codigo de Puesto" />
             <TableColumn fx:id="COL_NOMBRE_PUES" prefWidth="178.0" text="Puesto" />
@@ -21,9 +21,9 @@
             <TableColumn fx:id="COL_EMPLEADO_PUE" prefWidth="282.0" text="Empleado" />
          </columns>
       </TableView>
-      <Label fx:id="Titulo" layoutX="443.0" layoutY="40.0" text="Puestos" />
-      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="77.0" layoutY="469.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre del Puesto" />
-      <TableView fx:id="tableEmpleado" layoutX="386.0" layoutY="436.0" onMouseReleased="#agregarPersona" prefHeight="159.0" prefWidth="526.0">
+      <Label fx:id="Titulo" layoutX="443.0" layoutY="14.0" text="Puestos" />
+      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="77.0" layoutY="436.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre del Puesto" />
+      <TableView fx:id="tableEmpleado" layoutX="421.0" layoutY="425.0" onMouseReleased="#agregarPersona" prefHeight="159.0" prefWidth="526.0">
         <columns>
             <TableColumn prefWidth="560.0" text="Empleados">
                <columns>
@@ -33,18 +33,21 @@
             </TableColumn>
         </columns>
       </TableView>
-      <JFXTextField fx:id="txtEmpleado" disable="true" labelFloat="true" layoutX="387.0" layoutY="624.0" prefHeight="29.0" prefWidth="250.0" promptText="Empleado" />
-      <JFXTextArea fx:id="txtDescripcion" labelFloat="true" layoutX="77.0" layoutY="557.0" prefHeight="90.0" prefWidth="250.0" promptText="Descripcion" styleClass="text-field" />
-      <HBox layoutX="533.0" layoutY="671.0" prefHeight="100.0" prefWidth="477.0" spacing="20.0">
+      <JFXTextField fx:id="txtEmpleado" disable="true" labelFloat="true" layoutX="421.0" layoutY="604.0" prefHeight="29.0" prefWidth="250.0" promptText="Empleado" />
+      <JFXTextArea fx:id="txtDescripcion" labelFloat="true" layoutX="77.0" layoutY="513.0" prefHeight="91.0" prefWidth="250.0" promptText="Descripcion" styleClass="text-field" />
+      <HBox layoutX="421.0" layoutY="663.0" prefHeight="100.0" prefWidth="477.0" spacing="20.0">
          <padding>
             <Insets left="20.0" right="40.0" top="20.0" />
          </padding>
          <children>
+            <JFXButton fx:id="btnBuscar" onAction="#FiltrarEmpleado" text="Buscar" />
             <JFXButton fx:id="btnEditar1" onAction="#editar" style="-fx-cursor: hand;" text="Editar" />
             <JFXButton fx:id="btnEliminar" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
             <JFXButton onAction="#limpiarRegistro" text="Limpiar Registro" />
             <JFXButton fx:id="btnAgregar1" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar" />
          </children>
       </HBox>
+      <JFXTextField fx:id="txtFiltroPuesto" labelFloat="true" layoutX="77.0" layoutY="672.0" prefHeight="29.0" prefWidth="250.0" promptText="Buscar por Código o en blanco para todos" />
+      <Separator layoutX="80.0" layoutY="396.0" prefHeight="9.0" prefWidth="870.0" />
    </children>
 </AnchorPane>

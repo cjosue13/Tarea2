@@ -266,7 +266,6 @@ public class RolesController extends Controller {
         AppContext.getInstance().delete("Rol");
         table.getSelectionModel().clearSelection();
         RotativoRadioButtonN.setSelected(true);
-
     }
 
     @FXML

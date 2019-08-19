@@ -15,11 +15,13 @@ import horarios.service.PuestoService;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.util.ArrayList;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
@@ -71,6 +73,12 @@ public class EmpleadosController extends Controller {
     private Mensaje ms;
     @FXML
     private ImageView fondoEmp;
+    @FXML
+    private TableColumn<EmpleadoDto, Number> COL_FOLIO;
+    @FXML
+    private JFXTextField txtFiltroEmpleado;
+    @FXML
+    private JFXButton btnBuscar;
 
     @Override
     public void initialize() {
@@ -78,23 +86,19 @@ public class EmpleadosController extends Controller {
     }
 
     public void inicio() {
+        btnBuscar.setCursor(Cursor.HAND);
         typeKeys();
         empService = new EmpleadoService();
         ms = new Mensaje();
         resp = empService.getEmpleados();
         empleados = ((ArrayList<EmpleadoDto>) resp.getResultado("Empleados"));
+        COL_FOLIO.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
         COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre()));
         COL_APELLIDO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getApellido()));
         COL_CEDULA_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCedula()));
         COL_CORREO_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getCorreo()));
         items = FXCollections.observableArrayList(empleados);
         table.setItems(items);
-        /*Image omg1;
-        try {
-            omg1 = new Image("/horarios/resources/tttttttt.jpg");
-            fondoEmp.setImage(omg1);
-        } catch (Exception e) {
-        }*/
     }
 
     @FXML
@@ -135,7 +139,7 @@ public class EmpleadosController extends Controller {
     private void eliminar(ActionEvent event) {
         if (table.getSelectionModel() != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
-                if(table.getSelectionModel().getSelectedItem().getPuesto()!=null){
+                if (table.getSelectionModel().getSelectedItem().getPuesto() != null) {
                     PuestoDto puesto = table.getSelectionModel().getSelectedItem().getPuesto();
                     puesto.setEmpleado(null);
                     PuestoService puesSer = new PuestoService();
@@ -217,8 +221,37 @@ public class EmpleadosController extends Controller {
     private void limpiarRegistro(ActionEvent event) {
         limpiarValores();
     }
+
     private void typeKeys() {
         txtNombre.setOnKeyTyped(Horarios.aceptaCaracteres);
         txtApellidos.setOnKeyTyped(Horarios.aceptaCaracteres);
+    }
+
+    @FXML
+    private void Filtrar(ActionEvent event) {
+        try {
+            if (!txtFiltroEmpleado.getText().isEmpty()) {
+                Integer Folio = Integer.valueOf(txtFiltroEmpleado.getText());
+                resp = empService.getEmpleado(Folio);
+                ms.show(Alert.AlertType.INFORMATION, "Informacion sobre busqueda", resp.getMensaje());
+                if (resp.getResultado("EmpleadoID") != null) {
+                    EmpleadoDto emp = ((EmpleadoDto) resp.getResultado("EmpleadoID"));
+
+                    empleados.clear();
+                    empleados.add(emp);
+
+                    items = FXCollections.observableArrayList(empleados);
+                    table.setItems(items);
+                }
+            }
+             else {
+                    resp = empService.getEmpleados();
+                    empleados = ((ArrayList) resp.getResultado("Empleados"));
+                    items = FXCollections.observableArrayList(empleados);
+                    table.setItems(items);
+                }
+        } catch (NumberFormatException e) {
+            ms.showModal(Alert.AlertType.WARNING, "Alerta", this.stage, "Digita únicamente números");
+        }
     }
 }

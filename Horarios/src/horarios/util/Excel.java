@@ -86,6 +86,7 @@ public class Excel {
     private RolService rolservice;
     
     public void GenerarReporte() throws WriteException {
+        String nombreXX = nombreX.replace(" ","");//para que se eliminen los espacios del nombre
         //para que se eliminen los espacios del nombre
         
         

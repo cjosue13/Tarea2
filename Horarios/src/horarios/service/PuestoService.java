@@ -38,7 +38,7 @@ public class PuestoService {
 
             PuestoDto Puesto = new PuestoDto((Puesto) qryPuesto.getSingleResult());
 
-            return new Respuesta(true, "Encontrado exitosamente", "", "PuestoID", Puesto);
+            return new Respuesta(true, "Encontrado exitosamente", "", "PUE_CODIGO", Puesto);
         } catch (NoResultException ex) {
             return new Respuesta(false, "No existe un Puesto con el código ingresado.", "getPuesto NoResultException");
         } catch (NonUniqueResultException ex) {

@@ -20,6 +20,8 @@ import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
@@ -30,6 +32,7 @@ import javafx.collections.ObservableList;
 import javafx.css.SimpleStyleableStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -150,25 +153,39 @@ public class HorariosController extends Controller {
     static public boolean RolSeleccion = false;
     private Integer HorasTotales = 0;
     private Integer MinutosTotales = 0;
+    @FXML
+    private JFXButton btnFiltroEmp;
+    @FXML
+    private JFXTextField txtFiltroEmp;
+    @FXML
+    private JFXTextField txtFiltroPuesto;
+    @FXML
+    private JFXButton btnFiltroPuesto;
+
     @Override
     public void initialize() {
         inicio();
     }
 
     private void inicio() {
-        RolSeleccion = false;
-        puesService = new PuestoService();
-        resp = puesService.getPuestos();
-        empleados = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
-        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty((value.getValue().getEmpleado()!=null)?value.getValue().
-                getEmpleado().getNombre():"Sin asignar"));
-        COL_NOMBRE_PUE.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
-        items = FXCollections.observableArrayList(empleados);
-        listaEmpleados.setItems(items);
+        try {
+            btnCorreo.setCursor(Cursor.HAND);
+            Exportar.setCursor(Cursor.HAND);
+            RolSeleccion = false;
+            puesService = new PuestoService();
+            resp = puesService.getPuestos();
+            empleados = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
 
-        COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
+            COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty((value.getValue().getEmpleado() != null) ? value.getValue().
+                    getEmpleado().getNombre() + " " + value.getValue().getEmpleado().getApellido() : "Sin asignar"));
+            COL_NOMBRE_PUE.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
+            items = FXCollections.observableArrayList(empleados);
+            listaEmpleados.setItems(items);
 
-        progressBar.setVisible(false);
+            COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
+            progressBar.setVisible(false);
+        } catch (NullPointerException ex) {
+        }
     }
 
     @FXML
@@ -192,7 +209,7 @@ public class HorariosController extends Controller {
     @FXML
     private void SeleccionaRol(MouseEvent event) {
         limpiarDias();
-        HorasTotales = 0;  
+        HorasTotales = 0;
         MinutosTotales = 0;
         if (tableRol.getSelectionModel() != null) {
             if (tableRol.getSelectionModel().getSelectedItem() != null) {
@@ -208,7 +225,7 @@ public class HorariosController extends Controller {
                             lblHoraFinalLunes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalLunes = lblHoraFinalLunes.getText();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
-                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute() - dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
                             MinutosaHoras();
                             break;
@@ -219,8 +236,8 @@ public class HorariosController extends Controller {
                             lblHoraFinalMartes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalMartes = lblHoraFinalMartes.getText();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
-                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
-                            HorasTotales -= (dia.getCantHorasLibre()); 
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute() - dia.getHora_Inicio().toLocalTime().getMinute());
+                            HorasTotales -= (dia.getCantHorasLibre());
                             MinutosaHoras();
                             break;
                         case "Miercoles":
@@ -230,7 +247,7 @@ public class HorariosController extends Controller {
                             lblHoraFinalMiercoles.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalMiercoles = lblHoraFinalMiercoles.getText();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
-                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute() - dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
                             MinutosaHoras();
                             break;
@@ -241,7 +258,7 @@ public class HorariosController extends Controller {
                             lblHoraFinalJueves.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalJueves = lblHoraInicioJueves.getText();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
-                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute() - dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
                             MinutosaHoras();
                             break;
@@ -252,7 +269,7 @@ public class HorariosController extends Controller {
                             lblHoraFinalViernes.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalViernes = lblHoraFinalViernes.getText();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
-                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute() - dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
                             MinutosaHoras();
                             break;
@@ -263,7 +280,7 @@ public class HorariosController extends Controller {
                             lblHoraFinalSabado.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalSabado = lblHoraFinalSabado.getText();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
-                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute() - dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
                             MinutosaHoras();
                             break;
@@ -274,7 +291,7 @@ public class HorariosController extends Controller {
                             lblHoraFinalDomingo.setText(String.valueOf(dia.getHora_Salida().toLocalTime()));
                             FinalDomingo = lblHoraFinalDomingo.getText();
                             HorasTotales += (dia.getHora_Salida().toLocalTime().getHour() - dia.getHora_Inicio().toLocalTime().getHour());
-                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute()- dia.getHora_Inicio().toLocalTime().getMinute());
+                            MinutosTotales += (dia.getHora_Salida().toLocalTime().getMinute() - dia.getHora_Inicio().toLocalTime().getMinute());
                             HorasTotales -= (dia.getCantHorasLibre());
                             MinutosaHoras();
                             break;
@@ -282,31 +299,32 @@ public class HorariosController extends Controller {
                             break;
                     }
                 });
-                if(MinutosTotales < 10){
+                if (MinutosTotales < 10) {
                     horasTrabajadas.setText(String.valueOf(HorasTotales) + ":0" + String.valueOf(MinutosTotales));
                 }
-                if(HorasTotales < 10){
-                    horasTrabajadas.setText("0"+String.valueOf(HorasTotales) + ":" + String.valueOf(MinutosTotales));
+                if (HorasTotales < 10) {
+                    horasTrabajadas.setText("0" + String.valueOf(HorasTotales) + ":" + String.valueOf(MinutosTotales));
                 }
-                if(HorasTotales < 10 && MinutosTotales < 10){
+                if (HorasTotales < 10 && MinutosTotales < 10) {
                     System.out.println("entrando");
-                    horasTrabajadas.setText("0"+String.valueOf(HorasTotales) + ":0" + String.valueOf(MinutosTotales));
+                    horasTrabajadas.setText("0" + String.valueOf(HorasTotales) + ":0" + String.valueOf(MinutosTotales));
                 }
-                if(HorasTotales >= 10 && MinutosTotales >= 10){
+                if (HorasTotales >= 10 && MinutosTotales >= 10) {
                     horasTrabajadas.setText(String.valueOf(HorasTotales) + ":" + String.valueOf(MinutosTotales));
                 }
                 RolSeleccion = true;
             }
         }
     }
+
     //En el caso de que los minutos exedan los 60 minutos, se debe de pasar a horas
-    public void MinutosaHoras(){
-        if(MinutosTotales >= 60){
+    public void MinutosaHoras() {
+        if (MinutosTotales >= 60) {
             MinutosTotales -= 60;
             HorasTotales += 60;
         }
     }
-    
+
     public void limpiarHorario() {
         flowPane.getChildren().stream().forEach(node -> {
             ((AnchorPane) node).setId("button2");
@@ -365,19 +383,20 @@ public class HorariosController extends Controller {
             try {
                 correo.SendMail(listaEmpleados.getSelectionModel().getSelectedItem().getEmpleado().getCorreo());
             } catch (MessagingException | IOException ex) {
-                m.show(Alert.AlertType.ERROR, "Envio de Correo" ,"Ha ocurrido un error inesperado al enviar su correo");
+                m.show(Alert.AlertType.ERROR, "Envio de Correo", "Ha ocurrido un error inesperado al enviar su correo");
             }
         }
     }
 
     @FXML
     private void Exportar(ActionEvent event) throws WriteException {
-        if(RolSeleccion){
+        if (RolSeleccion) {
             Excel excel = new Excel();
             excel.GenerarReporte();
-        }   
+        }
     }
-    public void limpiarDias(){
+
+    public void limpiarDias() {
         InicioLunes = "     -";
         FinalLunes = "     -";
         InicioMartes = "     -";
@@ -396,9 +415,72 @@ public class HorariosController extends Controller {
 
     @FXML
     private void ExportarTodos(ActionEvent event) throws WriteException {
-        if(RolSeleccion){
+        if (RolSeleccion) {
             Excel excel = new Excel();
             excel.GenerarReporteTodos();
-        }  
+        }
+    }
+
+    @FXML
+    private void FiltrarEmpleado(ActionEvent event) {
+        try {
+            if (!txtFiltroEmp.getText().isEmpty()) {
+                try {
+                    Integer Folio = Integer.valueOf(txtFiltroEmp.getText());
+                    resp = puesService.getPuestos();
+                    empleados = (ArrayList) resp.getResultado("Puestos");
+                    // Uso de stream para buscar al empleado que se requiere
+                    empleados.stream().filter(x -> Objects.equals(x.getEmpleado().getId(), Folio)).forEach(x -> {
+                        empleados.clear();
+                        empleados.add(x);
+                        items = FXCollections.observableArrayList(empleados);
+                        listaEmpleados.setItems(items);
+                        m.showModal(Alert.AlertType.INFORMATION, "Informacion", this.stage, "Encontrado exitosamente");
+                    });
+                    boolean bandera = empleados.stream().anyMatch(x -> Objects.equals(x.getEmpleado().getId(), Folio));
+                    if (!bandera) {
+                        m.showModal(Alert.AlertType.ERROR, "Error", this.stage, "Empleado no encontrado");
+                    }
+                } catch (NumberFormatException e) {
+                    m.showModal(Alert.AlertType.WARNING, "Alerta", this.stage, "Digita únicamente números");
+
+                }
+            } else {
+                resp = puesService.getPuestos();
+                empleados = (ArrayList) resp.getResultado("Puestos");
+                items = FXCollections.observableArrayList(empleados);
+                listaEmpleados.setItems(items);
+            }
+        } catch (ConcurrentModificationException | NullPointerException e) {
+        }
+    }
+
+    @FXML
+    private void FiltrarPuesto(ActionEvent event) {
+        try {
+            if (!txtFiltroPuesto.getText().isEmpty()) {
+                Integer ID = Integer.valueOf(txtFiltroPuesto.getText());
+                resp = puesService.getPuesto(ID);
+                m.show(Alert.AlertType.INFORMATION, "Informacion sobre busqueda", resp.getMensaje());
+                if (resp.getResultado("PUE_CODIGO") != null) {
+                    PuestoDto puesto = ((PuestoDto) resp.getResultado("PUE_CODIGO"));
+
+                    empleados.clear();
+                    empleados.add(puesto);
+
+                    items = FXCollections.observableArrayList(empleados);
+                    listaEmpleados.setItems(items);
+                }
+            } else {
+                resp = puesService.getPuestos();
+                empleados = ((ArrayList) resp.getResultado("Puestos"));
+                items = FXCollections.observableArrayList(empleados);
+                listaEmpleados.setItems(items);
+            }
+        } catch (NullPointerException e) {
+
+        } catch (NumberFormatException e) {
+            m.showModal(Alert.AlertType.WARNING, "Alerta", this.stage, "Digita únicamente números");
+        }
     }
 }

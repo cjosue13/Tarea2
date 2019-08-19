@@ -130,7 +130,14 @@ public class PuestoService {
                 ArrayList<RolDto> roles = new ArrayList<>();
                 for (Rol rol : ((Puesto) pues).getRolList()) {
                     RolDto rolDto = new RolDto(rol);
-                    rolDto.setHorario(new HorarioDto(rol.getHorario()));
+                    HorarioDto horarioDto = new HorarioDto(rol.getHorario());
+                    ArrayList <DiaDto> dias = new ArrayList();
+                    
+                    for(Dia dia: rol.getHorario().getHorDiaList()){
+                        dias.add(new DiaDto(dia));
+                    }
+                    horarioDto.setDias(dias);
+                    rolDto.setHorario(horarioDto);
                     roles.add(rolDto);
                 }
 

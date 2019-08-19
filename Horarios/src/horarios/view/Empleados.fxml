@@ -17,8 +17,8 @@
       <TableView fx:id="table" layoutX="38.0" layoutY="138.0" onMouseReleased="#DatosEmpleado" prefHeight="280.0" prefWidth="949.0">
          <columns>
             <TableColumn fx:id="COL_FOLIO" prefWidth="75.0" text="Folio" />
-            <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="379.0" text="Nombre Completo" />
-            <TableColumn fx:id="COL_CEDULA_EMP" prefWidth="178.0" text="Cedula" />
+            <TableColumn fx:id="COL_NOMBRE_EMP" prefWidth="359.99998474121094" text="Nombre Completo" />
+            <TableColumn fx:id="COL_CEDULA_EMP" prefWidth="197.0" text="Cedula" />
             <TableColumn fx:id="COL_CORREO_EMP" prefWidth="315.0" text="Correo" />
          </columns>
       </TableView>

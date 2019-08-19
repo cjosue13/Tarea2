@@ -328,7 +328,7 @@ public class HorariosController extends Controller {
         }
     }
 
-    //En el caso de que los minutos exedan los 60 minutos, se debe de pasar a horas
+    //En el caso de que los min,utos exedan los 60 minutos, se debe de pasar a horas
     public void MinutosaHoras() {
         if (MinutosTotales >= 60) {
             MinutosTotales -= 60;

@@ -20,6 +20,7 @@ import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,6 +79,10 @@ public class RolesController extends Controller {
     private AnchorPane anchor;
     @FXML
     private Button rbNo;
+    @FXML
+    private JFXTextField txtRolesFIl;
+    @FXML
+    private TableColumn<RolDto, Number> COL_ID_ROL;
 
     @Override
     public void initialize() {
@@ -93,6 +98,7 @@ public class RolesController extends Controller {
 
         roles = ((ArrayList) resp.getResultado("Roles"));
         COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
+        COL_ID_ROL.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
 
         items = FXCollections.observableArrayList(roles);
         table.setItems(items);
@@ -294,5 +300,33 @@ public class RolesController extends Controller {
     private void typeKeys() {
         txtNombre.setOnKeyTyped(Horarios.aceptaCaracteres);
 
+    }
+
+    @FXML
+    private void filtrar(ActionEvent event) {
+        try {
+            if (!txtRolesFIl.getText().isEmpty()) {
+                Integer Folio = Integer.valueOf(txtRolesFIl.getText());
+                resp = rolservice.getRol(Folio);
+                ms.show(Alert.AlertType.INFORMATION, "Informacion sobre busqueda", resp.getMensaje());
+                if (resp.getResultado("RolID") != null) {
+                    RolDto emp = ((RolDto) resp.getResultado("RolID"));
+
+                    roles.clear();
+                    roles.add(emp);
+
+                    items = FXCollections.observableArrayList(roles);
+                    table.setItems(items);
+                }
+            }
+            else {
+                    resp = rolservice.getRoles();
+                    roles = ((ArrayList) resp.getResultado("Roles"));
+                    items = FXCollections.observableArrayList(roles);
+                    table.setItems(items);
+                }
+        } catch (NumberFormatException e) {
+            ms.showModal(Alert.AlertType.WARNING, "Alerta", this.stage, "Digita únicamente números");
+        }
     }
 }

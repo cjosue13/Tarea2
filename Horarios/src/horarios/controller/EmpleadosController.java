@@ -242,7 +242,7 @@ public class EmpleadosController extends Controller {
                     table.setItems(items);
                 }
             }
-             else {
+            else {
                     resp = empService.getEmpleados();
                     empleados = ((ArrayList) resp.getResultado("Empleados"));
                     items = FXCollections.observableArrayList(empleados);

@@ -79,9 +79,9 @@
             <JFXTextField fx:id="txtCantidadHoras" focusColor="#405aa8" labelFloat="true" layoutX="662.0" layoutY="178.0" prefHeight="29.0" prefWidth="218.0" promptText="Cantidad de horas libre" stylesheets="@newCascadeStyleSheet.css" unFocusColor="#006988" visible="false" />
             <JFXDatePicker fx:id="dateFechaIni" layoutX="30.0" layoutY="89.0" prefHeight="29.0" prefWidth="250.0" promptText="Fecha de inicio" showWeekNumbers="true" stylesheets="@newCascadeStyleSheet.css" />
             <Button fx:id="btnCancelar" layoutX="840.0" layoutY="222.0" mnemonicParsing="false" onAction="#cancelarDia" text="Cancelar" textFill="WHITE" visible="false" />
-            <JFXButton fx:id="Ayuda" buttonType="RAISED" layoutX="713.0" layoutY="486.0" onAction="#ayudar" ripplerFill="#006e7a" text="Ayuda" />
-            <JFXButton fx:id="agregarhorario" buttonType="RAISED" layoutX="793.0" layoutY="486.0" onAction="#agregarHorario" text="Agregar Horario" />
-            <JFXButton fx:id="atras" layoutX="30.0" layoutY="485.0" onAction="#atras" text="Atras" />
+            <JFXButton fx:id="Ayuda" buttonType="RAISED" layoutX="713.0" layoutY="486.0" onAction="#ayudar" ripplerFill="#006e7a" text="Ayuda" style="-fx-cursor: hand;" />
+            <JFXButton fx:id="agregarhorario" buttonType="RAISED" layoutX="793.0" layoutY="486.0" onAction="#agregarHorario" text="Agregar Horario" style="-fx-cursor: hand;"/>
+            <JFXButton fx:id="atras" layoutX="30.0" layoutY="485.0" onAction="#atras" text="Atras" style="-fx-cursor: hand;"/>
          </children>
       </AnchorPane>
    </children>

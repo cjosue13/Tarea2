@@ -325,7 +325,7 @@ public class AsignacionRolesController extends Controller {
         /*
         Ordena la lista de roles con respecto al número
          */
-        System.out.println(lista.size());
+        //   System.out.println(lista.size());
 
         itemsRoles.sort((t, t1) -> {
             if (((PueRolDto) t).getOrdenRotacion() > ((PueRolDto) t1).getOrdenRotacion()) {
@@ -342,8 +342,9 @@ public class AsignacionRolesController extends Controller {
 
     @FXML
     private void rotarRoles(ActionEvent event) {
-
+        pueRoles = new ArrayList(TV_ROLES_ROTATIVOS.getItems());
         if (tablePuestos.getSelectionModel() != null && tablePuestos.getSelectionModel().getSelectedItem() != null && !pueRoles.isEmpty()) {
+
             if (pueRoles.size() > 1) {
                 if (pueRoles.size() > 2) {
                     pueRoles.get(pueRoles.size() - 1).setOrdenRotacion(1);
@@ -351,19 +352,28 @@ public class AsignacionRolesController extends Controller {
                     pueRoles.stream().forEach(x -> {
                         if (pueRoles.indexOf(x) != 0 && pueRoles.indexOf(x) != pueRoles.size() - 1) {
                             x.setOrdenRotacion(x.getOrdenRotacion() + 1);
-
                         }
 
                     });
-
-                }else{
+                } else {
                     pueRoles.get(pueRoles.size() - 1).setOrdenRotacion(1);
                     pueRoles.get(0).setOrdenRotacion(2);
                 }
+
                 PueRolService prs = new PueRolService();
                 pueRoles.stream().forEach((pueRol) -> {
                     prs.guardarTablaRelacional(pueRol);
                 });
+                TV_ROLES_ROTATIVOS.getItems().clear();
+                itemsRoles = FXCollections.observableArrayList(pueRoles);
+                itemsRoles.sort((t, t1) -> {
+                    if (((PueRolDto) t).getOrdenRotacion() > ((PueRolDto) t1).getOrdenRotacion()) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
+                TV_ROLES_ROTATIVOS.setItems(itemsRoles);
             }
         }
     }

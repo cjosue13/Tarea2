@@ -168,7 +168,7 @@ public class HorariosController extends Controller {
 
     private void inicio() {
         try {
-           
+
             Exportar.setCursor(Cursor.HAND);
             RolSeleccion = false;
             puesService = new PuestoService();
@@ -354,7 +354,7 @@ public class HorariosController extends Controller {
             timeProgress.stop();
             progressBar.setVisible(false);
             lblPorcentaje.setVisible(false);
-            m.showModal(Alert.AlertType.WARNING, "Envio de Correo", this.getStage(), "Debes seleccionar el empleado");
+            m.show(Alert.AlertType.WARNING, "Alerta", "Alerta datos incompletos");
         }
     }
 
@@ -377,18 +377,21 @@ public class HorariosController extends Controller {
 
     @FXML
     private void Exportar(ActionEvent event) throws WriteException {
-        progressBar.setVisible(true);
-        lblPorcentaje.setVisible(true);
-        progressBar.setProgress(0);
-        progreso = 0;
+
         if (listaEmpleados.getSelectionModel() != null) {
             if (listaEmpleados.getSelectionModel().getSelectedItem() != null) {
-                if (RolSeleccion) {
+                if (tableRol.getSelectionModel().getSelectedItem() != null) {
+                    progressBar.setVisible(true);
+                    lblPorcentaje.setVisible(true);
+                    progressBar.setProgress(0);
+                    progreso = 0;
                     Excel excel = new Excel();
                     excel.GenerarReporte();
                     time.setCycleCount(Timeline.INDEFINITE);
                     correrBarInformation();
                     time.play();
+                } else {
+                    m.showModal(Alert.AlertType.WARNING, "Informacion", this.getStage(), "Rol No seleccionado o no tiene roles asignados");
                 }
             } else {
                 progressBar.setVisible(true);

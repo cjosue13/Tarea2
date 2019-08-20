@@ -242,7 +242,7 @@ public class RolesController extends Controller {
                     } else if (aux < relacion.getOrdenRotacion()) {
                         relacion.setOrdenRotacion(relacion.getOrdenRotacion() - 1);
                     }
-                }          
+                }
                 pueRoles.stream().forEach(x -> {
                     puerolService.guardarTablaRelacional(x);
                 });
@@ -357,7 +357,6 @@ public class RolesController extends Controller {
 
     private void typeKeys() {
         txtNombre.setOnKeyTyped(Horarios.aceptaCaracteres);
-
     }
 
     @FXML

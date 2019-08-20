@@ -77,13 +77,14 @@ public class EmpleadosController extends Controller {
     private JFXTextField txtFiltroEmpleado;
     @FXML
     private JFXButton btnBuscar;
-
+    private InicioController VistaInicio;
     @Override
     public void initialize() {
         inicio();
     }
 
     public void inicio() {
+        //VistaInicio.SetBorderPane(pane);
         btnBuscar.setCursor(Cursor.HAND);
         typeKeys();
         empService = new EmpleadoService();

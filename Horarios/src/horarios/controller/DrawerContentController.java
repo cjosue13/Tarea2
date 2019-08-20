@@ -101,12 +101,12 @@ public class DrawerContentController extends Controller {
             img6.setImage(img12);
         } catch (Exception e) {
         }
-    }
-    
+    }  
     @FXML
     private void btnEmpleados(ActionEvent event) {
              AppContext.getInstance().set("Vista", "Empleados");
              FlowController.getInstance().goView("Cargando");
+             
     }
 
     @FXML

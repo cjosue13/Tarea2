@@ -42,13 +42,10 @@ public class InicioController extends Controller {
     private ImageView omg;
     @FXML
     private AnchorPane anchorp;
-
-
+    private BorderPane Panel = new BorderPane();
     @Override
-    public void initialize() {
-       
-        AppContext.getInstance().set("Border", borderPane);
-        
+    public void initialize() {       
+        AppContext.getInstance().set("Border", borderPane);       
         Image omg1;
         try {
             omg1 = new Image("/horarios/resources/ttttt.png");
@@ -77,5 +74,19 @@ public class InicioController extends Controller {
             Logger.getLogger(InicioController.class.getName()).log(Level.SEVERE, null, ex);
         }    
     }
+    public void SetBorderPane(BorderPane pane){
+        Panel = pane;
+        Listener();
+    }
     
+    
+    public void Listener(){
+        Panel.widthProperty().addListener(x->{
+           this.hamburger.setPrefWidth(Panel.getWidth()-50);
+        });
+        
+        Panel.heightProperty().addListener(v->{
+            
+        });
+    }
 }

@@ -55,8 +55,7 @@ public class InicioController extends Controller {
         
         try {
             VBox box = FXMLLoader.load(getClass().getResource("/horarios/view/drawerContent.fxml"));
-            drawer.setSidePane(box);
-            
+            drawer.setSidePane(box);          
             HamburgerBackArrowBasicTransition burgerTask2 = new HamburgerBackArrowBasicTransition(hamburger);
             burgerTask2.setRate(-1);
             drawer.open();
@@ -75,14 +74,14 @@ public class InicioController extends Controller {
         }    
     }
     public void SetBorderPane(BorderPane pane){
-        Panel = pane;
+        this.Panel = pane;
         Listener();
     }
     
     
     public void Listener(){
         Panel.widthProperty().addListener(x->{
-           this.hamburger.setPrefWidth(Panel.getWidth()-50);
+           this.drawer.setPrefWidth(Panel.getWidth()-200);
         });
         
         Panel.heightProperty().addListener(v->{

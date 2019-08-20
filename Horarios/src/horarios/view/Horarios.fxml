@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.HorariosController">
    <children>
@@ -87,7 +88,6 @@
       <JFXTextField fx:id="txtFiltroEmp" labelFloat="true" layoutX="27.0" layoutY="150.0" prefHeight="29.0" prefWidth="307.0" promptText="Filtro por rol" />
       <Label layoutX="388.0" layoutY="565.0" text="Total de Horas Trabajadas:" />
       <Label layoutX="388.0" layoutY="614.0" text="Cantidad de Roles Asignados:" />
-      <JFXButton fx:id="Exportar" layoutX="880.0" layoutY="698.0" onAction="#Exportar" style="-fx-cursor: hand;" text="Exportar a Excel" />
       <Label fx:id="horasTrabajadas" layoutX="621.0" layoutY="565.0" prefHeight="21.0" prefWidth="189.0" />
       <Label fx:id="CantidadRoles" layoutX="621.0" layoutY="614.0" prefHeight="21.0" prefWidth="189.0" />
       <Label layoutX="875.0" layoutY="216.0" text="Días de trabajo:" />
@@ -97,12 +97,16 @@
           <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="305.0" text="Rol" />
         </columns>
       </TableView>
-      <JFXButton fx:id="btnCorreo" layoutX="732.0" layoutY="698.0" onAction="#EnviarCorreo" style="-fx-cursor: hand;" text="Enviar Correo" />
       <JFXProgressBar fx:id="progressBar" layoutX="732.0" layoutY="650.0" prefHeight="8.0" prefWidth="250.0" />
       <Label fx:id="lblPorcentaje" layoutX="840.0" layoutY="624.0" prefHeight="17.0" prefWidth="35.0" />
-      <JFXButton layoutX="880.0" layoutY="743.0" onAction="#ExportarTodos" prefHeight="31.0" prefWidth="124.0" text="Exportar todo" style="-fx-cursor: hand;"/>
-      <JFXButton fx:id="btnFiltroEmp" layoutX="27.0" layoutY="200.0" onAction="#FiltrarEmpleado" text="Filtrar" style="-fx-cursor: hand;"/>
+      <JFXButton fx:id="btnFiltroEmp" layoutX="27.0" layoutY="200.0" onAction="#FiltrarEmpleado" style="-fx-cursor: hand;" text="Filtrar" />
       <JFXTextField fx:id="txtFiltroPuesto" labelFloat="true" layoutX="382.0" layoutY="150.0" prefHeight="29.0" prefWidth="307.0" promptText="Filtro por puesto" />
-      <JFXButton fx:id="btnFiltroPuesto" layoutX="382.0" layoutY="200.0" onAction="#FiltrarPuesto" text="Filtrar" style="-fx-cursor: hand;" />
+      <JFXButton fx:id="btnFiltroPuesto" layoutX="382.0" layoutY="200.0" onAction="#FiltrarPuesto" style="-fx-cursor: hand;" text="Filtrar" />
+      <HBox layoutX="732.0" layoutY="670.0" prefHeight="41.0" prefWidth="250.0" spacing="20.0">
+         <children>
+            <JFXButton onAction="#ExportarTodos" prefHeight="18.0" prefWidth="124.0" style="-fx-cursor: hand;" text="Exportar todo" />
+            <JFXButton fx:id="Exportar" onAction="#Exportar" style="-fx-cursor: hand;" text="Exportar a Excel" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.QueryHint;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -29,9 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "HOR_PUE_ROL")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PueRol.findAll", query = "SELECT p FROM PueRol p")
-    , @NamedQuery(name = "PueRol.findByHorPueId", query = "SELECT p FROM PueRol p WHERE p.horPueId = :horPueId")
-    , @NamedQuery(name = "PueRol.findByOrdenRotacion", query = "SELECT p FROM PueRol p WHERE p.ordenRotacion = :ordenRotacion")})
+    @NamedQuery(name = "PueRol.findAll", query = "SELECT p FROM PueRol p", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "PueRol.findByHorPueId", query = "SELECT p FROM PueRol p WHERE p.horPueId = :horPueId", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))
+    , @NamedQuery(name = "PueRol.findByOrdenRotacion", query = "SELECT p FROM PueRol p WHERE p.ordenRotacion = :ordenRotacion", hints = @QueryHint(name = "eclipselink.refresh", value = "true"))})
 public class PueRol implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -201,7 +201,10 @@ public class HorariosController extends Controller {
                 itemsRoles = FXCollections.observableArrayList(puestoDto.getRoles());
                 CantidadRoles.setText(String.valueOf(puestoDto.getRoles().size()));
                 CantRol = puestoDto.getRoles().size();
-                nombreX = puestoDto.getEmpleado().getNombre();
+                if (puestoDto.getEmpleado() != null) {
+                    nombreX = puestoDto.getEmpleado().getNombre();
+                }
+
                 tableRol.setItems(itemsRoles);
             }
         }
@@ -325,11 +328,14 @@ public class HorariosController extends Controller {
         }
     }
 
-    //En el caso de que los minutos exedan los 60 minutos, se debe de pasar a horas
+    //En el caso de que los min,utos exedan los 60 minutos, se debe de pasar a horas
     public void MinutosaHoras() {
         if (MinutosTotales >= 60) {
             MinutosTotales -= 60;
-            HorasTotales += 60;
+            HorasTotales += 1;
+        }
+        if(MinutosTotales >= 60){
+            MinutosaHoras();//recursividad
         }
     }
 
@@ -488,6 +494,6 @@ public class HorariosController extends Controller {
         } catch (NumberFormatException e) {
             m.showModal(Alert.AlertType.WARNING, "Alerta", this.stage, "Digita únicamente números");
         }
-   
+
     }
 }

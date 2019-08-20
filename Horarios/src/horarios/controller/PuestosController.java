@@ -109,7 +109,6 @@ public class PuestosController extends Controller {
                             }
                         }
                     } else if (empleado == null) {
-                        System.out.println("");
                         empleado = puesto.getEmpleado();
                     }
 
@@ -223,7 +222,7 @@ public class PuestosController extends Controller {
         COL_CODIGO_PUES.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
         COL_EMPLEADO_PUE.setCellValueFactory(value -> new SimpleStringProperty((value.getValue().getEmpleado() != null)
                 ? value.getValue().getEmpleado().getNombre() + " "
-                + value.getValue().getEmpleado().getApellido() : " "));
+                + value.getValue().getEmpleado().getApellido() : "Sin asignar"));
 
         resp = empService.getEmpleados();
         empleados = (ArrayList) resp.getResultado("Empleados");

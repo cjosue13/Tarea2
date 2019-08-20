@@ -35,19 +35,19 @@
       </TableView>
       <JFXTextField fx:id="txtEmpleado" disable="true" labelFloat="true" layoutX="421.0" layoutY="604.0" prefHeight="29.0" prefWidth="250.0" promptText="Empleado" />
       <JFXTextArea fx:id="txtDescripcion" labelFloat="true" layoutX="77.0" layoutY="513.0" prefHeight="91.0" prefWidth="250.0" promptText="Descripcion" styleClass="text-field" />
-      <HBox layoutX="421.0" layoutY="663.0" prefHeight="100.0" prefWidth="477.0" spacing="20.0">
+      <HBox layoutX="421.0" layoutY="663.0" prefHeight="100.0" prefWidth="549.0" spacing="20.0">
          <padding>
             <Insets left="20.0" right="40.0" top="20.0" />
          </padding>
          <children>
-            <JFXButton fx:id="btnBuscar" onAction="#FiltrarEmpleado" text="Buscar" />
+            <JFXButton fx:id="btnBuscar" onAction="#FiltrarEmpleado" text="Buscar" style="-fx-cursor: hand;"/>
             <JFXButton fx:id="btnEditar1" onAction="#editar" style="-fx-cursor: hand;" text="Editar" />
             <JFXButton fx:id="btnEliminar" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
-            <JFXButton onAction="#limpiarRegistro" text="Limpiar Registro" />
+            <JFXButton onAction="#limpiarRegistro" text="Limpiar Registro" style="-fx-cursor: hand;" />
             <JFXButton fx:id="btnAgregar1" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar" />
          </children>
       </HBox>
-      <JFXTextField fx:id="txtFiltroPuesto" labelFloat="true" layoutX="77.0" layoutY="672.0" prefHeight="29.0" prefWidth="250.0" promptText="Buscar por Código o en blanco para todos" />
+      <JFXTextField fx:id="txtFiltroPuesto" labelFloat="true" layoutX="77.0" layoutY="672.0" prefHeight="29.0" prefWidth="250.0" promptText="Buscar por Código" />
       <Separator layoutX="80.0" layoutY="396.0" prefHeight="9.0" prefWidth="870.0" />
    </children>
 </AnchorPane>

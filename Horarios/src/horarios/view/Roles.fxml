@@ -15,31 +15,34 @@
 
 <AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.RolesController">
    <children>
-      <TableView fx:id="table" layoutX="77.0" layoutY="140.0" onMouseReleased="#DatosRoles" prefHeight="280.0" prefWidth="870.0">
+      <TableView fx:id="table" layoutX="65.0" layoutY="192.0" onMouseReleased="#DatosRoles" prefHeight="280.0" prefWidth="870.0">
          <columns>
-            <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="870.0" text="Nombre" />
+            <TableColumn fx:id="COL_ID_ROL" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="800.0" text="Nombre" />
          </columns>
       </TableView>
       <Label fx:id="Titulo" layoutX="468.0" layoutY="40.0" stylesheets="@newCascadeStyleSheet.css" text="Roles" />
-      <Label layoutX="77.0" layoutY="570.0" text="Horario Rotativo:" />
-      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="77.0" layoutY="485.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre del Rol" />
-      <JFXRadioButton fx:id="RotativoRadioButtonY" layoutX="185.0" layoutY="570.0" styleClass="custom-jfx-radio-button-white" text="Si">
+      <Label layoutX="65.0" layoutY="622.0" text="Horario Rotativo:" />
+      <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="65.0" layoutY="537.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre del Rol" />
+      <JFXRadioButton fx:id="RotativoRadioButtonY" layoutX="173.0" layoutY="622.0" styleClass="custom-jfx-radio-button-white" text="Si" style="-fx-cursor: hand;" >
          <toggleGroup>
             <ToggleGroup fx:id="rotativo" />
          </toggleGroup></JFXRadioButton>
-      <JFXRadioButton fx:id="RotativoRadioButtonN" layoutX="269.0" layoutY="570.0" selected="true" styleClass="custom-jfx-radio-button-white" text="No" toggleGroup="$rotativo" />
-      <HBox layoutX="389.0" layoutY="464.0" prefHeight="100.0" prefWidth="627.0" spacing="20.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="464.0">
+      <JFXRadioButton fx:id="RotativoRadioButtonN" layoutX="257.0" layoutY="622.0" selected="true" styleClass="custom-jfx-radio-button-white" style="-fx-cursor: hand;" text="No" toggleGroup="$rotativo" />
+      <HBox layoutX="377.0" layoutY="516.0" prefHeight="100.0" prefWidth="627.0" spacing="20.0" AnchorPane.bottomAnchor="184.0" AnchorPane.leftAnchor="377.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="516.0">
          <padding>
             <Insets left="20.0" right="20.0" top="40.0" />
          </padding>
          <children>
-            <JFXButton onAction="#abrirHorario" text="Asignar Horario" />
+            <JFXButton onAction="#abrirHorario" text="Asignar Horario" style="-fx-cursor: hand;"/>
             <JFXButton fx:id="btnEditar1" onAction="#editar" style="-fx-cursor: hand;" text="Editar Rol" />
             <JFXButton fx:id="btnEliminar" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
-            <Button fx:id="rbNo" mnemonicParsing="false" onAction="#limpiarResgistro" text="Limpiar Registro" />
+            <Button fx:id="rbNo" mnemonicParsing="false" onAction="#limpiarResgistro" text="Limpiar Registro" style="-fx-cursor: hand;"/>
             <JFXButton fx:id="btnAgregar1" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar Rol" />
          </children>
       </HBox>
-      <Separator layoutX="77.0" layoutY="444.0" prefHeight="2.0" prefWidth="870.0" />
+      <Separator layoutX="65.0" layoutY="496.0" prefHeight="2.0" prefWidth="870.0" />
+      <JFXTextField fx:id="txtRolesFIl" layoutX="65.0" layoutY="131.0" prefHeight="29.0" prefWidth="250.0" promptText="Filtro por ID" />
+      <JFXButton layoutX="345.0" layoutY="130.0" onAction="#filtrar" text="Filtrar" style="-fx-cursor: hand;"/>
    </children>
 </AnchorPane>

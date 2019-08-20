@@ -35,11 +35,11 @@
          <children>
             <JFXButton fx:id="btnEditar1" onAction="#editar" style="-fx-cursor: hand;" text="Editar" />
             <JFXButton fx:id="btnEliminar" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
-            <JFXButton onAction="#limpiarRegistro" text="Limpiar Registro" />
+            <JFXButton onAction="#limpiarRegistro" text="Limpiar Registro" style="-fx-cursor: hand;"/>
             <JFXButton fx:id="btnAgregar1" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar" />
          </children>
       </HBox>
-      <JFXTextField fx:id="txtFiltroEmpleado" labelFloat="true" layoutX="38.0" layoutY="475.0" prefHeight="29.0" prefWidth="250.0" promptText="Buscar por folio o en blanco para todos" />
-      <JFXButton fx:id="btnBuscar" layoutX="38.0" layoutY="530.0" onAction="#Filtrar" text="Buscar" />
+      <JFXTextField fx:id="txtFiltroEmpleado" labelFloat="true" layoutX="38.0" layoutY="475.0" prefHeight="29.0" prefWidth="250.0" promptText="Filtro por ID" />
+      <JFXButton fx:id="btnBuscar" layoutX="38.0" layoutY="530.0" onAction="#Filtrar" text="Buscar" style="-fx-cursor: hand;"/>
    </children>
 </AnchorPane>

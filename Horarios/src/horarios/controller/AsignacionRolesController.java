@@ -14,6 +14,7 @@ import horarios.model.RolDto;
 import horarios.service.PueRolService;
 import horarios.service.PuestoService;
 import horarios.service.RolService;
+import horarios.util.Excel;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.util.ArrayList;
@@ -143,7 +144,9 @@ public class AsignacionRolesController extends Controller {
                      Si el puesto ya tiene un empleado asignado, debe enviar un correo con el horario asignado al rol
                      */
                     if (puesto.getEmpleado() != null) {
-
+                        System.out.println(puesto.getRoles().size());
+                        Excel excel = new Excel();
+                        excel.GenerarReporte(puesto);
                     }
 
                     PueRolService prs = new PueRolService();

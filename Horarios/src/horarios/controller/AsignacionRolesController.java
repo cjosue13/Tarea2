@@ -345,6 +345,7 @@ public class AsignacionRolesController extends Controller {
 
     @FXML
     private void rotarRoles(ActionEvent event) {
+
         pueRoles = new ArrayList(TV_ROLES_ROTATIVOS.getItems());
         if (tablePuestos.getSelectionModel() != null && tablePuestos.getSelectionModel().getSelectedItem() != null && !pueRoles.isEmpty()) {
 
@@ -378,6 +379,10 @@ public class AsignacionRolesController extends Controller {
                 });
                 TV_ROLES_ROTATIVOS.setItems(itemsRoles);
             }
+        } else if (tablePuestos.getSelectionModel().getSelectedItem() != null) {
+            ms.showModal(Alert.AlertType.WARNING, "Informacion sobre rotacion", this.getStage(), "Debes asignar primero los roles seleccionados al empleado");
+        } else {
+            ms.showModal(Alert.AlertType.WARNING, "Informacion sobre rotacion", this.getStage(), "No has seleccionado un empleado para rotar");
         }
     }
 }

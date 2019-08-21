@@ -113,7 +113,7 @@ public class Excel {
 
             hformat.setBackground(Colour.GRAY_25);
             hformat1.setBackground(Colour.AQUA);
-            sheet.addCell(new jxl.write.Label(4, 0, "de Empleado: ", hformat1));
+            sheet.addCell(new jxl.write.Label(4, 0, "de: ", hformat1));
             sheet.addCell(new jxl.write.Label(3, 0, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
             sheet.addCell(new jxl.write.Label(1, 2, "Lunes", hformat));
             sheet.addCell(new jxl.write.Label(2, 2, "Martes", hformat));
@@ -126,6 +126,7 @@ public class Excel {
             sheet.addCell(new jxl.write.Label(0, 3, "Inicio:", hformat1));
             sheet.addCell(new jxl.write.Label(0, 4, "Salida:", hformat1));
             sheet.addCell(new jxl.write.Label(0, 5, "Cant Roles:", hformat1));
+            
 
             sheet.addCell(new jxl.write.Label(5, 0, nombreX, hformat1));
             sheet.addCell(new jxl.write.Label(1, 3, InicioLunes, hformat));
@@ -174,7 +175,11 @@ public class Excel {
             puesto.getRoles().stream().forEach(rol -> {
 
                 try {
-                    sheet.addCell(new jxl.write.Label(2, o, "de Empleado: ", hformat1));
+                    sheet.addCell(new jxl.write.Label(1,o,"",hformat1));
+                    sheet.addCell(new jxl.write.Label(4,o,"",hformat1));
+                    /*sheet.addCell(new jxl.write.Label(6,o,"",hformat1));
+                    sheet.addCell(new jxl.write.Label(7,o,"",hformat1));*/
+                    sheet.addCell(new jxl.write.Label(2, o, "de: ", hformat1));
                     sheet.addCell(new jxl.write.Label(0, o, "Horario", hformat1));// Esto es para escribir.. en este caso está escribiendo en la celda [0][0]
                     sheet.addCell(new jxl.write.Label(1, t, "Lunes", hformat));
                     sheet.addCell(new jxl.write.Label(2, t, "Martes", hformat));

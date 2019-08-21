@@ -137,8 +137,6 @@ public class HorariosController extends Controller {
     private ObservableList itemsRoles;
     private RolService rolService;
     private Respuesta RespuestaRol;
-    @FXML
-    private JFXButton btnCorreo;
     private Mensaje m = new Mensaje();
     @FXML
     private JFXProgressBar progressBar;
@@ -146,7 +144,7 @@ public class HorariosController extends Controller {
     private final Timeline timeProgress = new Timeline(new KeyFrame(Duration.ZERO, event -> correrBarWarning()), new KeyFrame(Duration.seconds(0.017)));
     private final Timeline time = new Timeline(new KeyFrame(Duration.ZERO, event -> correrBarInformation()), new KeyFrame(Duration.seconds(0.017)));
     private Excel correo = new Excel();
-    int porcentaje;
+    private int porcentaje;
     @FXML
     private Label lblPorcentaje;
     @FXML
@@ -170,7 +168,7 @@ public class HorariosController extends Controller {
 
     private void inicio() {
         try {
-            btnCorreo.setCursor(Cursor.HAND);
+
             Exportar.setCursor(Cursor.HAND);
             RolSeleccion = false;
             puesService = new PuestoService();
@@ -334,7 +332,7 @@ public class HorariosController extends Controller {
             MinutosTotales -= 60;
             HorasTotales += 1;
         }
-        if(MinutosTotales >= 60){
+        if (MinutosTotales >= 60) {
             MinutosaHoras();//recursividad
         }
     }
@@ -347,31 +345,6 @@ public class HorariosController extends Controller {
         });
     }
 
-    @FXML
-    private void EnviarCorreo(ActionEvent event) {
-        progressBar.setVisible(true);
-        lblPorcentaje.setVisible(true);
-        progressBar.setProgress(0);
-        progreso = 0;
-        if (listaEmpleados.getSelectionModel() != null) {
-            if (listaEmpleados.getSelectionModel().getSelectedItem() != null) {
-                time.setCycleCount(Timeline.INDEFINITE);
-                correrBarInformation();
-                time.play();
-            } else {
-                progressBar.setVisible(true);
-                timeProgress.setCycleCount(Timeline.INDEFINITE);
-                correrBarWarning();
-                timeProgress.play();
-            }
-        } else {
-            progressBar.setVisible(true);
-            timeProgress.setCycleCount(Timeline.INDEFINITE);
-            correrBarWarning();
-            timeProgress.play();
-        }
-    }
-
     public void correrBarWarning() {
         progreso += 0.01;
         progressBar.setProgress(progreso);
@@ -381,7 +354,7 @@ public class HorariosController extends Controller {
             timeProgress.stop();
             progressBar.setVisible(false);
             lblPorcentaje.setVisible(false);
-            m.showModal(Alert.AlertType.WARNING, "Envio de Correo", this.getStage(), "Debes seleccionar el empleado");
+            m.show(Alert.AlertType.WARNING, "Alerta", "Alerta datos incompletos");
         }
     }
 
@@ -404,9 +377,33 @@ public class HorariosController extends Controller {
 
     @FXML
     private void Exportar(ActionEvent event) throws WriteException {
-        if (RolSeleccion) {
-            Excel excel = new Excel();
-            excel.GenerarReporte();
+
+        if (listaEmpleados.getSelectionModel() != null) {
+            if (listaEmpleados.getSelectionModel().getSelectedItem() != null) {
+                if (tableRol.getSelectionModel().getSelectedItem() != null) {
+                    progressBar.setVisible(true);
+                    lblPorcentaje.setVisible(true);
+                    progressBar.setProgress(0);
+                    progreso = 0;
+                    Excel excel = new Excel();
+                    excel.GenerarReporte();
+                    time.setCycleCount(Timeline.INDEFINITE);
+                    correrBarInformation();
+                    time.play();
+                } else {
+                    m.showModal(Alert.AlertType.WARNING, "Informacion", this.getStage(), "Rol No seleccionado o no tiene roles asignados");
+                }
+            } else {
+                progressBar.setVisible(true);
+                timeProgress.setCycleCount(Timeline.INDEFINITE);
+                correrBarWarning();
+                timeProgress.play();
+            }
+        } else {
+            progressBar.setVisible(true);
+            timeProgress.setCycleCount(Timeline.INDEFINITE);
+            correrBarWarning();
+            timeProgress.play();
         }
     }
 

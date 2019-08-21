@@ -10,9 +10,13 @@ import com.jfoenix.controls.JFXTextField;
 import horarios.Horarios;
 import horarios.model.DiaDto;
 import horarios.model.HorarioDto;
+import horarios.model.PueRolDto;
+import horarios.model.PuestoDto;
 import horarios.model.RolDto;
 import horarios.service.DiaService;
 import horarios.service.HorarioService;
+import horarios.service.PueRolService;
+import horarios.service.PuestoService;
 import horarios.service.RolService;
 import horarios.util.AppContext;
 import horarios.util.FlowController;
@@ -20,6 +24,7 @@ import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -127,36 +132,67 @@ public class RolesController extends Controller {
                     Integer id = rol.getId();
                     Integer version = rol.getVersion() + 1;
                     horarioDto.setVersion(horarioDto.getVersion() + 1);
-                 
+
+                    if (!rol.getHorarioRotativo().equals(rotar)) {
+                        PueRolService puerolService = new PueRolService();
+                        ArrayList<PueRolDto> pueRoles;
+                        pueRoles = (ArrayList) puerolService.getRelaciones().getResultado("getRelaciones");
+                        PuestoService pueService = new PuestoService();
+                        ArrayList<PuestoDto> puestos = (ArrayList) pueService.getPuestos().getResultado("Puestos");
+                        if (rotar.equals("Y")) {
+                            puestos.stream().forEach(puesto -> {
+                                pueRoles.stream().forEach(relacion -> {
+                                    if (relacion.getPueCodigo().getId() == puesto.getId() && relacion.getRolId().getId() == rol.getId()) {
+                                        ArrayList<RolDto> lista = (ArrayList) puesto.getRoles().stream().filter(y -> y.getHorarioRotativo().equals("Y")).collect(Collectors.toList());
+                                        relacion.setOrdenRotacion(lista.size() + 1);
+                                    }
+                                });
+                            });
+
+                        } else {
+                            puestos.stream().forEach(v -> {
+                                pueRoles.stream().forEach(x -> {
+                                    if (x.getPueCodigo().getId() == v.getId() && x.getRolId().getId() == rol.getId()) {
+                                        if (v.getRoles().stream().anyMatch(y -> y.getHorarioRotativo().equals("N"))) {
+                                            x.setOrdenRotacion(0);
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                        pueRoles.stream().forEach(x -> {
+                            puerolService.guardarTablaRelacional(x);
+                        });
+                    }
                     rol = new RolDto(nombre, rotar, version, id, null);
                     try {
                         resp = rolservice.guardarRol(rol);
 
                         //Validar luego si se ha cambiado de rol 
                         if (!rol.getId().equals(horarioDto.getRol().getId())) {
+
                             horarioDto.setRol((RolDto) resp.getResultado("Rol"));
                         }
 
                         resp = horarioService.guardarHorario(horarioDto);
 
                         DiaService diaService = new DiaService();
-                        
+
                         Respuesta respuesta = horarioService.getDias(horarioDto.getId());
                         ArrayList<DiaDto> dias = (ArrayList) respuesta.getResultado("getDias");
-                        
+
                         for (DiaDto dia : dias) {
-                            Boolean encontrado=false;
+                            Boolean encontrado = false;
                             for (DiaDto diaSem : horarioDto.getDias()) {
-                                if(dia.getNombre().equals(diaSem.getNombre())){
+                                if (dia.getNombre().equals(diaSem.getNombre())) {
                                     encontrado = true;
                                     break;
                                 }
                             }
-                            if(!encontrado){
+                            if (!encontrado) {
                                 diaService.EliminarDia(dia.getDiaid());
                             }
                         }
-                        
 
                         horarioDto.getDias().stream().forEach(dia -> {
                             dia.setVersion(dia.getVersion() + 1);
@@ -171,7 +207,6 @@ public class RolesController extends Controller {
 
                         limpiarValores();
                     } catch (Exception e) {
-                        //Preguntar a Carranza
                         ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de editar el rol.");
                     }
                 } else {
@@ -188,6 +223,29 @@ public class RolesController extends Controller {
     private void eliminar(ActionEvent event) {
         if (table.getSelectionModel() != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
+                PueRolService puerolService = new PueRolService();
+                ArrayList<PueRolDto> pueRoles;
+                pueRoles = (ArrayList) puerolService.getRelaciones().getResultado("getRelaciones");
+                PuestoService pueService = new PuestoService();
+                Integer aux = 0;
+                ArrayList<PuestoDto> puestos = (ArrayList) pueService.getPuestos().getResultado("Puestos");
+                for (PuestoDto puesto : puestos) {
+                    for (PueRolDto relacion : pueRoles) {
+                        if (relacion.getPueCodigo().getId() == puesto.getId() && relacion.getRolId().getId() == table.getSelectionModel().getSelectedItem().getId()) {
+                            aux = relacion.getOrdenRotacion();
+                        }
+                    }
+                }
+                for (PueRolDto relacion : pueRoles) {
+                    if (aux == 1 && relacion.getRolId().getHorarioRotativo().equals("Y")) {
+                        relacion.setOrdenRotacion(relacion.getOrdenRotacion() - 1);
+                    } else if (aux < relacion.getOrdenRotacion()) {
+                        relacion.setOrdenRotacion(relacion.getOrdenRotacion() - 1);
+                    }
+                }
+                pueRoles.stream().forEach(x -> {
+                    puerolService.guardarTablaRelacional(x);
+                });
                 rolservice.EliminarRol(table.getSelectionModel().getSelectedItem().getId());
                 ms.showModal(Alert.AlertType.INFORMATION, "Información", this.getStage(), "Datos Eliminados correctamente");
                 resp = rolservice.getRoles();
@@ -196,7 +254,6 @@ public class RolesController extends Controller {
                 items = FXCollections.observableArrayList(roles);
                 table.setItems(items);
                 limpiarValores();
-
             } else {
                 ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a eliminar");
             }
@@ -227,7 +284,7 @@ public class RolesController extends Controller {
                     //horario.setOrdenRotacion(0);
                     HorarioService horService = new HorarioService();
                     Respuesta respHorario = horService.guardarHorario(horario);
- 
+
                     DiaService diaService = new DiaService();
                     horario.getDias().stream().forEach(dia -> {
                         dia.setHorario((HorarioDto) respHorario.getResultado("Horario"));
@@ -297,9 +354,9 @@ public class RolesController extends Controller {
     private void limpiarResgistro(ActionEvent event) {
         limpiarValores();
     }
+
     private void typeKeys() {
         txtNombre.setOnKeyTyped(Horarios.aceptaCaracteres);
-
     }
 
     @FXML
@@ -318,13 +375,12 @@ public class RolesController extends Controller {
                     items = FXCollections.observableArrayList(roles);
                     table.setItems(items);
                 }
+            } else {
+                resp = rolservice.getRoles();
+                roles = ((ArrayList) resp.getResultado("Roles"));
+                items = FXCollections.observableArrayList(roles);
+                table.setItems(items);
             }
-            else {
-                    resp = rolservice.getRoles();
-                    roles = ((ArrayList) resp.getResultado("Roles"));
-                    items = FXCollections.observableArrayList(roles);
-                    table.setItems(items);
-                }
         } catch (NumberFormatException e) {
             ms.showModal(Alert.AlertType.WARNING, "Alerta", this.stage, "Digita únicamente números");
         }

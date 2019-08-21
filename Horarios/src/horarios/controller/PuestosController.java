@@ -1,4 +1,3 @@
-
 package horarios.controller;
 
 import com.jfoenix.controls.JFXButton;
@@ -8,6 +7,7 @@ import horarios.model.EmpleadoDto;
 import horarios.model.PuestoDto;
 import horarios.service.EmpleadoService;
 import horarios.service.PuestoService;
+import horarios.util.Excel;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import jxl.write.WriteException;
 
 /**
  * FXML Controller class
@@ -81,7 +82,7 @@ public class PuestosController extends Controller {
     }
 
     @FXML
-    private void editar(ActionEvent event) {
+    private void editar(ActionEvent event) throws WriteException {
         if (tablePuesto.getSelectionModel() != null) {
             if (tablePuesto.getSelectionModel().getSelectedItem() != null) {
                 if (registroCorrecto()) {
@@ -97,7 +98,10 @@ public class PuestosController extends Controller {
                             //Si ya existe un rol con horario para el nuevo puesto asignado para el empleado
                             if (!puesto.getRoles().isEmpty()) {
                                 //Deberia enviar un correo al nuevo empleado con el nuevo horario asignado
-
+                                puesto = new PuestoDto(nombre, descripcion, version, empleado, id);
+                                puesto.setRoles(((PuestoDto) puesService.getRoles(puesto.getId()).getResultado("roles")).getRoles());
+                                Excel excel = new Excel();
+                                excel.GenerarReporte(puesto);
                             }
                             try {
                                 //Tomo el puesto anterior que tenia el empleado y lo dejo como vacante libre
@@ -108,6 +112,11 @@ public class PuestosController extends Controller {
 
                             }
                         }
+                    } else if (empleado != null && empleado.getPuesto() == null) {
+                        puesto = new PuestoDto(nombre, descripcion, version, empleado, id);
+                        puesto.setRoles(((PuestoDto) puesService.getRoles(puesto.getId()).getResultado("roles")).getRoles());
+                        Excel excel = new Excel();
+                        excel.GenerarReporte(puesto);
                     } else if (empleado == null) {
                         empleado = puesto.getEmpleado();
                     }
@@ -139,7 +148,8 @@ public class PuestosController extends Controller {
     }
 
     @FXML
-    private void eliminar(ActionEvent event) {
+    private void eliminar(ActionEvent event
+    ) {
         if (tablePuesto.getSelectionModel() != null) {
             if (tablePuesto.getSelectionModel().getSelectedItem() != null) {
                 puesService.EliminarPuesto(tablePuesto.getSelectionModel().getSelectedItem().getId());
@@ -157,7 +167,8 @@ public class PuestosController extends Controller {
     }
 
     @FXML
-    private void agregar(ActionEvent event) {
+    private void agregar(ActionEvent event
+    ) {
         if (registroCorrecto()) {
             if (tablePuesto.getSelectionModel() != null) {
                 if (tablePuesto.getSelectionModel().getSelectedItem() == null) {
@@ -180,9 +191,9 @@ public class PuestosController extends Controller {
                             ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el Puesto. "
                                     + "Verifica que todos los datos esten llenos correctamente o que el empleado no tenga un puesto asignado");
                         }
-                    }else{
-                         ms.showModal(Alert.AlertType.WARNING, "Informacion del registro", this.getStage(), "Este empleado ya tiene un puesto asignado,"
-                                 + " si deseas asignarle un puesto diferente, debes seleccionarlo y luego editarlo.");
+                    } else {
+                        ms.showModal(Alert.AlertType.WARNING, "Informacion del registro", this.getStage(), "Este empleado ya tiene un puesto asignado,"
+                                + " si deseas asignarle un puesto diferente, debes seleccionarlo y luego editarlo.");
                     }
                 } else {
                     ms.showModal(Alert.AlertType.WARNING, "Informacion acerca del guardado", this.getStage(), "Se ha elegido un puesto para editar, "
@@ -227,8 +238,8 @@ public class PuestosController extends Controller {
         resp = empService.getEmpleados();
         empleados = (ArrayList) resp.getResultado("Empleados");
 
-        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre()+" "+
-                value.getValue().getApellido()));
+        COL_NOMBRE_EMP.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombre() + " "
+                + value.getValue().getApellido()));
         COL_ID_EMP.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));
 
         itemsPues = FXCollections.observableArrayList(puestos);
@@ -281,16 +292,15 @@ public class PuestosController extends Controller {
                     itemsPues = FXCollections.observableArrayList(puestos);
                     tablePuesto.setItems(itemsPues);
                 }
+            } else {
+                resp = puesService.getPuestos();
+                empleados = ((ArrayList) resp.getResultado("Puestos"));
+                itemsPues = FXCollections.observableArrayList(empleados);
+                tablePuesto.setItems(itemsPues);
             }
-             else {
-                    resp = puesService.getPuestos();
-                    empleados = ((ArrayList) resp.getResultado("Puestos"));
-                    itemsPues = FXCollections.observableArrayList(empleados);
-                    tablePuesto.setItems(itemsPues);
-                }
         } catch (NumberFormatException e) {
             ms.showModal(Alert.AlertType.WARNING, "Alerta", this.stage, "Digita únicamente números");
         }
     }
-    
+
 }

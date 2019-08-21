@@ -17,6 +17,7 @@ import horarios.util.Respuesta;
 import java.util.ArrayList;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableIntegerValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 
 /**
  * FXML Controller class
@@ -77,13 +79,18 @@ public class EmpleadosController extends Controller {
     private JFXTextField txtFiltroEmpleado;
     @FXML
     private JFXButton btnBuscar;
-
+    private InicioController VistaInicio = new InicioController();
+    @FXML
+    private BorderPane borderPane;
+    private BorderPane border = new BorderPane();
     @Override
     public void initialize() {
         inicio();
     }
 
-    public void inicio() {
+    public void inicio() {     
+        
+        
         btnBuscar.setCursor(Cursor.HAND);
         typeKeys();
         empService = new EmpleadoService();

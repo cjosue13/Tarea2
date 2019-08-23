@@ -125,20 +125,20 @@ public class Excel {
                 rol.getHorario().getDias().stream().forEach(dia -> {
                     try {
 
-                        sheet.addCell(new jxl.write.Label(1, r, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(1, g, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(2, r, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(2, g, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(3, r, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(3, g, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(4, r, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(4, g, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(5, r, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(5, g, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(6, r, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(6, g, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(7, r, "-", hformat));
-                        sheet.addCell(new jxl.write.Label(7, g, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(1, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(1, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(2, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(2, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(3, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(3, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(4, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(4, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(5, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(5, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(6, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(6, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(7, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(7, g, "Libre", hformat));
 
                         if (dia.getNombre().equals("Lunes")) {
                             sheet.addCell(new jxl.write.Label(1, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
@@ -234,7 +234,6 @@ public class Excel {
             sheet.addCell(new jxl.write.Label(0, 3, "Inicio:", hformat1));
             sheet.addCell(new jxl.write.Label(0, 4, "Salida:", hformat1));
             sheet.addCell(new jxl.write.Label(0, 5, "Cant Roles:", hformat1));
-            
 
             sheet.addCell(new jxl.write.Label(5, 0, nombreX, hformat1));
             sheet.addCell(new jxl.write.Label(1, 3, InicioLunes, hformat));
@@ -283,8 +282,8 @@ public class Excel {
             puesto.getRoles().stream().forEach(rol -> {
 
                 try {
-                    sheet.addCell(new jxl.write.Label(1,o,"",hformat1));
-                    sheet.addCell(new jxl.write.Label(4,o,"",hformat1));
+                    sheet.addCell(new jxl.write.Label(1, o, "", hformat1));
+                    sheet.addCell(new jxl.write.Label(4, o, "", hformat1));
                     /*sheet.addCell(new jxl.write.Label(6,o,"",hformat1));
                     sheet.addCell(new jxl.write.Label(7,o,"",hformat1));*/
                     sheet.addCell(new jxl.write.Label(2, o, "de: ", hformat1));
@@ -302,11 +301,26 @@ public class Excel {
                     sheet.addCell(new jxl.write.Label(2, o, (puesto.getEmpleado() != null) ? puesto.getEmpleado().getNombre() : "Sin asignar", hformat1));
                     sheet.addCell(new jxl.write.Label(3, o, puesto.getNombrePuesto(), hformat1));
                     sheet.addCell(new jxl.write.Label(5, o, rol.getNombreRol(), hformat1));
+
                 } catch (WriteException ex) {
                     Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 rol.getHorario().getDias().stream().forEach(dia -> {
                     try {
+                        sheet.addCell(new jxl.write.Label(1, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(1, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(2, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(2, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(3, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(3, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(4, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(4, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(5, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(5, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(6, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(6, g, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(7, r, "Libre", hformat));
+                        sheet.addCell(new jxl.write.Label(7, g, "Libre", hformat));
                         if (dia.getNombre().equals("Lunes")) {
                             sheet.addCell(new jxl.write.Label(1, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
                             sheet.addCell(new jxl.write.Label(1, g, dia.getHora_Salida().toLocalTime().toString(), hformat));

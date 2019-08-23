@@ -8,11 +8,10 @@ package horarios.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextField;
+import horarios.Horarios;
 import horarios.model.DiaDto;
-import horarios.model.EmpleadoDto;
 import horarios.model.PuestoDto;
 import horarios.model.RolDto;
-import horarios.service.EmpleadoService;
 import horarios.service.PuestoService;
 import horarios.service.RolService;
 import horarios.util.Excel;
@@ -22,20 +21,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.css.SimpleStyleableStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
@@ -124,11 +119,22 @@ public class HorariosController extends Controller {
     static public String InicioDomingo = "";
     @FXML
     private Label lblHoraFinalDomingo;
-    static public String FinalDomingo = "";
-    static public String nombreX = "";
-    static public Integer CantRol = 0;
     @FXML
     private FlowPane flowPane;
+    @FXML
+    private JFXProgressBar progressBar;
+    @FXML
+    private Label lblPorcentaje;
+    @FXML
+    private JFXButton Exportar;
+    @FXML
+    private JFXButton btnFiltroEmp;
+    @FXML
+    private JFXTextField txtFiltroEmp;
+    @FXML
+    private JFXTextField txtFiltroPuesto;
+    @FXML
+    private JFXButton btnFiltroPuesto;
     private PuestoService puesService;
     private Respuesta resp;
     private ArrayList<PuestoDto> empleados;
@@ -138,29 +144,18 @@ public class HorariosController extends Controller {
     private RolService rolService;
     private Respuesta RespuestaRol;
     private Mensaje m = new Mensaje();
-    @FXML
-    private JFXProgressBar progressBar;
+    static public boolean RolSeleccion = false;
+    private Integer HorasTotales = 0;
+    private Integer MinutosTotales = 0;
     private double progreso;
     private final Timeline timeProgress = new Timeline(new KeyFrame(Duration.ZERO, event -> correrBarWarning()), new KeyFrame(Duration.seconds(0.017)));
     private final Timeline time = new Timeline(new KeyFrame(Duration.ZERO, event -> correrBarInformation()), new KeyFrame(Duration.seconds(0.017)));
     private Excel correo = new Excel();
     private int porcentaje;
-    @FXML
-    private Label lblPorcentaje;
-    @FXML
-    private JFXButton Exportar;
-    static public boolean RolSeleccion = false;
-    private Integer HorasTotales = 0;
-    private Integer MinutosTotales = 0;
-    @FXML
-    private JFXButton btnFiltroEmp;
-    @FXML
-    private JFXTextField txtFiltroEmp;
-    @FXML
-    private JFXTextField txtFiltroPuesto;
-    @FXML
-    private JFXButton btnFiltroPuesto;
-
+    static public String FinalDomingo = "";
+    static public String nombreX = "";
+    static public Integer CantRol = 0;
+    
     @Override
     public void initialize() {
         inicio();
@@ -183,6 +178,9 @@ public class HorariosController extends Controller {
 
             COL_NOMBRE_ROL.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombreRol()));
             progressBar.setVisible(false);
+            txtFiltroEmp.setOnKeyTyped(Horarios.aceptaNumeros);
+            txtFiltroPuesto.setOnKeyTyped(Horarios.aceptaNumeros);
+            
         } catch (NullPointerException ex) {
         }
     }
@@ -390,7 +388,7 @@ public class HorariosController extends Controller {
                     correrBarInformation();
                     time.play();
                 } else {
-                    m.showModal(Alert.AlertType.WARNING, "Informacion", this.getStage(), "Rol No seleccionado o no tiene roles asignados");
+                    m.showModal(Alert.AlertType.WARNING, "Informacion", this.getStage(), "No has seleccionado un rol o el puesto no tiene roles asignados.");
                 }
             } else {
                 progressBar.setVisible(true);
@@ -407,20 +405,20 @@ public class HorariosController extends Controller {
     }
 
     public void limpiarDias() {
-        InicioLunes = "     -";
-        FinalLunes = "     -";
-        InicioMartes = "     -";
-        FinalMartes = "     -";
-        InicioMiercoles = "     -";
-        FinalMiercoles = "     -";
-        InicioJueves = "     -";
-        FinalJueves = "     -";
-        InicioViernes = "     -";
-        FinalViernes = "     -";
-        InicioSabado = "     -";
-        FinalSabado = "     -";
-        InicioDomingo = "     -";
-        FinalDomingo = "     -";
+        InicioLunes = "Libre";
+        FinalLunes = "Libre";
+        InicioMartes = "Libre";
+        FinalMartes = "Libre";
+        InicioMiercoles = "Libre";
+        FinalMiercoles = "Libre";
+        InicioJueves = "Libre";
+        FinalJueves = "Libre";
+        InicioViernes = "Libre";
+        FinalViernes = "Libre";
+        InicioSabado = "Libre";
+        FinalSabado = "Libre";
+        InicioDomingo = "Libre";
+        FinalDomingo = "Libre";
     }
 
     @FXML

@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.EmpleadosController">
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.EmpleadosController">
    <center>
       <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css">
          <children>
@@ -32,19 +31,19 @@
             <JFXTextField fx:id="txtApellidos" labelFloat="true" layoutX="336.0" layoutY="555.0" prefHeight="29.0" prefWidth="250.0" promptText="Apellidos" />
             <JFXTextField fx:id="txtCedula" labelFloat="true" layoutX="697.0" layoutY="475.0" prefHeight="29.0" prefWidth="250.0" promptText="Cedula" />
             <JFXTextField fx:id="txtCorreo" labelFloat="true" layoutX="697.0" layoutY="555.0" prefHeight="29.0" prefWidth="250.0" promptText="Correo" />
-            <HBox layoutX="294.0" layoutY="626.0" prefHeight="100.0" prefWidth="443.0" spacing="20.0">
+            <HBox layoutX="310.0" layoutY="622.0" prefHeight="100.0" prefWidth="553.0" spacing="30.0">
                <padding>
                   <Insets left="20.0" right="20.0" top="40.0" />
                </padding>
                <children>
+                  <JFXButton fx:id="btnBuscar" onAction="#Filtrar" style="-fx-cursor: hand;" text="Buscar" />
                   <JFXButton fx:id="btnEditar1" onAction="#editar" style="-fx-cursor: hand;" text="Editar" />
                   <JFXButton fx:id="btnEliminar" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
                   <JFXButton onAction="#limpiarRegistro" style="-fx-cursor: hand;" text="Limpiar Registro" />
                   <JFXButton fx:id="btnAgregar1" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar" />
                </children>
             </HBox>
-            <JFXTextField fx:id="txtFiltroEmpleado" labelFloat="true" layoutX="38.0" layoutY="475.0" prefHeight="29.0" prefWidth="250.0" promptText="Filtro por ID" />
-            <JFXButton fx:id="btnBuscar" layoutX="38.0" layoutY="530.0" onAction="#Filtrar" style="-fx-cursor: hand;" text="Buscar" />
+            <JFXTextField fx:id="txtFiltroEmpleado" labelFloat="true" layoutX="38.0" layoutY="475.0" prefHeight="29.0" prefWidth="250.0" promptText="Filtro por Folio" />
          </children>
       </AnchorPane>
    </center>

@@ -24,6 +24,7 @@ import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -31,9 +32,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,7 +41,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -70,16 +67,8 @@ public class RolesController extends Controller {
     private RadioButton RotativoRadioButtonY;
     @FXML
     private RadioButton RotativoRadioButtonN;
-    private RolService rolservice;
-    private Respuesta resp;
-    private ArrayList<RolDto> roles;
-    private ObservableList items;
-    private Mensaje ms;
-    private RolDto rol;
-    private HorarioDto horarioDto;
     @FXML
     private ToggleGroup rotativo;
-    private HorarioService horarioService;
     @FXML
     private AnchorPane anchor;
     @FXML
@@ -88,6 +77,14 @@ public class RolesController extends Controller {
     private JFXTextField txtRolesFIl;
     @FXML
     private TableColumn<RolDto, Number> COL_ID_ROL;
+    private RolService rolservice;
+    private Respuesta resp;
+    private ArrayList<RolDto> roles;
+    private ObservableList items;
+    private Mensaje ms;
+    private RolDto rol;
+    private HorarioDto horarioDto;
+    private HorarioService horarioService;
 
     @Override
     public void initialize() {
@@ -142,7 +139,7 @@ public class RolesController extends Controller {
                         if (rotar.equals("Y")) {
                             puestos.stream().forEach(puesto -> {
                                 pueRoles.stream().forEach(relacion -> {
-                                    if (relacion.getPueCodigo().getId() == puesto.getId() && relacion.getRolId().getId() == rol.getId()) {
+                                    if (Objects.equals(relacion.getPueCodigo().getId(), puesto.getId()) && Objects.equals(relacion.getRolId().getId(), rol.getId())) {
                                         ArrayList<RolDto> lista = (ArrayList) puesto.getRoles().stream().filter(y -> y.getHorarioRotativo().equals("Y")).collect(Collectors.toList());
                                         relacion.setOrdenRotacion(lista.size() + 1);
                                     }
@@ -150,15 +147,22 @@ public class RolesController extends Controller {
                             });
 
                         } else {
-                            puestos.stream().forEach(v -> {
-                                pueRoles.stream().forEach(x -> {
-                                    if (x.getPueCodigo().getId() == v.getId() && x.getRolId().getId() == rol.getId()) {
-                                        if (v.getRoles().stream().anyMatch(y -> y.getHorarioRotativo().equals("N"))) {
-                                            x.setOrdenRotacion(0);
+                            Integer aux = 0;
+                            for (PuestoDto puesto : puestos) {
+                                for (PueRolDto relacion : pueRoles) {
+                                    if (Objects.equals(relacion.getPueCodigo().getId(), puesto.getId()) && Objects.equals(relacion.getRolId().getId(), rol.getId())) {
+                                        aux = relacion.getOrdenRotacion();
+                                        for (PueRolDto relacion2 : pueRoles) {
+                                            if (aux == 1 && relacion2.getRolId().getHorarioRotativo().equals("Y") && Objects.equals(puesto.getId(), relacion2.getPueCodigo().getId())) {
+                                                relacion2.setOrdenRotacion(relacion2.getOrdenRotacion() - 1);
+                                            } else if (aux < relacion2.getOrdenRotacion() && relacion2.getRolId().getHorarioRotativo().equals("Y") && puesto.getId() == relacion2.getPueCodigo().getId()) {
+                                                relacion2.setOrdenRotacion(relacion2.getOrdenRotacion() - 1);
+                                            }
                                         }
+                                        relacion.setOrdenRotacion(0);
                                     }
-                                });
-                            });
+                                }
+                            }
                         }
                         pueRoles.stream().forEach(x -> {
                             puerolService.guardarTablaRelacional(x);
@@ -231,16 +235,16 @@ public class RolesController extends Controller {
                 ArrayList<PuestoDto> puestos = (ArrayList) pueService.getPuestos().getResultado("Puestos");
                 for (PuestoDto puesto : puestos) {
                     for (PueRolDto relacion : pueRoles) {
-                        if (relacion.getPueCodigo().getId() == puesto.getId() && relacion.getRolId().getId() == table.getSelectionModel().getSelectedItem().getId()) {
+                        if (Objects.equals(relacion.getPueCodigo().getId(), puesto.getId()) && Objects.equals(relacion.getRolId().getId(), rol.getId())) {
                             aux = relacion.getOrdenRotacion();
+                            for (PueRolDto relacion2 : pueRoles) {
+                                if (aux == 1 && relacion2.getRolId().getHorarioRotativo().equals("Y") && Objects.equals(puesto.getId(), relacion2.getPueCodigo().getId())) {
+                                    relacion2.setOrdenRotacion(relacion2.getOrdenRotacion() - 1);
+                                } else if (aux < relacion2.getOrdenRotacion() && relacion2.getRolId().getHorarioRotativo().equals("Y") && puesto.getId() == relacion2.getPueCodigo().getId()) {
+                                    relacion2.setOrdenRotacion(relacion2.getOrdenRotacion() - 1);
+                                }
+                            }
                         }
-                    }
-                }
-                for (PueRolDto relacion : pueRoles) {
-                    if (aux == 1 && relacion.getRolId().getHorarioRotativo().equals("Y")) {
-                        relacion.setOrdenRotacion(relacion.getOrdenRotacion() - 1);
-                    } else if (aux < relacion.getOrdenRotacion()) {
-                        relacion.setOrdenRotacion(relacion.getOrdenRotacion() - 1);
                     }
                 }
                 pueRoles.stream().forEach(x -> {
@@ -307,7 +311,7 @@ public class RolesController extends Controller {
                         + " agregar un registro nuevo. Si agregaras un rol nuevo debes limpiar el registro.");
             }
         } else {
-            ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
+            ms.showModal(Alert.AlertType.WARNING, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
                     + "verifica que todos los datos esten llenos o que ya hayas creado un horario.");
         }
     }
@@ -357,6 +361,7 @@ public class RolesController extends Controller {
 
     private void typeKeys() {
         txtNombre.setOnKeyTyped(Horarios.aceptaCaracteres);
+        txtRolesFIl.setOnKeyTyped(Horarios.aceptaNumeros);
     }
 
     @FXML

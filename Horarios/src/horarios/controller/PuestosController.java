@@ -3,6 +3,7 @@ package horarios.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import horarios.Horarios;
 import horarios.model.EmpleadoDto;
 import horarios.model.PuestoDto;
 import horarios.service.EmpleadoService;
@@ -61,6 +62,10 @@ public class PuestosController extends Controller {
     private JFXTextField txtEmpleado;
     @FXML
     private TableColumn<PuestoDto, String> COL_EMPLEADO_PUE;
+    @FXML
+    private JFXButton btnBuscar;
+    @FXML
+    private JFXTextField txtFiltroPuesto;
     private PuestoService puesService;
     private EmpleadoService empService;
     private Respuesta resp;
@@ -71,10 +76,6 @@ public class PuestosController extends Controller {
     private Mensaje ms;
     private PuestoDto puesto;
     private EmpleadoDto empleado;
-    @FXML
-    private JFXButton btnBuscar;
-    @FXML
-    private JFXTextField txtFiltroPuesto;
 
     @Override
     public void initialize() {
@@ -95,15 +96,13 @@ public class PuestosController extends Controller {
                     if (empleado != null && empleado.getPuesto() != null) {
                         //Si el puesto que se ha seleccionado no es igual al empleado asignado
                         if (!empleado.getPuesto().getId().equals(puesto.getId())) {
-                            System.out.println("HOLA 1");
                             //Si ya existe un rol con horario para el nuevo puesto asignado para el empleado
                             if (!puesto.getRoles().isEmpty()) {
-                                System.out.println("HOLA 2");
-                                //Deberia enviar un correo al nuevo empleado con el nuevo horario asignado
+                                //Envia un correo al nuevo empleado con el nuevo horario asignado
                                 PuestoDto auxPuesto = new PuestoDto(nombre, descripcion, version, empleado, id);
                                 auxPuesto.setRoles(((PuestoDto) puesService.getRoles(auxPuesto.getId()).getResultado("roles")).getRoles());
                                 Excel excel = new Excel();
-                                excel.GenerarReporte(auxPuesto,false,true);
+                                excel.GenerarReporte(auxPuesto, false, true);
                             }
                             try {
                                 //Tomo el puesto anterior que tenia el empleado y lo dejo como vacante libre
@@ -114,9 +113,10 @@ public class PuestosController extends Controller {
                             } catch (Exception e) {
 
                             }
-                        } else if (puesto.getEmpleado() == null && empleado.getPuesto() != null) {
-                            System.out.println("HOLA 3");
+                        }/* else if (puesto.getEmpleado() == null && empleado.getPuesto() != null) {
+                            System.out.println("HOLA ");
                             try {
+
                                 //Tomo el puesto anterior que tenia el empleado y lo dejo como vacante libre
                                 PuestoDto pues = empleado.getPuesto();
                                 pues.setEmpleado(null);
@@ -125,19 +125,18 @@ public class PuestosController extends Controller {
                                 PuestoDto auxPuesto = new PuestoDto(nombre, descripcion, version, empleado, id);
                                 auxPuesto.setRoles(((PuestoDto) puesService.getRoles(auxPuesto.getId()).getResultado("roles")).getRoles());
                                 Excel excel = new Excel();
-                                excel.GenerarReporte(auxPuesto,false,true);
+                                excel.GenerarReporte(auxPuesto, false, true);
                             } catch (Exception e) {
                                 System.out.println("ERROR");
                             }
-                        }
+                        }*/
                     } else if (puesto.getEmpleado() == null && empleado != null && empleado.getPuesto() == null) {
-                        System.out.println("HOLA 4");
+                        //Se envia al nuevo empleado su horario asignado
                         PuestoDto auxPuesto = new PuestoDto(nombre, descripcion, version, empleado, id);
                         auxPuesto.setRoles(((PuestoDto) puesService.getRoles(id).getResultado("roles")).getRoles());
                         Excel excel = new Excel();
-                        excel.GenerarReporte(auxPuesto,false,true);
+                        excel.GenerarReporte(auxPuesto, false, true);
                     } else if (empleado == null) {//Por si no se toco ningun empleado a editar
-                        System.out.println("HOLA 5");
                         empleado = puesto.getEmpleado();
                     }
 
@@ -224,7 +223,7 @@ public class PuestosController extends Controller {
             }
 
         } else {
-            ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
+            ms.showModal(Alert.AlertType.WARNING, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
                     + "verifica que todos los datos esten llenos.");
         }
     }
@@ -268,6 +267,8 @@ public class PuestosController extends Controller {
         itemsEmp = FXCollections.observableArrayList(empleados);
         tablePuesto.setItems(itemsPues);
         tableEmpleado.setItems(itemsEmp);
+        
+        txtFiltroPuesto.setOnKeyTyped(Horarios.aceptaNumeros);
     }
 
     @FXML

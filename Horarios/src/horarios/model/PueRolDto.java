@@ -61,6 +61,11 @@ public class PueRolDto {
     public void setRolId(RolDto rolId) {
         this.rolId = rolId;
     }
+
+    @Override
+    public String toString() {
+        return "PueRolDto{" + "horPueId=" + horPueId + ", ordenRotacion=" + ordenRotacion + ", pueCodigo=" + pueCodigo + ", rolId=" + rolId + '}';
+    }
     
     
 }

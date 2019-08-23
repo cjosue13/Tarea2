@@ -230,6 +230,7 @@ public class EmpleadosController extends Controller {
     private void typeKeys() {
         txtNombre.setOnKeyTyped(Horarios.aceptaCaracteres);
         txtApellidos.setOnKeyTyped(Horarios.aceptaCaracteres);
+        txtFiltroEmpleado.setOnKeyTyped(Horarios.aceptaNumeros);
     }
 
     @FXML

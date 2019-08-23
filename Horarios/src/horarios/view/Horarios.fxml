@@ -3,14 +3,16 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXProgressBar?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.HorariosController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.HorariosController">
    <children>
       <FlowPane fx:id="flowPane" layoutX="382.0" layoutY="257.0" prefHeight="300.0" prefWidth="600.0">
          <children>
@@ -85,28 +87,50 @@
           <TableColumn fx:id="COL_NOMBRE_PUE" prefWidth="125.0" text="Puesto" />
         </columns>
       </TableView>
-      <JFXTextField fx:id="txtFiltroEmp" labelFloat="true" layoutX="27.0" layoutY="150.0" prefHeight="29.0" prefWidth="307.0" promptText="Filtro por rol" />
       <Label layoutX="388.0" layoutY="565.0" text="Total de Horas Trabajadas:" />
       <Label layoutX="388.0" layoutY="614.0" text="Cantidad de Roles Asignados:" />
       <Label fx:id="horasTrabajadas" layoutX="621.0" layoutY="565.0" prefHeight="21.0" prefWidth="189.0" />
       <Label fx:id="CantidadRoles" layoutX="621.0" layoutY="614.0" prefHeight="21.0" prefWidth="189.0" />
+      <Label fx:id="Titulo" layoutX="404.0" layoutY="14.0" text="Horarios" AnchorPane.topAnchor="14.0" />
       <Label layoutX="875.0" layoutY="216.0" text="Días de trabajo:" />
-      <Label fx:id="Titulo" layoutX="404.0" layoutY="14.0" text="Horarios" />
       <TableView fx:id="tableRol" layoutX="27.0" layoutY="527.0" onMouseReleased="#SeleccionaRol" prefHeight="233.0" prefWidth="307.0">
         <columns>
           <TableColumn fx:id="COL_NOMBRE_ROL" prefWidth="305.0" text="Rol" />
         </columns>
       </TableView>
-      <JFXProgressBar fx:id="progressBar" layoutX="732.0" layoutY="650.0" prefHeight="8.0" prefWidth="250.0" />
       <Label fx:id="lblPorcentaje" layoutX="840.0" layoutY="624.0" prefHeight="17.0" prefWidth="35.0" />
-      <JFXButton fx:id="btnFiltroEmp" layoutX="27.0" layoutY="200.0" onAction="#FiltrarEmpleado" style="-fx-cursor: hand;" text="Filtrar" />
-      <JFXTextField fx:id="txtFiltroPuesto" labelFloat="true" layoutX="382.0" layoutY="150.0" prefHeight="29.0" prefWidth="307.0" promptText="Filtro por puesto" />
-      <JFXButton fx:id="btnFiltroPuesto" layoutX="382.0" layoutY="200.0" onAction="#FiltrarPuesto" style="-fx-cursor: hand;" text="Filtrar" />
-      <HBox layoutX="732.0" layoutY="670.0" prefHeight="41.0" prefWidth="250.0" spacing="20.0">
+      <HBox layoutX="27.0" layoutY="116.0" prefHeight="132.0" prefWidth="542.0" spacing="100.0" AnchorPane.bottomAnchor="552.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="461.0" AnchorPane.topAnchor="116.0">
+         <children>
+            <VBox prefHeight="112.0" prefWidth="174.0" spacing="20.0">
+               <children>
+                  <JFXTextField fx:id="txtFiltroEmp" labelFloat="true" prefHeight="29.0" prefWidth="307.0" promptText="Filtro por Rol (ID)">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <JFXButton fx:id="btnFiltroEmp" onAction="#FiltrarEmpleado" style="-fx-cursor: hand;" text="Buscar Rol" />
+               </children>
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="112.0" prefWidth="212.0" spacing="20.0">
+               <children>
+                  <JFXTextField fx:id="txtFiltroPuesto" labelFloat="true" prefHeight="29.0" prefWidth="307.0" promptText="Filtro por Puesto (Codigo)" />
+                  <JFXButton fx:id="btnFiltroPuesto" onAction="#FiltrarPuesto" style="-fx-cursor: hand;" text="Buscar Puesto" />
+               </children>
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox layoutX="732.0" layoutY="688.0" prefHeight="41.0" prefWidth="250.0" spacing="20.0">
          <children>
             <JFXButton onAction="#ExportarTodos" prefHeight="18.0" prefWidth="124.0" style="-fx-cursor: hand;" text="Exportar todo" />
             <JFXButton fx:id="Exportar" onAction="#Exportar" style="-fx-cursor: hand;" text="Exportar a Excel" />
          </children>
       </HBox>
+      <JFXProgressBar fx:id="progressBar" layoutX="732.0" layoutY="671.0" prefHeight="7.0" prefWidth="250.0" />
    </children>
 </AnchorPane>

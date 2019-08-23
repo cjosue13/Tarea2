@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionRolesController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1030.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.AsignacionRolesController">
    <children>
       <Label fx:id="Titulo" layoutX="286.0" layoutY="40.0" text="Asignaciones de roles" AnchorPane.leftAnchor="286.0" AnchorPane.rightAnchor="297.0" />
       <VBox layoutX="77.0" layoutY="140.0" spacing="20.0" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="77.0" AnchorPane.topAnchor="140.0">
@@ -34,8 +34,8 @@
                   </TableView>
                   <TableView fx:id="TV_ROLES_ROTATIVOS" onMouseReleased="#roles_rotativos" prefHeight="200.0" prefWidth="200.0">
                     <columns>
-                      <TableColumn fx:id="COL_ROL_ROTATIVO" prefWidth="139.0" text="Roles rotativos" />
-                        <TableColumn fx:id="COL_ORDEN_ROL" prefWidth="60.0" text="Orden" />
+                      <TableColumn fx:id="COL_ROL_ROTATIVO" prefWidth="129.0" text="Roles rotativos" />
+                        <TableColumn fx:id="COL_ORDEN_ROL" prefWidth="70.0" text="Orden R" />
                     </columns>
                      <padding>
                         <Insets right="10.0" />
@@ -71,8 +71,8 @@
       </VBox>
       <HBox layoutX="587.0" layoutY="662.0" prefHeight="100.0" prefWidth="405.0" spacing="20.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="587.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="662.0">
          <children>
-            <JFXButton onAction="#limpiarValores" text="Limpiar Valores" style="-fx-cursor: hand;"/>
-            <JFXButton onAction="#rotarRoles" text="Rotar Roles " style="-fx-cursor: hand;"/>
+            <JFXButton onAction="#limpiarValores" style="-fx-cursor: hand;" text="Limpiar Valores" />
+            <JFXButton onAction="#rotarRoles" style="-fx-cursor: hand;" text="Rotar Roles " />
             <JFXButton fx:id="btnAsignarRol" onAction="#AsignarRol" style="-fx-cursor: hand;" text="Asignar Roles" />
          </children>
          <padding>

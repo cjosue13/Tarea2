@@ -18,6 +18,7 @@ import horarios.util.Excel;
 import horarios.util.Mensaje;
 import horarios.util.Respuesta;
 import java.util.ArrayList;
+import java.util.Objects;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -146,8 +147,14 @@ public class AsignacionRolesController extends Controller {
                      */
                     if (puesto.getEmpleado() != null) {
                         Excel excel = new Excel();
-                        excel.GenerarReporte(puesto,false,true);
+                        excel.GenerarReporte(puesto, false, true);
                     }
+                    rolesNR.stream().forEach(rolNR -> {
+                        if (puesto.getRoles().stream().allMatch(x -> !x.getId().equals(rolNR.getId()))) {
+                            pueRoles.add(new PueRolDto(null, 0, puesto, rolNR));
+                        }
+
+                    });
 
                     PueRolService prs = new PueRolService();
                     pueRoles.stream().forEach((pueRol) -> {
@@ -234,7 +241,7 @@ public class AsignacionRolesController extends Controller {
                     } else {
                         if (!rolesNR.isEmpty() && rolesNR.stream().allMatch(x -> !x.getId().equals(rol.getId()))) {
                             rolesNR.add(rol);
-                            pueRoles.add(new PueRolDto(null, 0, puesto, rol));
+                            //pueRoles.add(new PueRolDto(null, 0, puesto, rol));
                             itemsRoles = FXCollections.observableArrayList(rolesNR);
                             TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);
                             //Lleno la lista para que se almacene en el empleado
@@ -243,7 +250,7 @@ public class AsignacionRolesController extends Controller {
                             //Si la lista esta vacia la seteamos al tableView
                             if (rolesNR.isEmpty()) {
                                 rolesNR.add(rol);
-                                pueRoles.add(new PueRolDto(null, 0, puesto, rol));
+                                //pueRoles.add(new PueRolDto(null, 0, puesto, rol));
                                 itemsRoles = FXCollections.observableArrayList(rolesNR);
                                 TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);
                                 //Lleno la lista para que se almacene en el empleado
@@ -281,12 +288,83 @@ public class AsignacionRolesController extends Controller {
 
     @FXML
     private void roles_no_rotativos(MouseEvent event) {
-        System.out.println("ROLES NO ROTATIVOS");
+        if (TV_ROLES_NO_ROTATIVOS.getSelectionModel() != null && TV_ROLES_NO_ROTATIVOS.getSelectionModel().getSelectedItem() != null) {
+            PueRolService prs = new PueRolService();
+            RolDto auxRol = TV_ROLES_NO_ROTATIVOS.getSelectionModel().getSelectedItem();
+            PuestoDto puest = tablePuestos.getSelectionModel().getSelectedItem();
+            ArrayList<PueRolDto> pRoles = (ArrayList) prs.getRelaciones().getResultado("getRelaciones");
+            for (PueRolDto pR : pRoles) {
+                if (auxRol.getId() == pR.getRolId().getId() && puest.getId() == pR.getPueCodigo().getId()) {
+                    if (pR.getHorPueId() != null) {
+                        prs.eliminarRelacion(pR.getHorPueId());
+                    }
+                }
+            }
+
+            rolesNR.remove(auxRol);
+            //pueRoles.add(new PueRolDto(null, 0, puesto, rol));
+            itemsRoles = FXCollections.observableArrayList(rolesNR);
+            TV_ROLES_NO_ROTATIVOS.setItems(itemsRoles);
+            //Lleno la lista para que se almacene en el empleado
+            roles.remove(auxRol);
+
+            respPues = puesService.getPuestos();
+            puestos = ((ArrayList) respPues.getResultado("Puestos"));
+            itemsPuestos = FXCollections.observableArrayList(puestos);
+            tablePuestos.setItems(itemsPuestos);
+            ms.showModal(Alert.AlertType.INFORMATION, "Informacion", this.getStage(), "Has quitado el rol al empleado");
+            //limpiarValores();
+        }
     }
 
     @FXML
     private void roles_rotativos(MouseEvent event) {
-        System.out.println("ROLES ROTATIVOS");
+        if (TV_ROLES_ROTATIVOS.getSelectionModel() != null && TV_ROLES_ROTATIVOS.getSelectionModel().getSelectedItem() != null) {
+            PueRolDto relAux = TV_ROLES_ROTATIVOS.getSelectionModel().getSelectedItem();
+            PueRolService prs = new PueRolService();
+            ArrayList<PueRolDto> pR;
+            pR = new ArrayList(TV_ROLES_ROTATIVOS.getItems());
+
+            Integer aux = relAux.getOrdenRotacion();
+
+            pR.stream().forEach((relacion) -> {
+                if (aux == 1) {
+                    relacion.setOrdenRotacion(relacion.getOrdenRotacion() - 1);
+                } else if (aux < relacion.getOrdenRotacion()) {
+                    relacion.setOrdenRotacion(relacion.getOrdenRotacion() - 1);
+                }
+            });
+            
+            if (relAux.getHorPueId() != null) {
+                prs.eliminarRelacion(relAux.getHorPueId());
+            }
+
+            //Actualiza el orden 
+            pR.stream().forEach(x -> {
+                if (x.getHorPueId() != null) {
+                    prs.guardarTablaRelacional(x);
+                }
+            });
+
+            pR.remove(relAux);
+            rolesR.remove(relAux.getRolId());
+            roles.remove(relAux.getRolId());
+
+            if (pueRoles.contains(relAux)) {
+                pueRoles.remove(relAux);
+            }
+
+            itemsRoles = FXCollections.observableArrayList(pR);
+            TV_ROLES_ROTATIVOS.setItems(itemsRoles);
+
+            respPues = puesService.getPuestos();
+            puestos = ((ArrayList) respPues.getResultado("Puestos"));
+            itemsPuestos = FXCollections.observableArrayList(puestos);
+            tablePuestos.setItems(itemsPuestos);
+            ms.showModal(Alert.AlertType.INFORMATION, "Informacion", this.getStage(), "Has quitado el rol al empleado");
+            //limpiarValores();
+        }
+
     }
 
     /*
@@ -311,15 +389,11 @@ public class AsignacionRolesController extends Controller {
         pueRoles = (ArrayList) puerolService.getRelaciones().getResultado("getRelaciones");
 
         rolesR.stream().forEach(x -> {
-
             pueRoles.stream().forEach(y -> {
-
                 if (y.getRolId().getId() == x.getId() && y.getPueCodigo().getId() == puesto.getId()) {
                     lista.add(y);
                 }
-
             });
-
         });
 
         pueRoles.clear();
@@ -380,8 +454,8 @@ public class AsignacionRolesController extends Controller {
                     });
                     TV_ROLES_ROTATIVOS.setItems(itemsRoles);
                 }
-            }else{
-                ms.showModal(Alert.AlertType.WARNING,"Informacion sobre rotacion",this.getStage(),"Debes asignar primero los roles antes de poder rotarlos.");
+            } else {
+                ms.showModal(Alert.AlertType.WARNING, "Informacion sobre rotacion", this.getStage(), "Debes asignar primero los roles antes de poder rotarlos.");
             }
 
         } else if (tablePuestos.getSelectionModel().getSelectedItem() != null) {

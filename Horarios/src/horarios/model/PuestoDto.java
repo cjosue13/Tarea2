@@ -94,4 +94,9 @@ public class PuestoDto {
         this.roles = roles;
     }
 
+    @Override
+    public String toString() {
+        return "PuestoDto{" + "NombrePuesto=" + NombrePuesto + ", Descripcion=" + Descripcion + ", version=" + version + ", empleado=" + empleado + ", id=" + id + ", roles=" + roles + '}';
+    }
+    
 }

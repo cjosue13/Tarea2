@@ -315,7 +315,6 @@ public class HorariosController extends Controller {
                     horasTrabajadas.setText("0" + String.valueOf(HorasTotales) + ":" + String.valueOf(MinutosTotales));
                 }
                 if (HorasTotales < 10 && MinutosTotales < 10) {
-                    System.out.println("entrando");
                     horasTrabajadas.setText("0" + String.valueOf(HorasTotales) + ":0" + String.valueOf(MinutosTotales));
                 }
                 if (HorasTotales >= 10 && MinutosTotales >= 10) {

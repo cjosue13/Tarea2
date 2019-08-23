@@ -94,19 +94,6 @@ public class PuestoService {
                     return new Respuesta(false, "No se encontró el Puesto a modificar.", "guardarPuesto NoResultException");
                 }
                 Puesto.actualizarPuesto(PuestoDto);
-                /*
-                Revisar metodo 
-                */
-               /* if (PuestoDto.getRoles() != null && !PuestoDto.getRoles().isEmpty()) {
-                    for (RolDto rolDto : PuestoDto.getRoles()) {
-                        Rol rol  = em.find(Rol.class, rolDto.getId());
-                        Horario horario = rol.getHorario();
-                        //horario.setHorOrdenrotacion(rolDto.getHorario().getOrdenRotacion());
-                        em.merge(horario);
-                        rol.getPuestoList().add(Puesto);
-                        Puesto.getRolList().add(rol);
-                    }
-                } */
                 Puesto = em.merge(Puesto);
             } else {
                 Puesto = new Puesto(PuestoDto);

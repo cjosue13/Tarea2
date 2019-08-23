@@ -104,6 +104,11 @@ public class EmpleadoDto {
         this.puesto = puesto;
     }
 
+    @Override
+    public String toString() {
+        return "EmpleadoDto{" + "Nombre=" + Nombre + ", Apellido=" + Apellido + ", Cedula=" + Cedula + ", Correo=" + Correo + ", CantidadHoras=" + CantidadHoras + ", version=" + version + ", Id=" + Id + ", puesto=" + puesto + '}';
+    }
+
     
     
     

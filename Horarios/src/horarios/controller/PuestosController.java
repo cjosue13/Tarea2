@@ -91,38 +91,57 @@ public class PuestosController extends Controller {
                     Integer id = puesto.getId();
                     Integer version = puesto.getVersion() + 1;
 
-                    //Si el empleado ya tiene un puesto 
+                    //Si el empleado que se selecciono de la tableView de empleados tiene un puesto
                     if (empleado != null && empleado.getPuesto() != null) {
-                        //Si el puesto no es igual al que ya tiene
+                        //Si el puesto que se ha seleccionado no es igual al empleado asignado
                         if (!empleado.getPuesto().getId().equals(puesto.getId())) {
+                            System.out.println("HOLA 1");
                             //Si ya existe un rol con horario para el nuevo puesto asignado para el empleado
                             if (!puesto.getRoles().isEmpty()) {
+                                System.out.println("HOLA 2");
                                 //Deberia enviar un correo al nuevo empleado con el nuevo horario asignado
-                                puesto = new PuestoDto(nombre, descripcion, version, empleado, id);
-                                puesto.setRoles(((PuestoDto) puesService.getRoles(puesto.getId()).getResultado("roles")).getRoles());
+                                PuestoDto auxPuesto = new PuestoDto(nombre, descripcion, version, empleado, id);
+                                auxPuesto.setRoles(((PuestoDto) puesService.getRoles(auxPuesto.getId()).getResultado("roles")).getRoles());
                                 Excel excel = new Excel();
-                                excel.GenerarReporte(puesto);
+                                excel.GenerarReporte(auxPuesto,false,true);
                             }
                             try {
                                 //Tomo el puesto anterior que tenia el empleado y lo dejo como vacante libre
                                 PuestoDto pues = empleado.getPuesto();
                                 pues.setEmpleado(null);
                                 puesService.guardarPuesto(pues);
+                                empleado.setPuesto(null);
                             } catch (Exception e) {
 
                             }
+                        } else if (puesto.getEmpleado() == null && empleado.getPuesto() != null) {
+                            System.out.println("HOLA 3");
+                            try {
+                                //Tomo el puesto anterior que tenia el empleado y lo dejo como vacante libre
+                                PuestoDto pues = empleado.getPuesto();
+                                pues.setEmpleado(null);
+                                puesService.guardarPuesto(pues);
+                                empleado.setPuesto(null);
+                                PuestoDto auxPuesto = new PuestoDto(nombre, descripcion, version, empleado, id);
+                                auxPuesto.setRoles(((PuestoDto) puesService.getRoles(auxPuesto.getId()).getResultado("roles")).getRoles());
+                                Excel excel = new Excel();
+                                excel.GenerarReporte(auxPuesto,false,true);
+                            } catch (Exception e) {
+                                System.out.println("ERROR");
+                            }
                         }
-                    } else if (empleado != null && empleado.getPuesto() == null) {
-                        puesto = new PuestoDto(nombre, descripcion, version, empleado, id);
-                        puesto.setRoles(((PuestoDto) puesService.getRoles(puesto.getId()).getResultado("roles")).getRoles());
+                    } else if (puesto.getEmpleado() == null && empleado != null && empleado.getPuesto() == null) {
+                        System.out.println("HOLA 4");
+                        PuestoDto auxPuesto = new PuestoDto(nombre, descripcion, version, empleado, id);
+                        auxPuesto.setRoles(((PuestoDto) puesService.getRoles(id).getResultado("roles")).getRoles());
                         Excel excel = new Excel();
-                        excel.GenerarReporte(puesto);
-                    } else if (empleado == null) {
+                        excel.GenerarReporte(auxPuesto,false,true);
+                    } else if (empleado == null) {//Por si no se toco ningun empleado a editar
+                        System.out.println("HOLA 5");
                         empleado = puesto.getEmpleado();
                     }
 
                     puesto = new PuestoDto(nombre, descripcion, version, empleado, id);
-
                     try {
                         resp = puesService.guardarPuesto(puesto);
 
@@ -132,6 +151,11 @@ public class PuestosController extends Controller {
                         tablePuesto.getItems().clear();
                         itemsPues = FXCollections.observableArrayList(puestos);
                         tablePuesto.setItems(itemsPues);
+
+                        resp = empService.getEmpleados();
+                        empleados = (ArrayList) resp.getResultado("Empleados");
+                        itemsEmp = FXCollections.observableArrayList(empleados);
+                        tableEmpleado.setItems(itemsEmp);
 
                     } catch (Exception e) {
                         ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el Puesto. "
@@ -148,8 +172,7 @@ public class PuestosController extends Controller {
     }
 
     @FXML
-    private void eliminar(ActionEvent event
-    ) {
+    private void eliminar(ActionEvent event) {
         if (tablePuesto.getSelectionModel() != null) {
             if (tablePuesto.getSelectionModel().getSelectedItem() != null) {
                 puesService.EliminarPuesto(tablePuesto.getSelectionModel().getSelectedItem().getId());
@@ -167,8 +190,7 @@ public class PuestosController extends Controller {
     }
 
     @FXML
-    private void agregar(ActionEvent event
-    ) {
+    private void agregar(ActionEvent event) {
         if (registroCorrecto()) {
             if (tablePuesto.getSelectionModel() != null) {
                 if (tablePuesto.getSelectionModel().getSelectedItem() == null) {

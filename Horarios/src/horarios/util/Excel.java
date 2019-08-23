@@ -86,7 +86,7 @@ public class Excel {
     private RolService rolservice;
     private int tamano = 0;
 
-    public void GenerarReporte(PuestoDto puesto) throws WriteException {
+    public void GenerarReporte(PuestoDto puesto, boolean abrirArchivo, boolean enviarArchivo) throws WriteException {
         try {
             nombreX = (puesto.getEmpleado() != null) ? puesto.getEmpleado().getNombre().replace(" ", "") + puesto.getEmpleado().getApellido().replace(" ", "") : "SinAsignar";//para que se eliminen los espacios del nombre
             WorkbookSettings conf = new WorkbookSettings();
@@ -124,6 +124,22 @@ public class Excel {
                 }
                 rol.getHorario().getDias().stream().forEach(dia -> {
                     try {
+
+                        sheet.addCell(new jxl.write.Label(1, r, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(1, g, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(2, r, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(2, g, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(3, r, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(3, g, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(4, r, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(4, g, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(5, r, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(5, g, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(6, r, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(6, g, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(7, r, "-", hformat));
+                        sheet.addCell(new jxl.write.Label(7, g, "-", hformat));
+
                         if (dia.getNombre().equals("Lunes")) {
                             sheet.addCell(new jxl.write.Label(1, r, dia.getHora_Inicio().toLocalTime().toString(), hformat));
                             sheet.addCell(new jxl.write.Label(1, g, dia.getHora_Salida().toLocalTime().toString(), hformat));
@@ -167,7 +183,15 @@ public class Excel {
             });
             workbook.write(); // escribimos en el archivo
             workbook.close(); //
-            SendMail(puesto.getEmpleado().getCorreo());
+
+            if (abrirArchivo) {
+                Runtime.getRuntime().exec("cmd /c start " + "C:\\Reporte\\" + nombreX + ".xls");
+            }
+            if (enviarArchivo) {
+                if (puesto.getEmpleado() != null) {
+                    SendMail(puesto.getEmpleado().getCorreo());
+                }
+            }
         } catch (Exception e) {
 
         }

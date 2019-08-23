@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import jxl.write.WriteException;
 
 /**
  * FXML Controller class
@@ -144,9 +145,8 @@ public class AsignacionRolesController extends Controller {
                      Si el puesto ya tiene un empleado asignado, debe enviar un correo con el horario asignado al rol
                      */
                     if (puesto.getEmpleado() != null) {
-                        System.out.println(puesto.getRoles().size());
                         Excel excel = new Excel();
-                        excel.GenerarReporte(puesto);
+                        excel.GenerarReporte(puesto,false,true);
                     }
 
                     PueRolService prs = new PueRolService();
@@ -157,7 +157,7 @@ public class AsignacionRolesController extends Controller {
                     ms.showModal(Alert.AlertType.INFORMATION, "Informacion de guardado", this.getStage(), "Elementos guardados");
                     limpiarValores();
 
-                } catch (Exception e) {
+                } catch (WriteException e) {
                     ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Ocurrio un error al asignar un rol al empleado");
                 }
             } else {
@@ -345,40 +345,45 @@ public class AsignacionRolesController extends Controller {
 
     @FXML
     private void rotarRoles(ActionEvent event) {
-
+        /*Corregir validaciones
+         */
         pueRoles = new ArrayList(TV_ROLES_ROTATIVOS.getItems());
         if (tablePuestos.getSelectionModel() != null && tablePuestos.getSelectionModel().getSelectedItem() != null && !pueRoles.isEmpty()) {
+            if (pueRoles.stream().allMatch(x -> x.getHorPueId() != null)) {
+                if (pueRoles.size() > 1) {
+                    if (pueRoles.size() > 2) {
+                        pueRoles.get(pueRoles.size() - 1).setOrdenRotacion(1);
+                        pueRoles.get(0).setOrdenRotacion(2);
+                        pueRoles.stream().forEach(x -> {
+                            if (pueRoles.indexOf(x) != 0 && pueRoles.indexOf(x) != pueRoles.size() - 1) {
+                                x.setOrdenRotacion(x.getOrdenRotacion() + 1);
+                            }
 
-            if (pueRoles.size() > 1) {
-                if (pueRoles.size() > 2) {
-                    pueRoles.get(pueRoles.size() - 1).setOrdenRotacion(1);
-                    pueRoles.get(0).setOrdenRotacion(2);
-                    pueRoles.stream().forEach(x -> {
-                        if (pueRoles.indexOf(x) != 0 && pueRoles.indexOf(x) != pueRoles.size() - 1) {
-                            x.setOrdenRotacion(x.getOrdenRotacion() + 1);
-                        }
-
-                    });
-                } else {
-                    pueRoles.get(pueRoles.size() - 1).setOrdenRotacion(1);
-                    pueRoles.get(0).setOrdenRotacion(2);
-                }
-
-                PueRolService prs = new PueRolService();
-                pueRoles.stream().forEach((pueRol) -> {
-                    prs.guardarTablaRelacional(pueRol);
-                });
-                TV_ROLES_ROTATIVOS.getItems().clear();
-                itemsRoles = FXCollections.observableArrayList(pueRoles);
-                itemsRoles.sort((t, t1) -> {
-                    if (((PueRolDto) t).getOrdenRotacion() > ((PueRolDto) t1).getOrdenRotacion()) {
-                        return 1;
+                        });
                     } else {
-                        return 0;
+                        pueRoles.get(pueRoles.size() - 1).setOrdenRotacion(1);
+                        pueRoles.get(0).setOrdenRotacion(2);
                     }
-                });
-                TV_ROLES_ROTATIVOS.setItems(itemsRoles);
+
+                    PueRolService prs = new PueRolService();
+                    pueRoles.stream().forEach((pueRol) -> {
+                        prs.guardarTablaRelacional(pueRol);
+                    });
+                    TV_ROLES_ROTATIVOS.getItems().clear();
+                    itemsRoles = FXCollections.observableArrayList(pueRoles);
+                    itemsRoles.sort((t, t1) -> {
+                        if (((PueRolDto) t).getOrdenRotacion() > ((PueRolDto) t1).getOrdenRotacion()) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    });
+                    TV_ROLES_ROTATIVOS.setItems(itemsRoles);
+                }
+            }else{
+                ms.showModal(Alert.AlertType.WARNING,"Informacion sobre rotacion",this.getStage(),"Debes asignar primero los roles antes de poder rotarlos.");
             }
+
         } else if (tablePuestos.getSelectionModel().getSelectedItem() != null) {
             ms.showModal(Alert.AlertType.WARNING, "Informacion sobre rotacion", this.getStage(), "Debes asignar primero los roles seleccionados al empleado");
         } else {

@@ -150,10 +150,11 @@ public class AsignacionRolesController extends Controller {
                         excel.GenerarReporte(puesto, false, true);
                     }
                     rolesNR.stream().forEach(rolNR -> {
-                        if (puesto.getRoles().stream().allMatch(x -> !x.getId().equals(rolNR.getId()))) {
+                        System.out.println(rolNR.toString());
+                        if (puesto.getRoles().stream().allMatch(x -> x.getId() != rolNR.getId())){
                             pueRoles.add(new PueRolDto(null, 0, puesto, rolNR));
+                            System.out.println("hola mundo");
                         }
-
                     });
 
                     PueRolService prs = new PueRolService();

@@ -43,6 +43,8 @@ public class InicioController extends Controller {
     @FXML
     private AnchorPane anchorp;
     private BorderPane Panel = new BorderPane();
+    @FXML
+    private AnchorPane anchorimage;
     @Override
     public void initialize() {       
         AppContext.getInstance().set("Border", borderPane);       
@@ -65,6 +67,7 @@ public class InicioController extends Controller {
                 
                 if(drawer.isShown())
                     drawer.close();
+                
                 else{
                     drawer.open();
                 }

@@ -302,7 +302,7 @@ public class RolesController extends Controller {
                     table.setItems(items);
                     limpiarValores();
                 } catch (Exception e) {
-                    //Preguntar a Carranza
+                    
                     ms.showModal(Alert.AlertType.ERROR, "Informacion de guardado", this.getStage(), "Hubo un error al momento de guardar el rol.");
                 }
 

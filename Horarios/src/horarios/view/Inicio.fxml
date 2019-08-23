@@ -32,7 +32,7 @@
    <center>
       <VBox prefHeight="800.0" prefWidth="1030.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="800.0" prefWidth="1030.0">
+            <AnchorPane fx:id="anchorimage" prefHeight="800.0" prefWidth="1030.0">
                <children>
                   <ImageView fx:id="omg" fitHeight="800.0" fitWidth="1030.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="Titulo" layoutX="151.0" layoutY="40.0" text="Control de Horarios de Empleados" />

@@ -113,23 +113,7 @@ public class PuestosController extends Controller {
                             } catch (Exception e) {
 
                             }
-                        }/* else if (puesto.getEmpleado() == null && empleado.getPuesto() != null) {
-                            System.out.println("HOLA ");
-                            try {
-
-                                //Tomo el puesto anterior que tenia el empleado y lo dejo como vacante libre
-                                PuestoDto pues = empleado.getPuesto();
-                                pues.setEmpleado(null);
-                                puesService.guardarPuesto(pues);
-                                empleado.setPuesto(null);
-                                PuestoDto auxPuesto = new PuestoDto(nombre, descripcion, version, empleado, id);
-                                auxPuesto.setRoles(((PuestoDto) puesService.getRoles(auxPuesto.getId()).getResultado("roles")).getRoles());
-                                Excel excel = new Excel();
-                                excel.GenerarReporte(auxPuesto, false, true);
-                            } catch (Exception e) {
-                                System.out.println("ERROR");
-                            }
-                        }*/
+                        }
                     } else if (puesto.getEmpleado() == null && empleado != null && empleado.getPuesto() == null) {
                         //Se envia al nuevo empleado su horario asignado
                         PuestoDto auxPuesto = new PuestoDto(nombre, descripcion, version, empleado, id);
@@ -161,7 +145,7 @@ public class PuestosController extends Controller {
                                 + "Verifica que todos los datos esten llenados correctamente o que el empleado no tenga un puesto asignado");
                     }
                 } else {
-                    ms.showModal(Alert.AlertType.ERROR, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
+                    ms.showModal(Alert.AlertType.WARNING, "Informacion acerca del guardado", this.getStage(), "Existen datos erroneos en el registro, "
                             + "verifica que todos los datos esten llenos.");
                 }
             } else {
@@ -248,7 +232,7 @@ public class PuestosController extends Controller {
         ms = new Mensaje();
         resp = puesService.getPuestos();
 
-        puestos = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
+        puestos = ((ArrayList) resp.getResultado("Puestos"));
         COL_NOMBRE_PUES.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getNombrePuesto()));
         COL_DESCRIPCION_PUES.setCellValueFactory(value -> new SimpleStringProperty(value.getValue().getDescripcion()));
         COL_CODIGO_PUES.setCellValueFactory(value -> new SimpleIntegerProperty(value.getValue().getId()));

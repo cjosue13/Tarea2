@@ -134,7 +134,7 @@ public class EmpleadosController extends Controller {
                             + "verifica que todos los datos esten llenos.");
                 }
             } else {
-                ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a eliminar");
+                ms.showModal(Alert.AlertType.WARNING, "Información", this.getStage(), "Debes seleccionar el elemento a editar");
             }
         }
     }

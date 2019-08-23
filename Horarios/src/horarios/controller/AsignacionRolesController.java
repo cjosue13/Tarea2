@@ -140,21 +140,22 @@ public class AsignacionRolesController extends Controller {
     private void AsignarRol(ActionEvent event) {
         if (ValidarAsignacion()) { // si devuelve true entonces seleccionó bien
             if (puesto.getEmpleado() != null) {
-                puesto.setRoles(roles);
+                
                 try {
                     /*
                      Si el puesto ya tiene un empleado asignado, debe enviar un correo con el horario asignado al rol
                      */
-                    if (puesto.getEmpleado() != null) {
-                        Excel excel = new Excel();
-                        excel.GenerarReporte(puesto, false, true);
-                    }
                     rolesNR.stream().forEach(rolNR -> {
                         if (puesto.getRoles().stream().allMatch(x -> !x.getId().equals(rolNR.getId()))) {
                             pueRoles.add(new PueRolDto(null, 0, puesto, rolNR));
                         }
-
                     });
+                    
+                    puesto.setRoles(roles);
+                    if (puesto.getEmpleado() != null) {
+                        Excel excel = new Excel();
+                        excel.GenerarReporte(puesto, false, true);
+                    }
 
                     PueRolService prs = new PueRolService();
                     pueRoles.stream().forEach((pueRol) -> {
@@ -289,6 +290,7 @@ public class AsignacionRolesController extends Controller {
     @FXML
     private void roles_no_rotativos(MouseEvent event) {
         if (TV_ROLES_NO_ROTATIVOS.getSelectionModel() != null && TV_ROLES_NO_ROTATIVOS.getSelectionModel().getSelectedItem() != null) {
+            PuestoDto puestoDto = tablePuestos.getSelectionModel().getSelectedItem();
             PueRolService prs = new PueRolService();
             RolDto auxRol = TV_ROLES_NO_ROTATIVOS.getSelectionModel().getSelectedItem();
             PuestoDto puest = tablePuestos.getSelectionModel().getSelectedItem();
@@ -314,6 +316,12 @@ public class AsignacionRolesController extends Controller {
             tablePuestos.setItems(itemsPuestos);
             ms.showModal(Alert.AlertType.INFORMATION, "Informacion", this.getStage(), "Has quitado el rol al empleado");
             //limpiarValores();
+            tablePuestos.getItems().stream().forEach((x) -> {
+                if (x.getId() == puestoDto.getId()) {
+                    tablePuestos.getSelectionModel().select(x);
+                }
+            });
+
         }
     }
 
@@ -321,6 +329,7 @@ public class AsignacionRolesController extends Controller {
     private void roles_rotativos(MouseEvent event) {
         if (TV_ROLES_ROTATIVOS.getSelectionModel() != null && TV_ROLES_ROTATIVOS.getSelectionModel().getSelectedItem() != null) {
             PueRolDto relAux = TV_ROLES_ROTATIVOS.getSelectionModel().getSelectedItem();
+            PuestoDto puestoDto = tablePuestos.getSelectionModel().getSelectedItem();
             PueRolService prs = new PueRolService();
             ArrayList<PueRolDto> pR;
             pR = new ArrayList(TV_ROLES_ROTATIVOS.getItems());
@@ -334,7 +343,7 @@ public class AsignacionRolesController extends Controller {
                     relacion.setOrdenRotacion(relacion.getOrdenRotacion() - 1);
                 }
             });
-            
+
             if (relAux.getHorPueId() != null) {
                 prs.eliminarRelacion(relAux.getHorPueId());
             }
@@ -362,9 +371,12 @@ public class AsignacionRolesController extends Controller {
             itemsPuestos = FXCollections.observableArrayList(puestos);
             tablePuestos.setItems(itemsPuestos);
             ms.showModal(Alert.AlertType.INFORMATION, "Informacion", this.getStage(), "Has quitado el rol al empleado");
-            //limpiarValores();
+            tablePuestos.getItems().stream().forEach((x) -> {
+                if (x.getId() == puestoDto.getId()) {
+                    tablePuestos.getSelectionModel().select(x);
+                }
+            });
         }
-
     }
 
     /*
@@ -419,8 +431,7 @@ public class AsignacionRolesController extends Controller {
 
     @FXML
     private void rotarRoles(ActionEvent event) {
-        /*Corregir validaciones
-         */
+
         pueRoles = new ArrayList(TV_ROLES_ROTATIVOS.getItems());
         if (tablePuestos.getSelectionModel() != null && tablePuestos.getSelectionModel().getSelectedItem() != null && !pueRoles.isEmpty()) {
             if (pueRoles.stream().allMatch(x -> x.getHorPueId() != null)) {

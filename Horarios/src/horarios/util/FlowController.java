@@ -88,6 +88,7 @@ public class FlowController {
 
             this.mainStage.setScene(new Scene(FXMLLoader.load(Horarios.class.getResource("view/Inicio.fxml"), this.idioma)));
             this.mainStage.show();
+            /*this.mainStage.setResizable(false);*/
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(FlowController.class.getName()).log(Level.SEVERE, "Error inicializando la vista base.", ex);
         }

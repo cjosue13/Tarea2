@@ -5,7 +5,6 @@
  */
 package horarios.util;
 
-import horarios.controller.HorariosController;
 import static horarios.controller.HorariosController.CantRol;
 import static horarios.controller.HorariosController.FinalDomingo;
 import static horarios.controller.HorariosController.FinalJueves;
@@ -14,7 +13,6 @@ import static horarios.controller.HorariosController.FinalMartes;
 import static horarios.controller.HorariosController.FinalMiercoles;
 import static horarios.controller.HorariosController.FinalSabado;
 import static horarios.controller.HorariosController.FinalViernes;
-import static horarios.controller.HorariosController.HorasLibras;
 import static horarios.controller.HorariosController.InicioDomingo;
 import static horarios.controller.HorariosController.InicioJueves;
 import static horarios.controller.HorariosController.InicioLunes;
@@ -23,7 +21,6 @@ import static horarios.controller.HorariosController.InicioMiercoles;
 import static horarios.controller.HorariosController.InicioSabado;
 import static horarios.controller.HorariosController.InicioViernes;
 import static horarios.controller.HorariosController.nombreX;
-//import static horarios.controller.HorariosController.tableRol;
 import horarios.model.DiaDto;
 import horarios.model.EmpleadoDto;
 import horarios.model.HorarioDto;
@@ -300,7 +297,7 @@ public class Excel {
 
         puesService = new PuestoService();
         resp = puesService.getPuestos();
-        puestos = ((ArrayList<PuestoDto>) resp.getResultado("Puestos"));
+        puestos = ((ArrayList) resp.getResultado("Puestos"));
         try {
             WorkbookSettings conf = new WorkbookSettings();
             conf.setEncoding("ISO-8859-1");

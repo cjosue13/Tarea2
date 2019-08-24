@@ -4,32 +4,38 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox minHeight="-Infinity" prefHeight="732.0" prefWidth="200.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.DrawerContentController">
+<VBox minHeight="-Infinity" prefHeight="730.0" prefWidth="200.0" stylesheets="@newCascadeStyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="horarios.controller.DrawerContentController">
    <children>
       <ImageView fx:id="image" fitHeight="144.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <JFXButton fx:id="btnEmpleados" onAction="#btnEmpleados" prefHeight="115.0" prefWidth="200.0" style="-fx-cursor: hand;" text="Empleados             " textAlignment="CENTER">
          <graphic>
             <ImageView fx:id="img1" fitHeight="108.3" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic></JFXButton>
+         </graphic>
+      </JFXButton>
       <JFXButton fx:id="btnPuestos" onAction="#btnPuestos" prefHeight="115.0" prefWidth="200.0" style="-fx-cursor: hand;" text="Puestos                   ">
          <graphic>
             <ImageView fx:id="img2" fitHeight="108.3" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic></JFXButton>
+         </graphic>
+      </JFXButton>
       <JFXButton fx:id="btnRoles" onAction="#btnRoles" prefHeight="115.0" prefWidth="200.0" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Roles                       ">
          <graphic>
             <ImageView fx:id="img3" fitHeight="108.3" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic></JFXButton>
+         </graphic>
+      </JFXButton>
       <JFXButton fx:id="btnAsignacionRoles" onAction="#btnAsignacionRoles" prefHeight="115.0" prefWidth="200.0" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Asignacion de Roles">
          <graphic>
             <ImageView fx:id="img4" fitHeight="108.3" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic></JFXButton>
+         </graphic>
+      </JFXButton>
       <JFXButton fx:id="btnHorarios" onAction="#btnHorarios" prefHeight="115.0" prefWidth="200.0" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Horarios                  ">
          <graphic>
             <ImageView fx:id="img5" fitHeight="108.3" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic></JFXButton>
+         </graphic>
+      </JFXButton>
       <JFXButton fx:id="btnExit" onAction="#exit" prefHeight="115.0" prefWidth="200.0" style="-fx-cursor: hand;" text="Salir                        ">
          <graphic>
             <ImageView fx:id="img6" fitHeight="108.3" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic></JFXButton>
+         </graphic>
+      </JFXButton>
    </children>
 </VBox>

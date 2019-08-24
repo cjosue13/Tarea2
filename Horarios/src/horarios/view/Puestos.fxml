@@ -21,7 +21,7 @@
             <TableColumn fx:id="COL_EMPLEADO_PUE" prefWidth="282.0" text="Empleado" />
          </columns>
       </TableView>
-      <Label fx:id="Titulo" layoutX="443.0" layoutY="14.0" text="Puestos" />
+      <Label fx:id="Titulo" layoutX="435.0" layoutY="35.0" text="Puestos" />
       <JFXTextField fx:id="txtNombre" labelFloat="true" layoutX="77.0" layoutY="436.0" prefHeight="29.0" prefWidth="250.0" promptText="Nombre del Puesto" />
       <TableView fx:id="tableEmpleado" layoutX="421.0" layoutY="425.0" onMouseReleased="#agregarPersona" prefHeight="159.0" prefWidth="526.0">
         <columns>
@@ -40,10 +40,10 @@
             <Insets left="20.0" right="40.0" top="20.0" />
          </padding>
          <children>
-            <JFXButton fx:id="btnBuscar" onAction="#FiltrarEmpleado" text="Buscar" style="-fx-cursor: hand;"/>
+            <JFXButton fx:id="btnBuscar" onAction="#FiltrarEmpleado" style="-fx-cursor: hand;" text="Buscar" />
             <JFXButton fx:id="btnEditar1" onAction="#editar" style="-fx-cursor: hand;" text="Editar" />
             <JFXButton fx:id="btnEliminar" onAction="#eliminar" style="-fx-cursor: hand;" stylesheets="@newCascadeStyleSheet.css" text="Eliminar" />
-            <JFXButton onAction="#limpiarRegistro" text="Limpiar Registro" style="-fx-cursor: hand;" />
+            <JFXButton onAction="#limpiarRegistro" style="-fx-cursor: hand;" text="Limpiar Registro" />
             <JFXButton fx:id="btnAgregar1" onAction="#agregar" style="-fx-cursor: hand;" text="Agregar" />
          </children>
       </HBox>

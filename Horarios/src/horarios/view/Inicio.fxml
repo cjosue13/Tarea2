@@ -34,21 +34,36 @@
          <children>
             <AnchorPane fx:id="anchorimage" prefHeight="800.0" prefWidth="1030.0">
                <children>
-                  <ImageView fx:id="omg" fitHeight="800.0" fitWidth="1030.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="Titulo" layoutX="151.0" layoutY="40.0" text="Control de Horarios de Empleados" />
+                  <ImageView fx:id="img" fitHeight="700.0" fitWidth="1034.0" pickOnBounds="true" preserveRatio="true" />
+                  <GridPane layoutX="105.0" layoutY="14.0" prefHeight="78.0" prefWidth="714.0" AnchorPane.bottomAnchor="608.0" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="14.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="Titulo" prefHeight="69.0" prefWidth="718.0" text="Control de Horarios de Empleados" />
+                     </children>
+                  </GridPane>
+                  <GridPane layoutX="984.0" prefHeight="700.0" prefWidth="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="984.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="505.0" minWidth="10.0" prefWidth="58.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="166.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="340.0" minHeight="10.0" prefHeight="340.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="299.0" minHeight="10.0" prefHeight="299.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <JFXHamburger fx:id="hamburger" prefHeight="113.0" prefWidth="43.0" style="-fx-cursor: hand;" />
+                     </children>
+                  </GridPane>
                </children>
             </AnchorPane>
          </children></VBox>
    </center>
    <right>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <AnchorPane fx:id="anchorp" prefHeight="800.0" prefWidth="50.0">
-               <children>
-                  <JFXHamburger fx:id="hamburger" layoutX="10.0" layoutY="22.0" style="-fx-cursor: hand;" />
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
+      <VBox BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>
